@@ -9,6 +9,7 @@
 /// <reference path="registrations.ts" />
 /// <reference path="routes.ts" />
 /// <reference path="controllers/LobbyController.ts" />
+/// <reference path="controllers/PlayerController.ts" />
 /// <reference path="controllers/RankingController.ts" />
 /// <reference path="controllers/SettingsController.ts" />
 /// <reference path="controllers/GameController.ts" />

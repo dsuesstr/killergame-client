@@ -1,11 +1,20 @@
 /// <reference path='../min.references.ts'/>
 module Controllers {
 
-    interface IHomeScope extends angular.IScope {
-        //methods
+    class Player {
+        Username:string;
+        UserId:string;
     }
 
-    class HomeController {
+    class LobbyModel {
+        Players:Player[]
+    }
+
+    interface ILobbyScope extends angular.IScope {
+        Model:LobbyModel;
+    }
+
+    class LobbyController {
         static $inject = [
             $injections.Angular.$Scope,
             $injections.Services.Navigation,
@@ -17,12 +26,22 @@ module Controllers {
 
         private retryCount: number = 0;
 
-        constructor(private $scope: IHomeScope,
+        constructor(private $scope: ILobbyScope,
                     private navigation: Services.INavigation,
                     private $ionicPopup: any,
                     private strings: Services.IStrings,
                     private $ionicLoading: any,
                     private logger: Services.Logger) {
+
+            $scope.Model = new LobbyModel();
+            var players:Player[];
+
+            var player:Player = new Player();
+            player.UserId = "asd1";
+            player.Username = "Domi";
+            players = [player];
+
+            $scope.Model.Players = players;
         }
 
 
@@ -49,9 +68,9 @@ module Controllers {
         }
     }
 
-    export class HomeControllerRegister {
+    export class LobbyControllerRegister {
         constructor($module: angular.IModule) {
-            $module.controller($injections.Controllers.HomeController, HomeController);
+            $module.controller($injections.Controllers.LobbyController, LobbyController);
         }
     }
 }

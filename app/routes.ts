@@ -37,15 +37,23 @@ module Routes {
                     }]
                 }
             })
-                .state($injections.Routes.HomeState, {
+                .state($injections.Routes.LobbyState, {
                 url: "/home",
                 views: {
                     'menuContent': {
                         templateUrl: "app/views/lobby.html",
-                        controller: $injections.Controllers.HomeController
+                        controller: $injections.Controllers.LobbyController
                     }
                 },
                 clearHistory: true
+            }).state($injections.Routes.PlayerState, {
+                url: "/player/:id",
+                views: {
+                    'menuContent': {
+                        templateUrl: "app/views/player.html",
+                        controller: $injections.Controllers.PlayerController
+                    }
+                }
             }).state($injections.Routes.GameState, {
                 url: "/game/:id",
                 views: {
@@ -53,8 +61,7 @@ module Routes {
                         templateUrl: "app/views/game.html",
                         controller: $injections.Controllers.GameController
                     }
-                },
-                clearHistory: true
+                }
             }).state($injections.Routes.RankingState, {
                 url: "/ranking",
                 views: {
@@ -62,8 +69,7 @@ module Routes {
                         templateUrl: "app/views/ranking.html",
                         controller: $injections.Controllers.RankingController
                     }
-                },
-                clearHistory: true
+                }
             }).state($injections.Routes.SettingsState, {
                 url: "/settings",
                 views: {
@@ -71,8 +77,7 @@ module Routes {
                         templateUrl: "app/views/settings.html",
                         controller: $injections.Controllers.SettingsController
                     }
-                },
-                clearHistory: true
+                }
             });
 
             // if none of the above states are matched, use this as the fallback

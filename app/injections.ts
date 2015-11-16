@@ -26,14 +26,16 @@ module $injections{
     }
 
     export module Routes{
-        export var HomeState:string = 'menu.home';
+        export var LobbyState:string = 'menu.lobby';
+        export var PlayerState:string = 'menu.player';
         export var GameState:string = 'menu.game';
         export var RankingState:string = 'menu.ranking';
         export var SettingsState:string = 'menu.settings';
     }
 
     export module Controllers{
-        export var HomeController:string = 'HomeController';
+        export var LobbyController:string = 'LobbyController';
+        export var PlayerController:string = 'PlayerController';
         export var LoadingController: string = 'LoadingController';
         export var RankingController: string = 'RankingController';
         export var SettingsController: string = 'SettingsController';

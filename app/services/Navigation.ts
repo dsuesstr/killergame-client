@@ -13,6 +13,10 @@ module Services {
         Home = () => {
             this.$state.go($injections.Routes.HomeState, {});
         };
+
+        Player = (userId:string) => {
+            this.$state.go($injections.Routes.PlayerState, {id:userId});
+        };
     }
 
     export class NavigationRegister {

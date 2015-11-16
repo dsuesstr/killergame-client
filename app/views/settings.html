@@ -5,7 +5,35 @@
             <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
         </ion-nav-buttons>
     </ion-nav-bar>-->
-    <ion-content class="kg-content"  scroll="false">
+    <ion-content class="kg-content"  scroll="true">
         <h1>Settings</h1>
+        <h2>Profile</h2>
+        <div class="list">
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Name</span>
+                <input type="text">
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Email</span>
+                <input type="text">
+            </label>
+        </div>
+
+        <h2>Change Password</h2>
+        <div class="list">
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Old Password</span>
+                <input type="password" placeholder="I'm old :(">
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">New Password</span>
+                <input type="password" placeholder="Make me unforgettable!">
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Repeat new Password</span>
+                <input type="password" placeholder="Again!?">
+            </label>
+        </div>
+        <button class="button button-block button-calm" ng-click="Save()">Save changes</button>
     </ion-content>
 </ion-view>

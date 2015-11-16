@@ -6,7 +6,8 @@ class RegisterComponents {
         new Routes.UIRoutesRegister(application);
 
         new Controllers.MenuControllerRegister(application);
-        new Controllers.HomeControllerRegister(application);
+        new Controllers.LobbyControllerRegister(application);
+        new Controllers.PlayerControllerRegister(application);
         new Controllers.RankingControllerRegister(application);
         new Controllers.SettingsControllerRegister(application);
         new Controllers.AccountControllerRegister(application);

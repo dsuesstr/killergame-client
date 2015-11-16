@@ -6,11 +6,12 @@ module Directives {
         UserId:string;
         Rank:number;
         Username:string;
-        Points:Number;
+        Score:Number;
     }
 
     interface IRankingDirectiveScope extends angular.IScope {
-        Entries:RankingEntry[]
+        Entries:RankingEntry[];
+        Player(userId:number);
     }
 
     class RankingDirective implements angular.IDirective {
@@ -20,10 +21,15 @@ module Directives {
 
 
         static $inject = [
+            $injections.Services.Navigation,
         ];
 
-        constructor() {
+        constructor(private navigation: Services.INavigation) {
 
+        }
+
+        Player = (userId:string) => {
+            this.navigation.Player(userId);
         }
 
         link = ($scope:IRankingDirectiveScope, $element, $attr) => {
@@ -35,18 +41,20 @@ module Directives {
             entry.Rank = 1;
             entry.Username = "Domi";
             entry.UserId = "abc123";
-            entry.Points = 1234;
+            entry.Score = 1234;
 
             entries = [entry];
 
             var entry2:RankingEntry = new RankingEntry();
             entry2.Rank = 3;
             entry2.Username = "Domi2";
-            entry2.Points = 321;
+            entry2.UserId = "asdasd";
+            entry2.Score = 321;
 
             entries.push(entry2);
 
             $scope.Entries = entries.sort((e1,e2) => e1.Rank - e2.Rank);
+            $scope.Player = this.Player;
         }
     }
 

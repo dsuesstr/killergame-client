@@ -13,6 +13,7 @@ module Services {
 
     export interface INavigation {
         Home();
+        Player(userId:string);
     }
 
     export interface ILocalStorage {

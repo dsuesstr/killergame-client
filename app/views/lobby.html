@@ -9,8 +9,19 @@
         <h1>Lobby</h1>
         <h2>Available Players</h2>
         <ion-list>
-            <ion-item>
-
+            <ion-item class="list-header">
+                <div class="row">
+                    <div class="col-75">Player</div>
+                    <div class="col"></div>
+                    <div class="col"></div>
+                </div>
+            </ion-item>
+            <ion-item ng-repeat="player in Model.Players">
+                <div class="row">
+                    <div class="col-75">{{player.Username}}</div>
+                    <div class="col"><a ng-click="Player(player.UserId)"><i class="icon ion-person"></i></a></div>
+                    <div class="col"><a ng-click="Challenge(player.UserId)"><i class="icon ion-ios-game-controller-a"></i></a></div>
+                </div>
             </ion-item>
         </ion-list>
 
