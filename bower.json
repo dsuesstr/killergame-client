@@ -1,0 +1,24 @@
+{
+  "name": "application",
+  "version": "0.0.0",
+  "authors": [
+    "rdnscr <raphael.ritter@bluewin.ch>"
+  ],
+  "dependencies": {
+    "json3": "latest",
+    "jquery": "latest",
+    "angular-local-storage": "latest",
+    "es5-shim": "latest",
+    "linqjs": "latest",
+    "ionic": "latest",
+    "toastr": " latest",
+    "moment": "latest"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

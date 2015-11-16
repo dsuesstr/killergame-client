@@ -1,0 +1,16 @@
+<ion-list class="list ranking">
+    <ion-item class="list-header">
+        <div class="row">
+            <div class="col">#</div>
+            <div class="col-75">Name</div>
+            <div class="col">Points</div>
+        </div>
+    </ion-item>
+    <ion-item ng-repeat="entry in Entries">
+        <div class="row">
+            <div class="col">{{entry.Rank}}.</div>
+            <div class="col-75">{{entry.Username}}</div>
+            <div class="col">{{entry.Points}}</div>
+        </div>
+    </ion-item>
+</ion-list>

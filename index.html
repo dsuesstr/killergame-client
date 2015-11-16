@@ -1,0 +1,105 @@
+﻿<!doctype html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Killergame</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, target-densityDpi=medium-dpi,user-scalable=no" />
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <!--<script src="phonegap.js"></script>-->
+    <!--<script src="cordova.js"></script>-->
+    <!-- build:css css/main.css -->
+    <link rel="stylesheet" href="bower_components/ionic/release/css/ionic.css">
+    <link rel="stylesheet" href="styles/toastr.css">
+    <link rel="stylesheet" href="styles/default.css">
+
+    <!-- endbuild -->
+</head>
+<body>
+    <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+            your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <!--[if lt IE 9]>
+        <script src="bower_components/es5-shim/es5-shim.js"></script>
+        <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+    <!-- build:js js/plugins.js -->
+    <script src="bower_components/linqjs/linq.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/ionic/release/js/ionic.bundle.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/toastr/toastr.js"></script>
+
+    <script src="externals/angularjs-localizationservice/src/localize.js"></script>
+
+    <!-- build:js js/app.js -->
+    <script src="app/injections.js"></script>
+    <script src="app/app.js"></script>
+
+    <!-- inject-models -->
+    <!-- end-inject-models -->
+    <!-- inject -->
+    <script src="app/constants.js"></script>
+    <script src="app/routes.js"></script>
+    <script src="app/controllers/MenuController.js"></script>
+    <script src="app/controllers/LobbyController.js"></script>
+    <script src="app/controllers/RankingController.js"></script>
+    <script src="app/controllers/SettingsController.js"></script>
+    <script src="app/controllers/AccountController.js"></script>
+    <script src="app/controllers/GameController.js"></script>
+    <script src="app/filters/DurationFilter.js"></script>
+    <script src="app/filters/FormatFilter.js"></script>
+    <script src="app/interfaces/Framework.js"></script>
+    <script src="app/interfaces/Plugins.js"></script>
+    <script src="app/interfaces/Services.js"></script>
+    <script src="app/services/Event.js"></script>
+    <script src="app/run-services/InternetConnectionWatcher.js"></script>
+    <script src="app/services/LocalStorage.js"></script>
+    <script src="app/services/Logger.js"></script>
+    <script src="app/run-services/LocalizationConfig.js"></script>
+    <script src="app/services/Navigation.js"></script>
+    <script src="app/services/OpenLink.js"></script>
+    <script src="app/services/Strings.js"></script>
+    <script src="app/run-services/ClearHistory.js"></script>
+    <script src="app/run-services/IonicConfig.js"></script>
+    <script src="app/interfaces/models/Models.js"></script>
+    <script src="app/interfaces/models/messages/Responses.js"></script>
+    <script src="app/directives/Ranking.js"></script>
+    <script src="app/directives/Field.js"></script>
+    <!-- end-inject -->
+    <script src="app/registrations.js"></script>
+    <script src="app/run-services/AngularInit.js"></script>
+
+    <!-- endbuild -->
+    <ion-nav-view animation="slide-left-right"></ion-nav-view>
+    <div class="bar bar-footer bar-home">
+        <div class="row">
+            <!--
+            <a href="http://www.hsr.ch" target="_blank">
+                <img class="logo" style="left: 70%" src="./images/Logo.png" />
+            </a>
+            -->
+        </div>
+    </div>
+
+    <script>
+        new AngularInit();
+        angular.bootstrap(document, [$injections.Constants.AppName]);
+    </script>
+
+</body>
+</html>

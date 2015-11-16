@@ -1,0 +1,106 @@
+{
+  "name": "Killergame",
+  "version": "0.0.1",
+  "description": "It's a killergame",
+  "main": "main.js",
+  "dependencies": {
+    "tsd": "*",
+    "glob": "*",
+    "gulp": "*",
+    "gulp-concat": "*",
+    "gulp-uglify": "*",
+    "gulp-if": "*",
+    "gulp-notify": "*",
+    "gulp-minify-css": "*",
+    "gulp-clean": "*",
+    "gulp-size": "*",
+    "jshint-stylish": "*",
+    "gulp-cache": "*",
+    "gulp-header": "*",
+    "gulp-load-plugins": "*",
+    "gulp-load-utils": "*",
+    "chalk": "*",
+    "dateformat": "*",
+    "minimist": "*",
+    "gulp-ng-annotate": "*",
+    "gulp-angular-templatecache": "*"
+  },
+  "author": "Julian Mollik, Dominik Süssturnk",
+  "webroot": "../",
+  "webapp": "killergame",
+  "dest": [
+    "../killergame/www/"
+  ],
+  "paths": {
+    "source": {
+      "images": [
+        "images/**/*"
+      ],
+      "js": [
+        "app/injections.js",
+        "app/app.js",
+        "app/views/*.js",
+        "app/constants.js",
+        "app/routes.js",
+        "app/directives/MaxHeight.js",
+        "app/directives/PieMenu.js",
+        "app/controllers/MenuController.js",
+        "app/controllers/HomeController.js",
+        "app/controllers/LocationController.js",
+        "app/controllers/LanguageController.js",
+        "app/controllers/ConnectionsController.js",
+        "app/controllers/TravelDetailsController.js",
+        "app/controllers/MapController.js",
+        "app/filters/DurationFilter.js",
+        "app/filters/FormatFilter.js",
+        "app/interfaces/Framework.js",
+        "app/interfaces/GeoPosition.js",
+        "app/interfaces/Plugins.js",
+        "app/interfaces/Routes.js",
+        "app/interfaces/Services.js",
+        "app/services/SelectedRoute.js",
+        "app/services/Event.js",
+        "app/services/GeoLocationProvider.js",
+        "app/run-services/InternetConnectionWatcher.js",
+        "app/services/LocalStorage.js",
+        "app/run-services/LocalizationConfig.js",
+        "app/services/AvailableRoutes.js",
+        "app/services/Navigation.js",
+        "app/services/Logger.js",
+        "app/services/RoutesConverter.js",
+        "app/services/OpenLink.js",
+        "app/services/OpenPedestrianRoute.js",
+        "app/services/SelectedLocation.js",
+        "app/services/RoutesProvider.js",
+        "app/services/SelectedPedestrianRoute.js",
+        "app/services/TargetAddress.js",
+        "app/services/Strings.js",
+        "app/services/Urls.js",
+        "app/services/AddressesProvider.js",
+        "app/run-services/ClearHistory.js",
+        "app/run-services/IonicConfig.js",
+        "app/interfaces/models/Models.js",
+        "app/interfaces/models/messages/Responses.js",
+        "app/registrations.js",
+        "app/run-services/AngularInit.js"
+      ],
+      "css": [
+        "bower_components/ionic/release/css/ionic.css",
+        "styles/toastr.css",
+        "styles/pie.css",
+        "styles/default.css"
+      ]
+    },
+    "dest": {
+      "css": "../killergame/www/css/",
+      "js": "../killergame/www/scripts/app/",
+      "images": "../killergame/www/images/",
+      "views": "./app/views/",
+      "wp8": "../killergame/www/",
+      "cordova": "../killergame/"
+    }
+  },
+  "devDependencies": {
+    "gulp-serve": "^1.2.0"
+  }
+}

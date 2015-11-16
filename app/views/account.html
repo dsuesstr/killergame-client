@@ -1,0 +1,27 @@
+<ion-view clear-history align-title="center" view-title="Killergame">
+    <!--WP HACK-->
+    <!--<ion-nav-bar align-title="center" class="bar-energized bar bar-header">
+        <ion-nav-buttons side="left">
+            <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>-->
+    <ion-content  scroll="false">
+
+        <ion-nav-bar class="bar-calm">
+
+
+        </ion-nav-bar>
+        <ion-content class="kg-content">
+        <h1>Login</h1>
+            <div class="list">
+                <label class="item item-input">
+                    <input type="text" placeholder="Username" ng-model="Model.Username">
+                </label>
+                <label class="item item-input">
+                    <input type="password" placeholder="Password" ng-model="Model.Password">
+                </label>
+            </div>
+            <button class="button button-block button-calm" ng-click="Login()">Login</button>
+        </ion-content>
+    </ion-content>
+</ion-view>

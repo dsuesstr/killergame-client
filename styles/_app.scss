@@ -1,0 +1,62 @@
+.row {
+    padding: 0px;
+}
+
+.col {
+    padding: 0px;
+}
+
+.loading-container {
+    .loading {
+        background-color: red;
+    }
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.col-header {
+    font-weight: bold;
+}
+
+.long-col {
+    white-space: normal;
+}
+
+.number-col {
+    text-align: center;
+}
+
+.small-text {
+    font-size: 0.75em;
+}
+
+.custom-item {
+    padding: 0px;
+}
+
+.logo {
+    height: 30px;
+}
+
+.item-content:hover {
+    cursor: pointer;
+}
+
+.item-content .icon {
+    margin-right: 10px;
+}
+
+.kg-content {
+    padding: 10px;
+}
+
+.stone {
+    border: 1px solid #ddd;
+}
+
+.stone:hover {
+    background: red;
+}
