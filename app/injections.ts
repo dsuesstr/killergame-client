@@ -26,6 +26,7 @@ module $injections{
     }
 
     export module Routes{
+        export var AccountState:string = 'account';
         export var LobbyState:string = 'menu.lobby';
         export var PlayerState:string = 'menu.player';
         export var GameState:string = 'menu.game';

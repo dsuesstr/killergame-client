@@ -41,7 +41,7 @@ module Services {
 
             var logFn = this[fnName] || this.log;
             return (msg, data, showToast) => {
-                logFn(this.localize.getLocalizedString(msg), data, moduleId, (showToast === undefined) ? true : showToast);                
+                logFn(msg, data, moduleId, (showToast === undefined) ? true : showToast);
             };
         }
 
@@ -65,10 +65,6 @@ module Services {
             var write = (toastType === 'error') ? this.$log.error : this.$log.log;
             source = source ? '[' + source + '] ' : '';                                    
             write(source, message, data);
-
-            if (showToast) {
-                message = this.localize.getLocalizedString(message);
-            }
 
             if (showToast) {
                 if (toastType === 'error') {

@@ -16,7 +16,7 @@ module Routes {
         constructor($stateProvider: IStateProvider, $urlRouterProvider: angular.ui.IUrlRouterProvider) {
 
             $stateProvider
-                .state('account', {
+                .state($injections.Routes.AccountState, {
                     url: "/account",
                     templateUrl: "app/views/account.html",
                     controller: $injections.Controllers.AccountController,
@@ -38,7 +38,7 @@ module Routes {
                 }
             })
                 .state($injections.Routes.LobbyState, {
-                url: "/home",
+                url: "/lobby",
                 views: {
                     'menuContent': {
                         templateUrl: "app/views/lobby.html",

@@ -12,7 +12,8 @@ module Services {
     }
 
     export interface INavigation {
-        Home();
+        Login();
+        Lobby();
         Player(userId:string);
     }
 

@@ -10,8 +10,12 @@ module Services {
 
         }
 
-        Home = () => {
-            this.$state.go($injections.Routes.HomeState, {});
+        Login = () => {
+            this.$state.go($injections.Routes.AccountState);
+        }
+
+        Lobby = () => {
+            this.$state.go($injections.Routes.LobbyState);
         };
 
         Player = (userId:string) => {

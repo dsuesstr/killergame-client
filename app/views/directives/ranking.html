@@ -3,14 +3,14 @@
         <div class="row">
             <div class="col">#</div>
             <div class="col-75">Player</div>
-            <div class="col">Score</div>
+            <div class="col text-right">Score</div>
         </div>
     </ion-item>
     <ion-item ng-repeat="entry in Entries" ng-click="Player(entry.UserId)">
         <div class="row">
             <div class="col">{{entry.Rank}}.</div>
             <div class="col-75">{{entry.Username}}</div>
-            <div class="col">{{entry.Score}}</div>
+            <div class="col text-right">{{entry.Score}}</div>
         </div>
     </ion-item>
 </ion-list>

@@ -22,8 +22,17 @@
                     <span class="input-label">Password</span>
                     <input type="password" placeholder="123456" ng-model="Model.Password">
                 </label>
+                <ion-toggle toggle-class="toggle-calm" ng-model="Model.IsRegister"
+                            ng-change="IsRegisterChanged()">
+                    Are you new?
+                </ion-toggle>
+                <label class="item item-input item-stacked-label" ng-hide="Model.IsLogin">
+                    <span class="input-label">Repeat Password</span>
+                    <input type="password" placeholder="Again!?" ng-model="Model.Password2">
+                </label>
             </div>
-            <button class="button button-block button-calm" ng-click="Login()">Login</button>
+            <button class="button button-block button-calm" ng-click="Login()" ng-hide="Model.IsRegister">Login</button>
+            <button class="button button-block button-calm" ng-click="Register()" ng-hide="Model.IsLogin">Register</button>
         </ion-content>
     </ion-content>
 </ion-view>

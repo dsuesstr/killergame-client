@@ -17,7 +17,7 @@
         </ion-header-bar>
         <ion-content>
             <ion-list>
-                <ion-item menu-close ui-sref="menu.home">
+                <ion-item menu-close ui-sref="menu.lobby">
                     <i class="icon ion-home"></i>Lobby
                 </ion-item>
                 <ion-item menu-close ui-sref="menu.ranking">
@@ -26,8 +26,8 @@
                 <ion-item menu-close ui-sref="menu.settings">
                     <i class="icon ion-gear-a"></i>Settings
                 </ion-item>
-                <ion-item menu-close ui-sref="account">
-                    <i class="icon ion-log-out"></i>Logout
+                <ion-item menu-close ng-click="Logout()">
+                    <a class="item-content"><i class="icon ion-log-out"></i>Logout</a>
                 </ion-item>
             </ion-list>
         </ion-content>

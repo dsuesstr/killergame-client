@@ -8908,9 +8908,6 @@ table, th, td {
 .kg-content {
   padding: 10px; }
 
-.stone {
-  border: 1px solid #ddd; }
-
 .stone:hover {
   background: red; }
 

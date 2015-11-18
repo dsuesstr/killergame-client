@@ -11,7 +11,7 @@ module Directives {
 
     interface IRankingDirectiveScope extends angular.IScope {
         Entries:RankingEntry[];
-        Player(userId:number);
+        Player(userId:string);
     }
 
     class RankingDirective implements angular.IDirective {
