@@ -7,32 +7,38 @@
     </ion-nav-bar>-->
     <ion-content scroll="false">
 
+
+
         <ion-nav-bar class="bar-calm">
 
 
         </ion-nav-bar>
         <ion-content  class="kg-content">
-        <h1>Login</h1>
-            <div class="list">
-                <label class="item item-input item-stacked-label">
-                    <span class="input-label">Username</span>
-                    <input type="text" placeholder="john@doe.com" ng-model="Model.Username">
-                </label>
-                <label class="item item-input item-stacked-label">
-                    <span class="input-label">Password</span>
-                    <input type="password" placeholder="123456" ng-model="Model.Password">
-                </label>
+            <h1>Login</h1>
+            <div class="list" ng-form="Model.AccountForm">
                 <ion-toggle toggle-class="toggle-calm" ng-model="Model.IsRegister"
                             ng-change="IsRegisterChanged()">
                     Are you new?
                 </ion-toggle>
-                <label class="item item-input item-stacked-label" ng-hide="Model.IsLogin">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Username</span>
+                    <input type="text" placeholder="John Wayne" ng-model="Model.Username" required>
+                </label>
+                <label class="item item-input item-stacked-label" ng-hide="!Model.IsRegister">
+                    <span class="input-label">Email</span>
+                    <input type="email" placeholder="john@doe.com" ng-model="Model.Email" ng-required="Model.IsRegister">
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Password</span>
+                    <input type="password" placeholder="123456" ng-model="Model.Password" required>
+                </label>
+                <label class="item item-input item-stacked-label" ng-hide="!Model.IsRegister">
                     <span class="input-label">Repeat Password</span>
-                    <input type="password" placeholder="Again!?" ng-model="Model.Password2">
+                    <input type="password" placeholder="Again!?" ng-model="Model.Password2" ng-required="Model.IsRegister">
                 </label>
             </div>
-            <button class="button button-block button-calm" ng-click="Login()" ng-hide="Model.IsRegister">Login</button>
-            <button class="button button-block button-calm" ng-click="Register()" ng-hide="Model.IsLogin">Register</button>
+            <button class="button button-block button-calm" ng-click="Login()" ng-hide="Model.IsRegister" ng-disabled="!IsFormValid()">Login</button>
+            <button class="button button-block button-calm" ng-click="Register()" ng-hide="!Model.IsRegister" ng-disabled="!IsFormValid()">Register</button>
         </ion-content>
     </ion-content>
 </ion-view>

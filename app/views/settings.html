@@ -1,3 +1,4 @@
+
 <ion-view clear-history align-title="center" view-title="Settings">
     <!--WP HACK-->
     <!--<ion-nav-bar align-title="center" class="bar-energized bar bar-header">
@@ -6,16 +7,18 @@
         </ion-nav-buttons>
     </ion-nav-bar>-->
     <ion-content class="kg-content"  scroll="true">
+
+
         <h1>Settings</h1>
         <h2>Profile</h2>
-        <div class="list">
+        <div class="list" ng-form="Model.SettingsForm">
             <label class="item item-input item-stacked-label">
                 <span class="input-label">Name</span>
-                <input type="text" g-model="Model.Username">
+                <input type="text" ng-model="Model.Username" disabled>
             </label>
             <label class="item item-input item-stacked-label">
                 <span class="input-label">Email</span>
-                <input type="email" ng-model="Model.Email">
+                <input type="email" ng-model="Model.Email" required>
             </label>
         </div>
 
@@ -23,17 +26,17 @@
         <div class="list">
             <label class="item item-input item-stacked-label">
                 <span class="input-label">Old Password</span>
-                <input type="password" placeholder="I'm old :(" ng-model="Model.OldPassword">
+                <input type="password" placeholder="I'm old :(" ng-model="Model.OldPassword" ng-required="IsPasswordRequired()">
             </label>
             <label class="item item-input item-stacked-label">
                 <span class="input-label">New Password</span>
-                <input type="password" placeholder="Make me unforgettable!" ng-model="Model.NewPassword">
+                <input type="password" placeholder="Make me unforgettable!" ng-model="Model.NewPassword" ng-required="IsPasswordRequired()">
             </label>
             <label class="item item-input item-stacked-label">
                 <span class="input-label">Repeat new Password</span>
-                <input type="password" placeholder="Again!?" ng-Model="Model.NewPassword2">
+                <input type="password" placeholder="Again!?" ng-Model="Model.NewPassword2" ng-required="IsPasswordRequired()">
             </label>
         </div>
-        <button class="button button-block button-calm" ng-click="Save()">Save changes</button>
+        <button class="button button-block button-calm" ng-click="Save()" ng-disabled="!IsFormValid()">Save changes</button>
     </ion-content>
 </ion-view>

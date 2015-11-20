@@ -1,3 +1,4 @@
+
 /// <reference path='../min.references.ts'/>
 module Controllers {
 
@@ -7,10 +8,16 @@ module Controllers {
         OldPassword:string;
         NewPassword:string;
         NewPassword2:string;
+        SettingsForm:angular.IFormController;
     }
+
+
+
 
     interface ISettingsScope extends angular.IScope {
         Save();
+        IsFormValid();
+        IsPasswordRequired();
         Model:SettingsModel;
     }
 
@@ -38,37 +45,31 @@ module Controllers {
 
 
             $scope.Save = this.Save;
+            $scope.IsPasswordRequired = this.IsPasswordRequired;
+            $scope.IsFormValid = this.IsFormValid;
         }
 
-        Save = () => {
+        private IsPasswordRequired = () => {
+            return this.$scope.Model.OldPassword !== "" ||  this.$scope.Model.NewPassword !== "" ||  this.$scope.Model.NewPassword2 !== "";
+        }
 
-            if(this.$scope.Model.OldPassword !== "") {
-
-                if(this.$scope.Model.NewPassword === "") {
-                    this.ResetPasswords();
-                    this.logger.logError("You have to set a new password!", null, this, true);
-                    return;
-                }
-
-                if(this.$scope.Model.NewPassword !== this.$scope.Model.NewPassword2) {
-                    this.ResetPasswords();
-                    this.logger.logError("The new password does not match!", null, this, true);
-                    return;
-                }
+        private IsFormValid = () => {
+            if(!this.$scope.Model.SettingsForm.$valid)
+                return false
+            if(this.IsPasswordRequired()) {
+                return this.$scope.Model.OldPassword !== "" && this.$scope.Model.NewPassword !== "" && this.$scope.Model.NewPassword === this.$scope.Model.NewPassword2
             }
+            return true;
+        }
+
+        private Save = () => {
 
             this.OnSaveSuccess();
         }
 
-        OnSaveSuccess = () => {
+        private OnSaveSuccess = () => {
 
             this.logger.logSuccess("Settings saved", null, this, true);
-        }
-
-        ResetPasswords = () => {
-            this.$scope.Model.OldPassword = "";
-            this.$scope.Model.NewPassword = "";
-            this.$scope.Model.NewPassword2 = "";
         }
     }
 

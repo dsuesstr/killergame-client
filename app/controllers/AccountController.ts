@@ -5,14 +5,17 @@ module Controllers {
         Username:string;
         Password:string;
         Password2:string;
+        Email:string;
         IsRegister:boolean;
         IsLogin:boolean;
+        AccountForm: angular.IFormController;
     }
 
     interface IAccountScope extends angular.IScope {
         Login();
         Register();
         IsRegisterChanged();
+        IsFormValid();
         Model: LoginModel;
     }
 
@@ -33,41 +36,37 @@ module Controllers {
                     private $ionicLoading: any,
                     private logger: Services.Logger) {
 
+
+
             $scope.Login = this.Login;
             $scope.Register = this.Register;
             $scope.Model = new LoginModel();
             $scope.Model.Username = "";
             $scope.Model.Password = "";
             $scope.Model.Password2 = "";
+            $scope.Model.Email = "";
             $scope.Model.IsRegister = false;
-            $scope.Model.IsLogin = true;
-            $scope.IsRegisterChanged = this.IsRegisterChanged;
+            $scope.IsFormValid = this.IsFormValid;
+        }
+
+        private IsFormValid = () => {
+            if(!this.$scope.Model.AccountForm.$valid)
+                return false
+
+            if(this.$scope.Model.IsRegister)
+                return this.$scope.Model.Password === this.$scope.Model.Password2;
+
+            return true;
         }
 
         private Login = () => {
-            if(!this.CheckEmptyUsernamePassword()) {
-                return;
-            }
 
             this.OnLoginSuccessFull();
         };
 
         private Register = () => {
-            if(!this.CheckEmptyUsernamePassword()) {
-                return;
-            }
-
-            if(this.$scope.Model.Password !== this.$scope.Model.Password2) {
-                this.ResetPassword();
-                this.logger.logError("Passwords don't match", null, this, true);
-                return;
-            }
 
             this.OnRegisterSuccessFull();
-        };
-
-        private IsRegisterChanged = () => {
-            this.$scope.Model.IsLogin = !this.$scope.Model.IsRegister;
         };
 
 
@@ -80,20 +79,6 @@ module Controllers {
             this.logger.logSuccess("A new player is born", null, this, true);
             this.navigation.Lobby();
         };
-
-        private CheckEmptyUsernamePassword = () =>  {
-            if(this.$scope.Model.Username === "" || this.$scope.Model.Password === "") {
-                this.ResetPassword();
-                this.logger.logError("You need to enter an username and a password", null, this, true);
-                return false;
-            }
-            return true;
-        }
-
-        private ResetPassword = () => {
-            this.$scope.Model.Password = "";
-            this.$scope.Model.Password2 = "";
-        }
     }
 
     export class AccountControllerRegister {
