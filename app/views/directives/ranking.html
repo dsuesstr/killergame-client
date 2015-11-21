@@ -6,11 +6,11 @@
             <div class="col text-right">Score</div>
         </div>
     </ion-item>
-    <ion-item ng-repeat="entry in Entries" ng-click="Player(entry.UserId)">
+    <ion-item ng-repeat="player in Players" ng-click="Player(entry.UserId)">
         <div class="row">
-            <div class="col">{{entry.Rank}}.</div>
-            <div class="col-75">{{entry.Username}}</div>
-            <div class="col text-right">{{entry.Score}}</div>
+            <div class="col">{{player.Rank}}.</div>
+            <div class="col-75">{{player.Username}}</div>
+            <div class="col text-right">{{player.Score}}</div>
         </div>
     </ion-item>
 </ion-list>

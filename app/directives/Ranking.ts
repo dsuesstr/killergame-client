@@ -2,15 +2,15 @@
 
 module Directives {
 
-    class RankingEntry {
+    class Player implements IPlayer {
         UserId:string;
-        Rank:number;
         Username:string;
-        Score:Number;
+        Score:number;
+        Rank:number;
     }
 
     interface IRankingDirectiveScope extends angular.IScope {
-        Entries:RankingEntry[];
+        Players:Models.IPlayer[];
         Player(userId:string);
     }
 
@@ -35,9 +35,9 @@ module Directives {
         link = ($scope:IRankingDirectiveScope, $element, $attr) => {
             //TODO: Load ranking vom server
 
-            var entries:RankingEntry[];
+            var entries:Models.IPlayer[];
 
-            var entry:RankingEntry = new RankingEntry();
+            var entry:Models.IPlayer = new Player();
             entry.Rank = 1;
             entry.Username = "Domi";
             entry.UserId = "abc123";
@@ -45,7 +45,7 @@ module Directives {
 
             entries = [entry];
 
-            var entry2:RankingEntry = new RankingEntry();
+            var entry2:Models.IPlayer = new Player();
             entry2.Rank = 3;
             entry2.Username = "Domi2";
             entry2.UserId = "asdasd";
@@ -53,7 +53,7 @@ module Directives {
 
             entries.push(entry2);
 
-            $scope.Entries = entries.sort((e1,e2) => e1.Rank - e2.Rank);
+            $scope.Players = entries.sort((e1,e2) => e1.Rank - e2.Rank);
             $scope.Player = this.Player;
         }
     }

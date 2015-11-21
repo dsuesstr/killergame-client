@@ -3,11 +3,19 @@
 module Services {
     class Navigation implements Services.INavigation {
         static $inject = [
-            $injections.UIRouter.$StateService
+            $injections.UIRouter.$StateService,
+            $injections.Ionic.$ionicHistory
         ];
 
-        constructor(private $state: angular.ui.IStateService) {
+        constructor(
+            private $state: angular.ui.IStateService,
+            private $ionicHistory:any
+        ) {
 
+        }
+
+        Back = () => {
+            this.$ionicHistory.goBack();
         }
 
         Login = () => {

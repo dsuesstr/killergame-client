@@ -5,7 +5,11 @@
             <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
         </ion-nav-buttons>
     </ion-nav-bar>-->
-    <ion-content class="kg-content" scroll="false">
+    <ion-content class="kg-content">
+        <ion-refresher
+                pulling-text="Pull to refresh..."
+                on-refresh="Refresh()">
+        </ion-refresher>
         <h1>Lobby</h1>
         <h2>Available Players</h2>
         <ion-list>

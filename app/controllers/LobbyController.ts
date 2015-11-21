@@ -1,17 +1,20 @@
 /// <reference path='../min.references.ts'/>
 module Controllers {
 
-    class Player {
-        Username:string;
+    class Player implements IPlayer {
         UserId:string;
+        Username:string;
+        Score:number;
+        Rank:number;
     }
 
     class LobbyModel {
-        Players:Player[]
+        Players:Models.IPlayer[]
     }
 
     interface ILobbyScope extends angular.IScope {
         Model:LobbyModel;
+        Refresh();
     }
 
     class LobbyController {
@@ -34,16 +37,22 @@ module Controllers {
                     private logger: Services.Logger) {
 
             $scope.Model = new LobbyModel();
-            var players:Player[];
+            var players:Models.IPlayer[];
 
-            var player:Player = new Player();
+            var player:Models.IPlayer = new Player();
             player.UserId = "asd1";
             player.Username = "Domi";
             players = [player];
 
             $scope.Model.Players = players;
+            $scope.Refresh = this.Refresh;
         }
 
+        private Refresh = () => {
+            console.log("REFRESH");
+            this.$scope.$broadcast('scroll.refreshComplete');
+
+        }
 
         private OnError = () => {
             if (this.retryCount < 3) {

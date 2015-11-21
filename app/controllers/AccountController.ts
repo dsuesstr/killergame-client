@@ -1,14 +1,27 @@
 /// <reference path='../min.references.ts'/>
 module Controllers {
 
-    class LoginModel{
+    class LoginModel {
+        Name:string;
         Username:string;
         Password:string;
         Password2:string;
         Email:string;
         IsRegister:boolean;
-        IsLogin:boolean;
         AccountForm: angular.IFormController;
+    }
+
+    class LoginData implements Models.ILogin {
+        username:string;
+        password:string;
+    }
+
+    class RegisterData implements Models.IRegister {
+        username:string;
+        password_1:string;
+        password_2:string;
+        name:string;
+        email:string;
     }
 
     interface IAccountScope extends angular.IScope {
@@ -26,7 +39,8 @@ module Controllers {
             $injections.Ionic.$ionicPopup,
             $injections.Services.Strings,
             $injections.Ionic.$ionicLoading,
-            $injections.Services.Logger
+            $injections.Services.Logger,
+            $injections.Services.LoginProvider
         ];
 
         constructor(private $scope: IAccountScope,
@@ -34,13 +48,15 @@ module Controllers {
                     private $ionicPopup: any,
                     private strings: Services.IStrings,
                     private $ionicLoading: any,
-                    private logger: Services.Logger) {
+                    private logger: Services.Logger,
+                    private loginProvider: Services.ILoginProvider) {
 
 
 
             $scope.Login = this.Login;
             $scope.Register = this.Register;
             $scope.Model = new LoginModel();
+            $scope.Model.Name = "";
             $scope.Model.Username = "";
             $scope.Model.Password = "";
             $scope.Model.Password2 = "";
@@ -48,6 +64,27 @@ module Controllers {
             $scope.Model.IsRegister = false;
             $scope.IsFormValid = this.IsFormValid;
         }
+
+        private Login = () => {
+
+            var login = new LoginData();
+            login.username = this.$scope.Model.Username;
+            login.password = this.$scope.Model.Password;
+
+            this.loginProvider.Login(login).then(this.OnLoginSuccessful, this.OnError);
+        };
+
+        private Register = () => {
+
+            var register = new RegisterData();
+            register.username = this.$scope.Model.Username;
+            register.password_1 = this.$scope.Model.Password;
+            register.password_2 = this.$scope.Model.Password2;
+            register.name = this.$scope.Model.Name;
+            register.email = this.$scope.Model.Email;
+
+            this.loginProvider.Register(register).then(this.OnRegisterSuccessful, this.OnError);
+        };
 
         private IsFormValid = () => {
             if(!this.$scope.Model.AccountForm.$valid)
@@ -59,24 +96,24 @@ module Controllers {
             return true;
         }
 
-        private Login = () => {
+        private OnLoginSuccessful = (token:string) => {
 
-            this.OnLoginSuccessFull();
-        };
+            console.log(token);
 
-        private Register = () => {
-
-            this.OnRegisterSuccessFull();
-        };
-
-
-        private OnLoginSuccessFull = () => {
             this.logger.logSuccess("Hello " + this.$scope.Model.Username, null, this, true);
             this.navigation.Lobby();
         };
 
-        private OnRegisterSuccessFull = () => {
-            this.logger.logSuccess("A new player is born", null, this, true);
+        private OnError = (message:string) => {
+            this.logger.logError(message, null, this, true);
+            this.$scope.Model.Password = "";
+        };
+
+        private OnRegisterSuccessful = (token:string) => {
+
+            console.log(token);
+
+            this.logger.logSuccess("Hello " + this.$scope.Model.Username, null, this, true);
             this.navigation.Lobby();
         };
     }

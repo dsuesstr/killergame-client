@@ -6,23 +6,24 @@
         </ion-nav-buttons>
     </ion-nav-bar>-->
     <ion-content scroll="false">
-
-
-
         <ion-nav-bar class="bar-calm">
-
-
         </ion-nav-bar>
         <ion-content  class="kg-content">
-            <h1>Login</h1>
+            <h1>
+                <span ng-hide="Model.IsRegister">Login</span>
+                <span ng-hide="!Model.IsRegister">Register</span>
+            </h1>
             <div class="list" ng-form="Model.AccountForm">
-                <ion-toggle toggle-class="toggle-calm" ng-model="Model.IsRegister"
-                            ng-change="IsRegisterChanged()">
+                <ion-toggle toggle-class="toggle-calm" ng-model="Model.IsRegister">
                     Are you new?
                 </ion-toggle>
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Username</span>
-                    <input type="text" placeholder="John Wayne" ng-model="Model.Username" required>
+                    <input type="text" placeholder="john_wayne_1337" ng-model="Model.Username" required>
+                </label>
+                <label class="item item-input item-stacked-label" ng-hide="!Model.IsRegister">
+                    <span class="input-label">Name</span>
+                    <input type="text" placeholder="John Wayne" ng-model="Model.Name" ng-required="Model.IsRegister">
                 </label>
                 <label class="item item-input item-stacked-label" ng-hide="!Model.IsRegister">
                     <span class="input-label">Email</span>

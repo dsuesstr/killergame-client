@@ -2,14 +2,14 @@
 class AngularInit {
     constructor() {
         angular.module($injections.Constants.AppName)
-            .constant($injections.Constants.ApiHost, 'http://localhost:3000/api/')
-            //.constant($injections.Constants.ApiHost, 'http://localhost:26321/')
+            .constant($injections.Constants.ApiHost, 'http://localhost:3000/')
             .constant($injections.Constants.$Enumerable, (<any>window).Enumerable)
             .constant($injections.Plugins.GlobalizationPlugin, this.getGlobalizationPlugin())
             .constant($injections.Plugins.NetworkConnectionPlugin, this.getNetworkConnectionPlugin())
             .constant($injections.Constants.$JQuery, $)
             .constant($injections.Constants.$Navigator, navigator)
             .constant($injections.Constants.$Angular, angular);
+
     }
 
     private isDefined(value) {

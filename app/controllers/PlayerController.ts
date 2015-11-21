@@ -2,7 +2,7 @@
 module Controllers {
 
     interface IPlayerScope extends angular.IScope {
-
+        Player:Models.IPlayer
     }
 
     class PlayerController {

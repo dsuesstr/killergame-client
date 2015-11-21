@@ -52,6 +52,8 @@ module $injections{
         export var LocalStorage:string = 'LocalStorage';
         export var Navigation: string = 'Navigation';
         export var Logger: string = 'Logger';
+        export var Urls: string = 'Urls';
+        export var LoginProvider: string = 'LoginProvider';
     }
 
     export module Ionic{

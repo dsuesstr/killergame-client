@@ -5,6 +5,7 @@ declare var cordova: any;
 declare var StatusBar: any;
 declare var ionic: any;
 
+
 ionic.Platform.isIE = function () {
     return ionic.Platform.ua.toLowerCase().indexOf('trident') > -1;
 }

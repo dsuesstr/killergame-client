@@ -1,5 +1,5 @@
-
 /// <reference path='../min.references.ts'/>
+
 module Controllers {
 
     class SettingsModel {
@@ -10,9 +10,6 @@ module Controllers {
         NewPassword2:string;
         SettingsForm:angular.IFormController;
     }
-
-
-
 
     interface ISettingsScope extends angular.IScope {
         Save();
@@ -43,7 +40,6 @@ module Controllers {
             $scope.Model.NewPassword = "";
             $scope.Model.NewPassword2 = "";
 
-
             $scope.Save = this.Save;
             $scope.IsPasswordRequired = this.IsPasswordRequired;
             $scope.IsFormValid = this.IsFormValid;
@@ -65,6 +61,12 @@ module Controllers {
         private Save = () => {
 
             this.OnSaveSuccess();
+        }
+
+        private OnSaveFailed = () => {
+
+            this.logger.logError("Settings not saved", null, this, true);
+
         }
 
         private OnSaveSuccess = () => {

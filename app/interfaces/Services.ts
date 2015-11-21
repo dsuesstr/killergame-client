@@ -24,4 +24,14 @@ module Services {
         clearAll(): void;
     }
 
+    export interface IUrls {
+        Register():string;
+        Login():string;
+        Players():string;
+    }
+
+    export interface ILoginProvider {
+        Login(model:Models.ILogin):angular.IPromise<string>;
+        Register(model:Models.IRegister):angular.IPromise<string>;
+    }
 }
