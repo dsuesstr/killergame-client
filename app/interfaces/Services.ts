@@ -2,6 +2,9 @@
 
 module Services {
 
+    export interface IConverter {
+        ConvertApiPlayer(apiPlayer:any):Models.IPlayer;
+    }
 
     export interface IOpenLink {
         (url: string);
@@ -31,7 +34,8 @@ module Services {
     }
 
     export interface IPlayerProvider {
-        GetPlayers(startIndex:number, limit:number, sortColumn:string, sortDirection:string): angular.IPromise<Models.IPlayer[]>
+        GetPlayer(playerId:string): angular.IPromise<Models.IPlayer>;
+        GetPlayers(startIndex:number, limit:number, sortColumn:string, sortDirection:string): angular.IPromise<Models.IPlayer[]>;
     }
 
     export interface ILoginProvider {

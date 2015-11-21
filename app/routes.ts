@@ -47,7 +47,7 @@ module Routes {
                 },
                 clearHistory: true
             }).state($injections.Routes.PlayerState, {
-                url: "/player/:id",
+                url: "/player/:playerId",
                 views: {
                     'menuContent': {
                         templateUrl: "app/views/player.html",

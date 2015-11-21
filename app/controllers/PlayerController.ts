@@ -10,18 +10,44 @@ module Controllers {
             $injections.Angular.$Scope,
             $injections.Services.Navigation,
             $injections.Ionic.$ionicPopup,
-            $injections.Services.Strings,
             $injections.Ionic.$ionicLoading,
-            $injections.Services.Logger
+            $injections.Services.Logger,
+            $injections.Services.PlayerProvider,
+            $injections.UIRouter.$StateParams,
+            $injections.Constants.$Angular
         ];
 
         constructor(private $scope: IPlayerScope,
                     private navigation: Services.INavigation,
                     private $ionicPopup: any,
-                    private strings: Services.IStrings,
                     private $ionicLoading: any,
-                    private logger: Services.Logger) {
+                    private logger: Services.Logger,
+                    private playerProvider: Services.IPlayerProvider,
+                    private $stateParams:angular.ui.IStateParamsService,
+                    private $angular: angular.IAngularStatic
+        ) {
 
+            this.LoadPlayer();
+        }
+
+        private LoadPlayer = () => {
+            var playerId = this.GetPlayerId();
+
+            this.playerProvider.GetPlayer(playerId).then(this.GetPlayerSuccessful, this.GetPlayerFailed);
+        }
+
+        private GetPlayerSuccessful = (player:Models.IPlayer) => {
+            this.$scope.Player = player;
+        }
+
+        private GetPlayerFailed = (player:Models.IPlayer) => {
+
+        }
+
+        private GetPlayerId = () => {
+            var playerId = this.$stateParams['playerId'];
+            if (this.$angular.isUndefined(playerId)) return false;
+            return playerId;
         }
     }
 

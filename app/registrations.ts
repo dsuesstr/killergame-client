@@ -23,6 +23,7 @@ class RegisterComponents {
         new Services.IonicConfigServicesRegister(application);
         new Services.LoginProviderRegister(application);
         new Services.PlayerProviderRegister(application);
+        new Services.ConverterRegister(application);
 
         new Services.UrlsRegister(application);
 

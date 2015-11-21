@@ -55,6 +55,7 @@ module $injections{
         export var Urls: string = 'Urls';
         export var LoginProvider: string = 'LoginProvider';
         export var PlayerProvider: string = 'PlayerProvider';
+        export var Converter: string = 'Converter';
     }
 
     export module Ionic{
