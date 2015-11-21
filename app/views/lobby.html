@@ -23,8 +23,8 @@
             <ion-item ng-repeat="player in Model.Players">
                 <div class="row">
                     <div class="col">{{player.Username}}</div>
-                    <div class="col-10 text-right"><a ng-click="Player(player.UserId)"><i class="icon ion-person"></i></a></div>
-                    <div class="col-10 text-right"><a ng-click="Challenge(player.UserId)"><i class="icon ion-ios-game-controller-a"></i></a></div>
+                    <div class="col-10 text-right"><a ng-click="ShowPlayer(player.PlayerId)"><i class="icon ion-person"></i></a></div>
+                    <div class="col-10 text-right"><a ng-click="Challenge(player.PlayerId)"><i class="icon ion-ios-game-controller-a"></i></a></div>
                 </div>
             </ion-item>
         </ion-list>

@@ -2,7 +2,7 @@
 
 module Models {
     export interface IPlayer {
-        UserId:string;
+        PlayerId:string;
         Username:string;
         Score:number;
         Rank:number;

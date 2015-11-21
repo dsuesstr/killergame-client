@@ -1,4 +1,5 @@
-<ion-list class="list ranking">
+
+<ion-list class="list ranking" ng-hide="!IsLoaded">
     <ion-item class="list-header">
         <div class="row">
             <div class="col">#</div>
@@ -6,11 +7,16 @@
             <div class="col text-right">Score</div>
         </div>
     </ion-item>
-    <ion-item ng-repeat="player in Players" ng-click="Player(entry.UserId)">
+    <ion-item ng-repeat="player in Players" ng-click="ShowPlayer(entry.PlayerId)">
         <div class="row">
             <div class="col">{{player.Rank}}.</div>
             <div class="col-75">{{player.Username}}</div>
             <div class="col text-right">{{player.Score}}</div>
         </div>
     </ion-item>
+    <ion-item ng-hide="HasData">
+        No Players to show
+    </ion-item>
 </ion-list>
+
+<ion-spinner icon="lines" ng-hide="IsLoaded"></ion-spinner>

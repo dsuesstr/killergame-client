@@ -22,6 +22,7 @@ class RegisterComponents {
         new Services.ClearHistoryServicesRegister(application);
         new Services.IonicConfigServicesRegister(application);
         new Services.LoginProviderRegister(application);
+        new Services.PlayerProviderRegister(application);
 
         new Services.UrlsRegister(application);
 

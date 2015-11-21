@@ -35,8 +35,8 @@ module Services {
             var defer = this.$q.defer<string>();
 
             this.logger.log("starting request", null, this, false);
-console.log(data);
-            this.$http.post(url, JSON.stringify(data), config)
+
+            this.$http.post(url, data, config)
                 .success((response: any) => {
                     this.logger.log("request successfull", response, this, false);
                     defer.resolve(response.token);

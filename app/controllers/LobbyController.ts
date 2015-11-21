@@ -1,13 +1,6 @@
 /// <reference path='../min.references.ts'/>
 module Controllers {
 
-    class Player implements IPlayer {
-        UserId:string;
-        Username:string;
-        Score:number;
-        Rank:number;
-    }
-
     class LobbyModel {
         Players:Models.IPlayer[]
     }
@@ -39,8 +32,8 @@ module Controllers {
             $scope.Model = new LobbyModel();
             var players:Models.IPlayer[];
 
-            var player:Models.IPlayer = new Player();
-            player.UserId = "asd1";
+            var player:Models.IPlayer = new Models.Player();
+            player.PlayerId = "asd1";
             player.Username = "Domi";
             players = [player];
 

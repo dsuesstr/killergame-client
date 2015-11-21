@@ -30,6 +30,10 @@ module Services {
         Players():string;
     }
 
+    export interface IPlayerProvider {
+        GetPlayers(startIndex:number, limit:number, sortColumn:string, sortDirection:string): angular.IPromise<Models.IPlayer[]>
+    }
+
     export interface ILoginProvider {
         Login(model:Models.ILogin):angular.IPromise<string>;
         Register(model:Models.IRegister):angular.IPromise<string>;

@@ -2,59 +2,52 @@
 
 module Directives {
 
-    class Player implements IPlayer {
-        UserId:string;
-        Username:string;
-        Score:number;
-        Rank:number;
-    }
-
     interface IRankingDirectiveScope extends angular.IScope {
         Players:Models.IPlayer[];
-        Player(userId:string);
+        IsLoaded:boolean;
+        HasData:boolean;
+        ShowPlayer(playerId:string);
     }
 
     class RankingDirective implements angular.IDirective {
 
         restrict:string = "E";
         templateUrl:string = "app/views/directives/ranking.html";
-
+        $scope:IRankingDirectiveScope;
 
         static $inject = [
             $injections.Services.Navigation,
+            $injections.Services.PlayerProvider,
         ];
 
-        constructor(private navigation: Services.INavigation) {
 
+        constructor(private navigation: Services.INavigation,
+                    private playerProvider: Services.IPlayerProvider
+            ) {
         }
 
-        Player = (userId:string) => {
-            this.navigation.Player(userId);
+        ShowPlayer = (playerId:string) => {
+            console.log(playerId);
+            this.navigation.Player(playerId);
         }
 
         link = ($scope:IRankingDirectiveScope, $element, $attr) => {
-            //TODO: Load ranking vom server
+            this.$scope = $scope;
+            this.$scope.ShowPlayer = this.ShowPlayer;
+            this.$scope.IsLoaded = false;
+            this.$scope.HasData = false;
+            this.playerProvider.GetPlayers().then(this.GetPlayersSuccessful, this.GetPlayersFailed);
+        }
 
-            var entries:Models.IPlayer[];
+        private GetPlayersSuccessful = (players:Models.IPlayer[]) => {
+            this.$scope.Players = players;
+            this.$scope.HasData = players.length > 0;
+            this.$scope.IsLoaded = true;
+        }
 
-            var entry:Models.IPlayer = new Player();
-            entry.Rank = 1;
-            entry.Username = "Domi";
-            entry.UserId = "abc123";
-            entry.Score = 1234;
-
-            entries = [entry];
-
-            var entry2:Models.IPlayer = new Player();
-            entry2.Rank = 3;
-            entry2.Username = "Domi2";
-            entry2.UserId = "asdasd";
-            entry2.Score = 321;
-
-            entries.push(entry2);
-
-            $scope.Players = entries.sort((e1,e2) => e1.Rank - e2.Rank);
-            $scope.Player = this.Player;
+        private GetPlayersFailed = (players:Models.IPlayer[]) => {
+            this.$scope.HasData = true;
+            this.$scope.IsLoaded = false;
         }
     }
 
