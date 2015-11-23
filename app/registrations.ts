@@ -24,6 +24,7 @@ class RegisterComponents {
         new Services.LoginProviderRegister(application);
         new Services.PlayerProviderRegister(application);
         new Services.ConverterRegister(application);
+        new Services.ApiSettingsProviderRegister(application);
 
         new Services.UrlsRegister(application);
 

@@ -7,18 +7,23 @@ module Services {
             $injections.Services.Urls,
             $injections.Angular.$HttpService,
             $injections.Angular.$QService,
-            $injections.Services.Logger
+            $injections.Services.Logger,
+            $injections.Services.ApiSettingsProvider
         ];
 
         constructor(private urls: Services.IUrls,
                     private $http: angular.IHttpService,
                     private $q: angular.IQService,
-                    private logger: Services.Logger) {
+                    private logger: Services.Logger,
+                    private apiSettingsProvider: Services.ApiSettingsProvider) {
+        }
+
+        public IsLoggedIn = ():boolean => {
+            return this.apiSettingsProvider.HasToken();
         }
 
         public Register = (model:Models.IRegister):angular.IPromise<string> => {
-            debugger;
-            console.log(model);
+
             var url = this.urls.Register();
             return this.GetTokenFromApi(url, model);
         }
@@ -26,6 +31,10 @@ module Services {
         public Login = (model:Models.ILogin):angular.IPromise<string> => {
             var url = this.urls.Login();
             return this.GetTokenFromApi(url, model);
+        }
+
+        public Logout = () => {
+            this.apiSettingsProvider.RemoveToken();
         }
 
         private GetTokenFromApi = (url:string, data:any) :angular.IPromise<string> => {
@@ -38,7 +47,7 @@ module Services {
 
             this.$http.post(url, data, config)
                 .success((response: any) => {
-                    this.logger.log("request successfull", response, this, false);
+                    this.apiSettingsProvider.SetToken(response.token);
                     defer.resolve(response.token);
                 })
                 .error((data: any, status: number) => {

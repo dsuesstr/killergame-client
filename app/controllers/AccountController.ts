@@ -52,6 +52,11 @@ module Controllers {
                     private loginProvider: Services.ILoginProvider) {
 
 
+            if(this.loginProvider.IsLoggedIn()) {
+                this.logger.logSuccess("Hei, you're already logged in", null, this, true);
+                this.navigation.Lobby();
+            }
+
 
             $scope.Login = this.Login;
             $scope.Register = this.Register;
@@ -96,9 +101,14 @@ module Controllers {
             return true;
         }
 
+        private OnRegisterSuccessful = (token:string) => {
+
+            this.logger.logSuccess("Hello " + this.$scope.Model.Username, null, this, true);
+            this.navigation.Lobby();
+        };
+
         private OnLoginSuccessful = (token:string) => {
 
-            console.log(token);
 
             this.logger.logSuccess("Hello " + this.$scope.Model.Username, null, this, true);
             this.navigation.Lobby();
@@ -107,14 +117,6 @@ module Controllers {
         private OnError = (message:string) => {
             this.logger.logError(message, null, this, true);
             this.$scope.Model.Password = "";
-        };
-
-        private OnRegisterSuccessful = (token:string) => {
-
-            console.log(token);
-
-            this.logger.logSuccess("Hello " + this.$scope.Model.Username, null, this, true);
-            this.navigation.Lobby();
         };
     }
 

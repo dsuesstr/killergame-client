@@ -12,15 +12,15 @@ module Services
         }
 
         public Register = () :string => {
-            return this.apiHost + "Register";
+            return this.apiHost + "register";
         }
 
         public Login = () :string => {
-            return this.apiHost + "Login";
+            return this.apiHost + "login";
         }
 
         public Players = () :string => {
-            return this.apiHost + "Players";
+            return this.apiHost + "player";
         }
     }
 

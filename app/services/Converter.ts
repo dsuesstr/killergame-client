@@ -7,12 +7,15 @@ module Services {
         }
 
         public ConvertApiPlayer = (apiPlayer:any) : Models.IPlayer => {
-            var player = new Models.Player();
-            player.PlayerId = apiPlayer.playerId;
-            player.Username = apiPlayer.username;
-            player.Score = apiPlayer.score;
+            //var player = new Models.Player();
+            //player.PlayerId = apiPlayer.playerId;
+            //player.Username = apiPlayer.username;
+            //player.Email = apiPlayer.email;
+            //player.Name = apiPlayer.name;
+            //player.Score = apiPlayer.score;
 
-            return player;
+            //return player;
+            return undefined;
         }
     }
 

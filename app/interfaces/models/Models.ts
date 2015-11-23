@@ -2,10 +2,11 @@
 
 module Models {
     export interface IPlayer {
-        PlayerId:string;
-        Username:string;
-        Score:number;
-        Rank:number;
+        playerId:string;
+        username:string;
+        name:string;
+        email:string;
+        score:number;
     }
 
     export interface ILogin {

@@ -14,11 +14,15 @@
         <div class="list" ng-form="Model.SettingsForm">
             <label class="item item-input item-stacked-label">
                 <span class="input-label">Name</span>
-                <input type="text" ng-model="Model.Username" disabled>
+                <input type="email" ng-model="Model.username" readonly>
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Name</span>
+                <input type="text" ng-model="Model.name" required>
             </label>
             <label class="item item-input item-stacked-label">
                 <span class="input-label">Email</span>
-                <input type="email" ng-model="Model.Email" required>
+                <input type="email" ng-model="Model.email" required>
             </label>
         </div>
 

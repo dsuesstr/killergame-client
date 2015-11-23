@@ -10,23 +10,31 @@ module Controllers {
     static $inject = [
       $injections.Angular.$Scope,
       $injections.Services.Logger,
-      $injections.Services.Navigation
+      $injections.Services.Navigation,
+      $injections.Services.LoginProvider
     ];
 
       constructor(private $scope: IMenuScope,
                   private logger: Services.Logger,
-                  private navigation: Services.INavigation) {
-         $scope.Logout = this.Logout;
+                  private navigation: Services.INavigation,
+                  private loginProvider: Services.ILoginProvider) {
+
+
+          console.log("check");
+          if(!this.loginProvider.IsLoggedIn()) {
+              this.logger.logWarning("Please login first", null, this, true);
+              this.navigation.Login();
+
+          }
+
+          $scope.Logout = this.Logout;
     }
 
     Logout = () => {
-      this.OnLogoutSuccessfull();
+        this.loginProvider.Logout();
+        this.logger.log("Byebye :(", null, this, true);
+        this.navigation.Login();
     }
-
-    OnLogoutSuccessfull = () => {
-      this.logger.log("Byebye :(", null, this, true);
-      this.navigation.Login();
-    };
   }
 
   export class MenuControllerRegister {

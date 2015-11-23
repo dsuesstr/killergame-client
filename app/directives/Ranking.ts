@@ -6,7 +6,7 @@ module Directives {
         Players:Models.IPlayer[];
         IsLoaded:boolean;
         HasData:boolean;
-        ShowPlayer(playerId:string);
+        ShowPlayer(player:Models.IPlayer);
     }
 
     class RankingDirective implements angular.IDirective {
@@ -26,9 +26,8 @@ module Directives {
             ) {
         }
 
-        ShowPlayer = (playerId:string) => {
-            console.log(playerId);
-            this.navigation.Player(playerId);
+        ShowPlayer = (player:Models.IPlayer) => {
+            this.navigation.Player(player);
         }
 
         link = ($scope:IRankingDirectiveScope, $element, $attr) => {
@@ -36,7 +35,7 @@ module Directives {
             this.$scope.ShowPlayer = this.ShowPlayer;
             this.$scope.IsLoaded = false;
             this.$scope.HasData = false;
-            this.playerProvider.GetPlayers().then(this.GetPlayersSuccessful, this.GetPlayersFailed);
+            this.playerProvider.GetAllPlayers().then(this.GetPlayersSuccessful, this.GetPlayersFailed);
         }
 
         private GetPlayersSuccessful = (players:Models.IPlayer[]) => {

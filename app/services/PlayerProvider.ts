@@ -7,25 +7,26 @@ module Services {
             $injections.Angular.$HttpService,
             $injections.Angular.$QService,
             $injections.Services.Logger,
-            $injections.Services.Converter
+            $injections.Services.Converter,
+            $injections.Services.ApiSettingsProvider
         ];
 
         constructor(private urls:Services.IUrls,
                     private $http:angular.IHttpService,
                     private $q:angular.IQService,
                     private logger:Services.Logger,
-                    private converter:Services.IConverter) {
+                    private converter:Services.IConverter,
+                    private apiSettingsProvider:Services.IApiSettingsProvider) {
         }
 
         public GetPlayer = (playerId:string):angular.IPromise<Models.IPlayer> => {
             var url = this.urls.Register() + "/" + playerId;
             var defer = this.$q.defer<Models.IPlayer>();
-            var config = { timeout: 1000 };
+            var params = this.apiSettingsProvider.GetApiParameters();
 
-            this.$http.get(url, config)
+            this.$http.get(url, params)
                 .success((response: any) => {
-                    var player = this.converter.ConvertApiPlayer(response.player);
-                    defer.resolve(player);
+                    defer.resolve(response.player);
                 })
                 .error((data: any, status: number) => {
                     defer.reject(data.key);
@@ -34,29 +35,37 @@ module Services {
             return defer.promise;
         }
 
-        public GetPlayers = (startIndex:number = 0, limit:number = 10, sortColumn:string = "score", sortDirection:string = "desc") : angular.IPromise<Models.IPlayer[]> => {
-
+        public GetAllPlayers = (startIndex:number = 0, limit:number = 10, sortColumn:string = "score", sortDirection:string = "desc") : angular.IPromise<Models.IPlayer[]> => {
             var url = this.urls.Register();
-
             url += "/limit/" + limit + "/offset/" + startIndex + "/sort/" + sortColumn + "/" + sortDirection;
 
+            return this.GetPlayersList(url, false);
+        }
+
+        public GetAvailablePlayers = (startIndex:number = 0, limit:number = 10, sortColumn:string = "score", sortDirection:string = "desc") : angular.IPromise<Models.IPlayer[]> => {
+            var url = this.urls.Players();
+            url += "/available/limit/" + limit + "/offset/" + startIndex + "/sort/" + sortColumn + "/" + sortDirection;
+
+            return this.GetPlayersList(url, true);
+        }
+
+        private GetPlayersList = (url:string, secure:boolean): angular.IPromise<Models.IPlayer[]> => {
             var defer = this.$q.defer<Models.IPlayer[]>();
-            var config = { timeout: 1000 };
+            var params = secure ? this.apiSettingsProvider.GetSecureApiParameters() : this.apiSettingsProvider.GetApiParameters();
 
-            this.$http.get(url, config)
+            if(params == null) {
+                defer.reject(null);
+                return defer.promise;
+            }
+
+            this.$http.get(url, params)
                 .success((response: any) => {
-
-                    var players: Models.IPlayer[] = new Array();
-                    var convert = this.converter.ConvertApiPlayer;
-
-                    angular.forEach(response.players, function(value, key) {
-                        var player = convert(value);
-                        player.Rank = key + 1;
-                        this.push(player);
-
-                    }, players);
-
-                    defer.resolve(players);
+                    if(secure) {
+                        defer.resolve(response.result.players);
+                    }
+                    else {
+                        defer.resolve(response.players);
+                    }
                 })
                 .error((data: any, status: number) => {
                     defer.reject(data.key);

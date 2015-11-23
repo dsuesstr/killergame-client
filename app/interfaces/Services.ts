@@ -2,6 +2,14 @@
 
 module Services {
 
+    export interface IApiSettingsProvider {
+        GetApiParameters():any;
+        GetSecureApiParameters():any;
+        HasToken():boolean;
+        RemoveToken();
+        SetToken(token:string);
+    }
+
     export interface IConverter {
         ConvertApiPlayer(apiPlayer:any):Models.IPlayer;
     }
@@ -17,7 +25,7 @@ module Services {
     export interface INavigation {
         Login();
         Lobby();
-        Player(userId:string);
+        Player(player:Models.IPlayer);
     }
 
     export interface ILocalStorage {
@@ -35,11 +43,14 @@ module Services {
 
     export interface IPlayerProvider {
         GetPlayer(playerId:string): angular.IPromise<Models.IPlayer>;
-        GetPlayers(startIndex:number, limit:number, sortColumn:string, sortDirection:string): angular.IPromise<Models.IPlayer[]>;
+        GetAllPlayers(startIndex:number, limit:number, sortColumn:string, sortDirection:string): angular.IPromise<Models.IPlayer[]>;
+        GetAvailablePlayers(startIndex:number, limit:number, sortColumn:string, sortDirection:string): angular.IPromise<Models.IPlayer[]>;
     }
 
     export interface ILoginProvider {
         Login(model:Models.ILogin):angular.IPromise<string>;
         Register(model:Models.IRegister):angular.IPromise<string>;
+        IsLoggedIn():boolean;
+        Logout();
     }
 }

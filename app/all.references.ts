@@ -26,6 +26,7 @@
 /// <reference path="services/Urls.ts" />
 /// <reference path="services/LoginProvider.ts" />
 /// <reference path="services/PlayerProvider.ts" />
+/// <reference path="services/ApiSettingsProvider.ts" />
 /// <reference path="services/LocalStorage.ts" />
 /// <reference path="services/Converter.ts" />
 /// <reference path="services/OpenLink.ts" />

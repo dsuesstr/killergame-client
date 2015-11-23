@@ -2,7 +2,7 @@
 module Controllers {
 
     class LobbyModel {
-        Players:Models.IPlayer[]
+        AvailablePlayers:Models.IPlayer[]
     }
 
     interface ILobbyScope extends angular.IScope {
@@ -14,6 +14,7 @@ module Controllers {
         static $inject = [
             $injections.Angular.$Scope,
             $injections.Services.Navigation,
+            $injections.Services.PlayerProvider,
             $injections.Ionic.$ionicPopup,
             $injections.Services.Strings,
             $injections.Ionic.$ionicLoading,
@@ -24,27 +25,34 @@ module Controllers {
 
         constructor(private $scope: ILobbyScope,
                     private navigation: Services.INavigation,
+                    private playerProvider: Services.IPlayerProvider,
                     private $ionicPopup: any,
                     private strings: Services.IStrings,
                     private $ionicLoading: any,
                     private logger: Services.Logger) {
 
+
             $scope.Model = new LobbyModel();
-            var players:Models.IPlayer[];
-
-            var player:Models.IPlayer = new Models.Player();
-            player.PlayerId = "asd1";
-            player.Username = "Domi";
-            players = [player];
-
-            $scope.Model.Players = players;
             $scope.Refresh = this.Refresh;
+
+            this.Refresh();
         }
 
         private Refresh = () => {
-            console.log("REFRESH");
-            this.$scope.$broadcast('scroll.refreshComplete');
+            this.playerProvider.GetAvailablePlayers().then(this.GetAvailablePlayersSuccessful, this.GetAvailablePlayersFailed);
+        }
 
+
+        private GetAvailablePlayersSuccessful = (players:Models.IPlayer[]) => {
+
+            this.$scope.Model.AvailablePlayers = players;
+
+            this.$scope.$broadcast($constants.Events.Scroll.refreshComplete);
+        }
+
+        private GetAvailablePlayersFailed = (players:Models.IPlayer[]) => {
+            this.$scope.Model.AvailablePlayers = undefined;
+            this.$scope.$broadcast($constants.Events.Scroll.refreshComplete);
         }
 
         private OnError = () => {

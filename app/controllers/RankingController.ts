@@ -2,7 +2,7 @@
 module Controllers {
 
     interface IRankingScope extends angular.IScope {
-        //methods
+        Refresh();
     }
 
     class RankingController {
@@ -22,8 +22,15 @@ module Controllers {
                     private $ionicLoading: any,
                     private logger: Services.Logger) {
 
+            $scope.Refresh = this.Refresh;
 
         }
+
+        private Refresh = () => {
+            //TODO: Implement
+            console.log("REFRESH");
+            this.$scope.$broadcast('scroll.refreshComplete');
+        };
     }
 
     export class RankingControllerRegister {

@@ -20,11 +20,11 @@
                     <div class="col-10"></div>
                 </div>
             </ion-item>
-            <ion-item ng-repeat="player in Model.Players">
+            <ion-item ng-repeat="player in Model.AvailablePlayers">
                 <div class="row">
-                    <div class="col">{{player.Username}}</div>
-                    <div class="col-10 text-right"><a ng-click="ShowPlayer(player.PlayerId)"><i class="icon ion-person"></i></a></div>
-                    <div class="col-10 text-right"><a ng-click="Challenge(player.PlayerId)"><i class="icon ion-ios-game-controller-a"></i></a></div>
+                    <div class="col">{{player.username}}</div>
+                    <div class="col-10 text-right"><a ng-click="ShowPlayer(player)"><i class="icon ion-person"></i></a></div>
+                    <div class="col-10 text-right"><a ng-click="Challenge(player)"><i class="icon ion-ios-game-controller-a"></i></a></div>
                 </div>
             </ion-item>
         </ion-list>

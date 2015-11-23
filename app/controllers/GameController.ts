@@ -22,8 +22,8 @@ module Controllers {
                     private $ionicLoading: any,
                     private logger: Services.Logger) {
 
-
         }
+
 
 
     }

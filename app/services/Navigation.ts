@@ -26,8 +26,8 @@ module Services {
             this.$state.go($injections.Routes.LobbyState);
         };
 
-        Player = (playerId:string) => {
-            this.$state.go($injections.Routes.PlayerState, {playerId:playerId});
+        Player = (player:Models.IPlayer) => {
+            this.$state.go($injections.Routes.PlayerState, {playerId:player.playerId});
         };
     }
 

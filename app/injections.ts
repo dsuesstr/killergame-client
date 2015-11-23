@@ -55,6 +55,7 @@ module $injections{
         export var Urls: string = 'Urls';
         export var LoginProvider: string = 'LoginProvider';
         export var PlayerProvider: string = 'PlayerProvider';
+        export var ApiSettingsProvider: string = 'ApiSettingsProvider';
         export var Converter: string = 'Converter';
     }
 
