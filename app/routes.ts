@@ -19,23 +19,13 @@ module Routes {
                 .state($injections.Routes.AccountState, {
                     url: "/account",
                     templateUrl: "app/views/account.html",
-                    controller: $injections.Controllers.AccountController,
-                    resolve: {
-                        loadLocalization: [$injections.Services.LocalizationProvider, (localizationProvider: Services.LocalizationConfig) => {
-                            return localizationProvider.ExecuteLocalization();
-                        }]
-                    }
+                    controller: $injections.Controllers.AccountController
                 })
                 .state('menu', {
                 url: "/menu",
                 abstract: true,
                 templateUrl: "app/views/menu.html",
-                controller: $injections.Controllers.MenuController,
-                resolve: {
-                    loadLocalization: [$injections.Services.LocalizationProvider, (localizationProvider: Services.LocalizationConfig) => {
-                        return localizationProvider.ExecuteLocalization();
-                    }]
-                }
+                controller: $injections.Controllers.MenuController
             })
                 .state($injections.Routes.LobbyState, {
                 url: "/lobby",

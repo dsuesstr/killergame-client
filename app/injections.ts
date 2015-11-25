@@ -47,8 +47,6 @@ module $injections{
 
     export module Services{
         export var OpenLink:string = 'OpenLink';
-        export var Strings: string = 'Strings';
-        export var LocalizationProvider: string = 'LocalizationProvider';
         export var LocalStorage:string = 'LocalStorage';
         export var Navigation: string = 'Navigation';
         export var Logger: string = 'Logger';

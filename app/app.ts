@@ -31,7 +31,7 @@ if (ionic.Platform.isIE()) {
 }
 
 var application = angular.module($injections.Constants.AppName, [
-    'ionic', 'localization'
+    'ionic',
 ])
     .run(function ($ionicPlatform) {
 

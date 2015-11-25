@@ -15,7 +15,7 @@ module Services {
                     private $http: angular.IHttpService,
                     private $q: angular.IQService,
                     private logger: Services.Logger,
-                    private apiSettingsProvider: Services.ApiSettingsProvider) {
+                    private apiSettingsProvider: Services.IApiSettingsProvider) {
         }
 
         public IsLoggedIn = ():boolean => {

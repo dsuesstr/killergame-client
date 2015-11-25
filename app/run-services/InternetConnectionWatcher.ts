@@ -9,15 +9,13 @@ module Services {
             $injections.Plugins.NetworkConnectionPlugin,
             $injections.Constants.$Navigator,
             $injections.Ionic.$ionicPopup,
-            $injections.Services.Strings
         ];
 
         constructor(private $rootScope:Framework.IRootScope,
                     $window:angular.IWindowService,
                     networkConnectionPlugin:Plugins.NetworkConnection.INetworkConnection,
                     $navigator:any,
-                    private $ionicPopup:any,
-                    private strings:Services.IStrings) {
+                    private $ionicPopup:any) {
 
             $rootScope.online = networkConnectionPlugin !== null ? networkConnectionPlugin.type !== 'none' : $navigator.onLine;
             $window.addEventListener("offline", this.offline, false);
@@ -34,8 +32,8 @@ module Services {
             this.$rootScope.$apply(() => {
                 this.$rootScope.online = false;
                 this.$ionicPopup.alert({
-                    title: this.strings('alert:internet:title'),
-                    template: this.strings('alert:internet:message')
+                    title: "Connection",
+                    template: "Oh no! You're not connected to the internet!"
                 });
             });
         };

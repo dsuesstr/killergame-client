@@ -5,4 +5,3 @@
 /// <reference path="services/Logger.ts" />
 /// <reference path="services/ApiSettingsProvider.ts" />
 /// <reference path="models/Models.ts" />
-/// <reference path="run-services/LocalizationConfig.ts" />

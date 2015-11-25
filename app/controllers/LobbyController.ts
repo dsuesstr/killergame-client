@@ -16,7 +16,6 @@ module Controllers {
             $injections.Services.Navigation,
             $injections.Services.PlayerProvider,
             $injections.Ionic.$ionicPopup,
-            $injections.Services.Strings,
             $injections.Ionic.$ionicLoading,
             $injections.Services.Logger
         ];
@@ -27,7 +26,6 @@ module Controllers {
                     private navigation: Services.INavigation,
                     private playerProvider: Services.IPlayerProvider,
                     private $ionicPopup: any,
-                    private strings: Services.IStrings,
                     private $ionicLoading: any,
                     private logger: Services.Logger) {
 
@@ -39,18 +37,18 @@ module Controllers {
         }
 
         private Refresh = () => {
-            this.playerProvider.GetAvailablePlayers().then(this.GetAvailablePlayersSuccessful, this.GetAvailablePlayersFailed);
+            this.playerProvider.GetAvailablePlayers(0, 10, "score", "desc").then(this.GetAvailablePlayersSuccessful, this.GetAvailablePlayersFailed);
         }
 
 
         private GetAvailablePlayersSuccessful = (players:Models.IPlayer[]) => {
-
             this.$scope.Model.AvailablePlayers = players;
 
             this.$scope.$broadcast($constants.Events.Scroll.refreshComplete);
         }
 
         private GetAvailablePlayersFailed = (players:Models.IPlayer[]) => {
+
             this.$scope.Model.AvailablePlayers = undefined;
             this.$scope.$broadcast($constants.Events.Scroll.refreshComplete);
         }
@@ -63,8 +61,8 @@ module Controllers {
             }
 
             this.hidePopupWithDealy(() => this.$ionicPopup.alert({
-                title: this.strings('home:nearest station resolving:title'),
-                template: this.strings('home:nearest station resolving:message')
+                title: "Titel",
+                template: "nachricht"
             }));
         };
 

@@ -45,7 +45,6 @@ module Services {
         public GetAvailablePlayers = (startIndex:number = 0, limit:number = 10, sortColumn:string = "score", sortDirection:string = "desc") : angular.IPromise<Models.IPlayer[]> => {
             var url = this.urls.Players();
             url += "/available/limit/" + limit + "/offset/" + startIndex + "/sort/" + sortColumn + "/" + sortDirection;
-
             return this.GetPlayersList(url, true);
         }
 
@@ -57,13 +56,13 @@ module Services {
                 defer.reject(null);
                 return defer.promise;
             }
-
+            debugger;
             this.$http.get(url, params)
                 .success((response: any) => {
                     if(secure) {
-                        defer.resolve(response.result.players);
-                    }
-                    else {
+                        debugger;
+                        defer.resolve(response.result);
+                    } else {
                         defer.resolve(response.players);
                     }
                 })

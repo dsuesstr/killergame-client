@@ -29,7 +29,7 @@
   "webroot": "../",
   "webapp": "killergame",
   "dest": [
-    "../killergame/www/"
+    "../build/dist"
   ],
   "paths": {
     "source": {
@@ -92,15 +92,17 @@
       ]
     },
     "dest": {
-      "css": "../killergame/www/css/",
-      "js": "../killergame/www/scripts/app/",
-      "images": "../killergame/www/images/",
+      "css": "build/dist/css/",
+      "js": "build/dist/scripts/",
+      "images": "build/dist/images/",
       "views": "./app/views/",
-      "wp8": "../killergame/www/",
-      "cordova": "../killergame/"
+      "wp8": "build/dist/www/",
+      "cordova": "build/dist/"
     }
   },
   "devDependencies": {
-    "gulp-serve": "^1.2.0"
+    "gulp-inject": "^3.0.0",
+    "gulp-serve": "^1.2.0",
+    "gulp-uglify": "^1.5.1"
   }
 }

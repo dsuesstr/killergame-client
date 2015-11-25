@@ -35,7 +35,7 @@ module Directives {
             this.$scope.ShowPlayer = this.ShowPlayer;
             this.$scope.IsLoaded = false;
             this.$scope.HasData = false;
-            this.playerProvider.GetAllPlayers().then(this.GetPlayersSuccessful, this.GetPlayersFailed);
+            this.playerProvider.GetAllPlayers(0, 10, "score", "desc").then(this.GetPlayersSuccessful, this.GetPlayersFailed);
         }
 
         private GetPlayersSuccessful = (players:Models.IPlayer[]) => {

@@ -12,7 +12,7 @@ module Services {
         public logError: (message, data, source, showToast) => void;
         public getLogFn: (moduleId, fnName) => any;
 
-        constructor(private $log: angular.ILogService, private localize: any) {
+        constructor(private $log: angular.ILogService) {
             this.log = (message, data, source, showToast) => this.logInner(message, data, source, showToast);
             this.logWarning = (message, data, source, showToast) => this.logWarningInner(message, data, source, showToast);
             this.logSuccess = (message, data, source, showToast) => this.logSuccessInner(message, data, source, showToast);
@@ -85,5 +85,5 @@ module Services {
     }
 
     //Register DI    
-    angular.module($injections.Constants.AppName).factory('Logger', ['$log', 'localize', ($log, localize) => new Logger($log, localize)]);
+    angular.module($injections.Constants.AppName).factory('Logger', ['$log', ($log, localize) => new Logger($log)]);
 }

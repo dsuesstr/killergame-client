@@ -18,10 +18,6 @@ module Services {
         (url: string);
     }
 
-    export interface IStrings {
-        (key: string, ...args: any[]): string;
-    }
-
     export interface INavigation {
         Login();
         Lobby();

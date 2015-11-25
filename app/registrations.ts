@@ -14,10 +14,8 @@ class RegisterComponents {
         new Controllers.GameControllerRegister(application);
 
         new Services.OpenLinkServiceRegister(application);
-        new Services.StringsRegister(application);
         new Services.LocalStorageRegister(application);
         new Services.ConnectionWatcherServiceRegister(application);
-        new Services.LocalizationConfigRegister(application);
         new Services.NavigationRegister(application);
         new Services.ClearHistoryServicesRegister(application);
         new Services.IonicConfigServicesRegister(application);

@@ -9,9 +9,9 @@
     </ion-item>
     <ion-item ng-repeat="player in Players track by $index" ng-click="ShowPlayer(player)">
         <div class="row">
-            <div class="col">{{$index+1}}.</div>
-            <div class="col-75">{{player.username}}</div>
-            <div class="col text-right">{{player.score}}</div>
+            <div class="col" ng-bind="$index+1"></div>
+            <div class="col-75" ng-bind="player.username"></div>
+            <div class="col text-right" ng-bind="player.score"></div>
         </div>
     </ion-item>
     <ion-item ng-hide="HasData">
