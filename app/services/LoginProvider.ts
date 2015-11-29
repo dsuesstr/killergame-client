@@ -8,51 +8,53 @@ module Services {
             $injections.Angular.$HttpService,
             $injections.Angular.$QService,
             $injections.Services.Logger,
-            $injections.Services.ApiSettingsProvider
+            $injections.Services.ApiSettingsProvider,
+            $injections.Services.PlayerProvider
         ];
 
         constructor(private urls: Services.IUrls,
                     private $http: angular.IHttpService,
                     private $q: angular.IQService,
-                    private logger: Services.Logger,
-                    private apiSettingsProvider: Services.IApiSettingsProvider) {
+                    private logger: Services.ILogger,
+                    private apiSettingsProvider: Services.IApiSettingsProvider,
+                    private playerProvider: Services.IPlayerProvider) {
         }
 
         public IsLoggedIn = ():boolean => {
             return this.apiSettingsProvider.HasToken();
         }
 
-        public Register = (model:Models.IRegister):angular.IPromise<string> => {
+        public Register = (model:Models.IRegister):angular.IPromise<Models.IPlayer> => {
 
             var url = this.urls.Register();
-            return this.GetTokenFromApi(url, model);
+            return this.PostTokenRequest(url, model);
         }
 
-        public Login = (model:Models.ILogin):angular.IPromise<string> => {
+        public Login = (model:Models.ILogin):angular.IPromise<Models.IPlayer> => {
             var url = this.urls.Login();
-            return this.GetTokenFromApi(url, model);
+            return this.PostTokenRequest(url, model);
         }
 
         public Logout = () => {
+            this.playerProvider.RemoveCurrentPlayer();
             this.apiSettingsProvider.RemoveToken();
         }
 
-        private GetTokenFromApi = (url:string, data:any) :angular.IPromise<string> => {
+        private PostTokenRequest = (url:string, data:any) :angular.IPromise<Models.IPlayer> => {
 
-            var config = { timeout: 1000 };
+            var params = this.apiSettingsProvider.GetApiParameters();
 
-            var defer = this.$q.defer<string>();
+            var defer = this.$q.defer<Models.IPlayer>();
 
-            this.logger.log("starting request", null, this, false);
-
-            this.$http.post(url, data, config)
-                .success((response: any) => {
+            this.$http.post(url, data, params)
+                .success((response: Models.IAccountResponse) => {
                     this.apiSettingsProvider.SetToken(response.token);
-                    defer.resolve(response.token);
+                    this.playerProvider.SetCurrentPlayer(response.player);
+                    defer.resolve(response.player);
                 })
-                .error((data: any, status: number) => {
-                    this.logger.logError("request failed", status, this, false);
-                    defer.reject(data.key);
+                .error((data:Models.IError, status: number) => {
+                    this.apiSettingsProvider.RemoveToken();
+                    defer.reject(data.text);
                 });
 
             return defer.promise;

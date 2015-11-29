@@ -8,9 +8,6 @@ module Controllers {
     class PlayerController {
         static $inject = [
             $injections.Angular.$Scope,
-            $injections.Services.Navigation,
-            $injections.Ionic.$ionicPopup,
-            $injections.Ionic.$ionicLoading,
             $injections.Services.Logger,
             $injections.Services.PlayerProvider,
             $injections.UIRouter.$StateParams,
@@ -18,10 +15,7 @@ module Controllers {
         ];
 
         constructor(private $scope: IPlayerScope,
-                    private navigation: Services.INavigation,
-                    private $ionicPopup: any,
-                    private $ionicLoading: any,
-                    private logger: Services.Logger,
+                    private logger: Services.ILogger,
                     private playerProvider: Services.IPlayerProvider,
                     private $stateParams:angular.ui.IStateParamsService,
                     private $angular: angular.IAngularStatic

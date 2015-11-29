@@ -3,7 +3,7 @@
 module Controllers {
 
   interface IMenuScope extends angular.IScope {
-        Logout();
+        Logout(message:string, isWarning:boolean);
   }
 
   class MenuController {
@@ -15,24 +15,31 @@ module Controllers {
     ];
 
       constructor(private $scope: IMenuScope,
-                  private logger: Services.Logger,
+                  private logger: Services.ILogger,
                   private navigation: Services.INavigation,
                   private loginProvider: Services.ILoginProvider) {
 
-
-          console.log("check");
           if(!this.loginProvider.IsLoggedIn()) {
-              this.logger.logWarning("Please login first", null, this, true);
-              this.navigation.Login();
-
+              this.HandleAuthenticationError();
           }
 
           $scope.Logout = this.Logout;
+          $scope.$on($constants.Events.Kg.AuthenticationError, this.HandleAuthenticationError);
     }
 
-    Logout = () => {
+      private HandleAuthenticationError = () => {
+          this.Logout("Please login first", true)
+      }
+
+    private Logout = (message:string, isWarning:boolean) => {
         this.loginProvider.Logout();
-        this.logger.log("Byebye :(", null, this, true);
+
+        if(isWarning) {
+            this.logger.LogWarning(message, null, this, true);
+        } else {
+            this.logger.Log(message, null, this, true);
+        }
+
         this.navigation.Login();
     }
   }

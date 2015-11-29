@@ -55,6 +55,8 @@ module $injections{
         export var PlayerProvider: string = 'PlayerProvider';
         export var ApiSettingsProvider: string = 'ApiSettingsProvider';
         export var Converter: string = 'Converter';
+        export var Strings: string = 'Strings';
+        export var EventFactoryProvider: string = 'EventFactoryProvider';
     }
 
     export module Ionic{
@@ -62,6 +64,7 @@ module $injections{
         export var $ionicPopup:string = '$ionicPopup';
         export var $ionicHistory: string = '$ionicHistory';
         export var $ionicConfig: string = '$ionicConfig';
+        export var $ionicScrollDelegate: string = '$ionicScrollDelegate';
     }
 
     export module Angular{

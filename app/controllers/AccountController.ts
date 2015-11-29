@@ -36,25 +36,24 @@ module Controllers {
         static $inject = [
             $injections.Angular.$Scope,
             $injections.Services.Navigation,
-            $injections.Ionic.$ionicPopup,
             $injections.Ionic.$ionicLoading,
             $injections.Services.Logger,
-            $injections.Services.LoginProvider
+            $injections.Services.LoginProvider,
+            $injections.Services.PlayerProvider
         ];
 
         constructor(private $scope: IAccountScope,
                     private navigation: Services.INavigation,
-                    private $ionicPopup: any,
                     private $ionicLoading: any,
-                    private logger: Services.Logger,
-                    private loginProvider: Services.ILoginProvider) {
+                    private logger: Services.ILogger,
+                    private loginProvider: Services.ILoginProvider,
+                    private playerProvider: Services.IPlayerProvider) {
 
 
             if(this.loginProvider.IsLoggedIn()) {
-                this.logger.logSuccess("Hei, you're already logged in", null, this, true);
+                this.logger.LogSuccess("Hei, you're already logged in", null, this, true);
                 this.navigation.Lobby();
             }
-
 
             $scope.Login = this.Login;
             $scope.Register = this.Register;
@@ -74,8 +73,17 @@ module Controllers {
             login.username = this.$scope.Model.Username;
             login.password = this.$scope.Model.Password;
 
+            this.$ionicLoading.show({
+                template: "Let's check that"
+            });
+
             this.loginProvider.Login(login).then(this.OnLoginSuccessful, this.OnError);
         };
+
+        private sleepFor = ( sleepDuration:number) => {
+        var now = new Date().getTime();
+        while(new Date().getTime() < now + sleepDuration){ /* do nothing */ }
+    }
 
         private Register = () => {
 
@@ -85,6 +93,10 @@ module Controllers {
             register.password_2 = this.$scope.Model.Password2;
             register.name = this.$scope.Model.Name;
             register.email = this.$scope.Model.Email;
+
+            this.$ionicLoading.show({
+                template: "Let's put you in the game"
+            });
 
             this.loginProvider.Register(register).then(this.OnRegisterSuccessful, this.OnError);
         };
@@ -99,22 +111,21 @@ module Controllers {
             return true;
         }
 
-        private OnRegisterSuccessful = (token:string) => {
-
-            this.logger.logSuccess("Hello " + this.$scope.Model.Username, null, this, true);
-            this.navigation.Lobby();
+        private OnRegisterSuccessful = (player:Models.IPlayer) => {
+            d
         };
 
-        private OnLoginSuccessful = (token:string) => {
-
-
-            this.logger.logSuccess("Hello " + this.$scope.Model.Username, null, this, true);
+        private OnLoginSuccessful = (player:Models.IPlayer) => {
+            this.$ionicLoading.hide();
+            this.logger.LogSuccess("Hello " + player.username, null, this, true);
             this.navigation.Lobby();
         };
 
         private OnError = (message:string) => {
-            this.logger.logError(message, null, this, true);
+            this.$ionicLoading.hide();
+            this.logger.LogError(message, null, this, true);
             this.$scope.Model.Password = "";
+            this.$scope.Model.Password2 = "";
         };
     }
 

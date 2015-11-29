@@ -18,12 +18,9 @@ module Controllers {
                     private navigation: Services.INavigation,
                     private $ionicPopup: any,
                     private $ionicLoading: any,
-                    private logger: Services.Logger) {
+                    private logger: Services.ILogger) {
 
         }
-
-
-
     }
 
     export class GameControllerRegister {

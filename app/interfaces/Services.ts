@@ -2,6 +2,10 @@
 
 module Services {
 
+    export interface IStrings {
+        (key: string, ...args: any[]): string;
+    }
+
     export interface IApiSettingsProvider {
         GetApiParameters():any;
         GetSecureApiParameters():any;
@@ -39,14 +43,27 @@ module Services {
 
     export interface IPlayerProvider {
         GetPlayer(playerId:string): angular.IPromise<Models.IPlayer>;
-        GetAllPlayers(startIndex:number, limit:number, sortColumn:string, sortDirection:string): angular.IPromise<Models.IPlayer[]>;
-        GetAvailablePlayers(startIndex:number, limit:number, sortColumn:string, sortDirection:string): angular.IPromise<Models.IPlayer[]>;
+        GetAllPlayers(listParams:Models.IListParams): angular.IPromise<Models.IPlayer[]>;
+        GetAvailablePlayers(listParams:Models.IListParams): angular.IPromise<Models.IPlayer[]>;
+        UpdateCurrentPlayer(player:Models.IPlayerUpdate): angular.IPromise<Models.IPlayer>;
+        SetCurrentPlayer(player:Models.IPlayer);
+        GetCurrentPlayer():Models.IPlayer;
+        RemoveCurrentPlayer();
+
     }
 
     export interface ILoginProvider {
-        Login(model:Models.ILogin):angular.IPromise<string>;
-        Register(model:Models.IRegister):angular.IPromise<string>;
+        Login(model:Models.ILogin):angular.IPromise<Models.IPlayer>;
+        Register(model:Models.IRegister):angular.IPromise<Models.IPlayer>;
         IsLoggedIn():boolean;
         Logout();
+    }
+
+    export interface ILogger {
+        Log(message:string, data:any, source:any, showToast:boolean);
+        LogWarning(message:string, data:any, source:any, showToast:boolean);
+        LogSuccess(message:string, data:any, source:any, showToast:boolean);
+        LogError(message:string, data:any, source:any, showToast:boolean);
+        GetLogFn(moduleId:any, fnName:string):any;
     }
 }

@@ -9,6 +9,13 @@ module Models {
         score:number;
     }
 
+    export interface IPlayerUpdate {
+        name:string;
+        email:string;
+        password_1:string;
+        password_2:string;
+    }
+
     export interface ILogin {
         username:string;
         password:string;
@@ -20,5 +27,22 @@ module Models {
         password_2:string;
         email:string;
         name:string;
+    }
+
+    export interface IError {
+        text:string;
+        key:string;
+    }
+
+    export interface IAccountResponse {
+        token:string;
+        player:IPlayer;
+    }
+
+    export interface IListParams {
+        Limit:number;
+        Offset:number;
+        SortColumn:string;
+        SortDirection:string;
     }
 }

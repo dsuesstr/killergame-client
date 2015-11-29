@@ -5,12 +5,18 @@
             <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
         </ion-nav-buttons>
     </ion-nav-bar>-->
-    <ion-content class="kg-content">
+    <ion-content class="kg-content" scroll="true">
         <ion-refresher
                 pulling-text="Pull to refresh..."
                 on-refresh="Refresh()">
         </ion-refresher>
         <h1>Ranking</h1>
-        <ranking></ranking>
+        <ranking />
+        <ion-infinite-scroll
+                ng-if="HasMoreData"
+                icon="ion-loading-c"
+                distance="1%"
+                on-infinite="LoadMore()">
+        </ion-infinite-scroll>
     </ion-content>
 </ion-view>

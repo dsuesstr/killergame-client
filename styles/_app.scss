@@ -8,7 +8,7 @@
 
 .loading-container {
     .loading {
-        background-color: red;
+        background-color: $calm;
     }
 }
 
@@ -58,4 +58,8 @@ table, th, td {
 
 .stone:hover {
     background: red;
+}
+
+.input-readonly {
+    background: #fff;
 }

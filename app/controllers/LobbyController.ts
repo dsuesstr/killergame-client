@@ -13,21 +13,15 @@ module Controllers {
     class LobbyController {
         static $inject = [
             $injections.Angular.$Scope,
-            $injections.Services.Navigation,
             $injections.Services.PlayerProvider,
-            $injections.Ionic.$ionicPopup,
-            $injections.Ionic.$ionicLoading,
             $injections.Services.Logger
         ];
 
         private retryCount: number = 0;
 
         constructor(private $scope: ILobbyScope,
-                    private navigation: Services.INavigation,
                     private playerProvider: Services.IPlayerProvider,
-                    private $ionicPopup: any,
-                    private $ionicLoading: any,
-                    private logger: Services.Logger) {
+                    private logger: Services.ILogger) {
 
 
             $scope.Model = new LobbyModel();
@@ -37,43 +31,22 @@ module Controllers {
         }
 
         private Refresh = () => {
-            this.playerProvider.GetAvailablePlayers(0, 10, "score", "desc").then(this.GetAvailablePlayersSuccessful, this.GetAvailablePlayersFailed);
+            this.playerProvider.GetAvailablePlayers(new Models.ListParams()).then(this.GetAvailablePlayersSuccessful, this.GetAvailablePlayersFailed);
         }
 
 
         private GetAvailablePlayersSuccessful = (players:Models.IPlayer[]) => {
             this.$scope.Model.AvailablePlayers = players;
 
-            this.$scope.$broadcast($constants.Events.Scroll.refreshComplete);
+            this.$scope.$broadcast($constants.Events.Scroll.RefreshComplete);
         }
 
         private GetAvailablePlayersFailed = (players:Models.IPlayer[]) => {
 
             this.$scope.Model.AvailablePlayers = undefined;
-            this.$scope.$broadcast($constants.Events.Scroll.refreshComplete);
+            this.$scope.$broadcast($constants.Events.Scroll.RefreshComplete);
         }
 
-        private OnError = () => {
-            if (this.retryCount < 3) {
-                this.retryCount++;
-                //this.Start();
-                return;
-            }
-
-            this.hidePopupWithDealy(() => this.$ionicPopup.alert({
-                title: "Titel",
-                template: "nachricht"
-            }));
-        };
-
-
-        private hidePopupWithDealy(after: () => void): void {
-            //Delay is necessary because a race condition might occure
-            window.setTimeout(() => {
-                this.$ionicLoading.hide();
-                after();
-            }, 500);
-        }
     }
 
     export class LobbyControllerRegister {

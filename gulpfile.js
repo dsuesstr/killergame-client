@@ -50,7 +50,7 @@ gulp.task('bundlejs', ['views'], function () {
 
     return gulp.src(pkg.paths.source.js)
         .pipe(plug.size({ showFiles: true }))
-        //.pipe(plug.uglify())
+        .pipe(plug.uglify())
         .pipe(plug.ngAnnotate())        
         .pipe(plug.concat(bundlefile, opt))        
         .pipe(plug.header(commentHeader))        
@@ -76,8 +76,6 @@ gulp.task('bundlecss', function () {
  */
 gulp.task('images', function () {
     return gulp.src(pkg.paths.source.images)
-        //To use image optimization check required prerequisites
-        //.pipe(plug.cache(plug.imagemin({ optimizationLevel: 3 })))
         .pipe(gulp.dest(pkg.paths.dest.images));
 });
 
@@ -91,21 +89,13 @@ gulp.task('wp8', ['bundlejs', 'bundlecss', 'images'], function () {
  * Bundle the JS, CSS, and compress images.
  * Then copy files to production and show a toast.
  */
-//gulp.task('default', ['bundlejs', 'bundlecss', 'images'], function () {
-//    // Copy the CSS to prod
-//    return gulp.src(pkg.paths.dest.css + '/**/*')
-//        .pipe(gulp.dest(pkg.paths.production + '/content/'))
-
-//        // Copy the js files to prod
-//        .pipe(gulp.src(pkg.paths.dest.js + '/*.js'))
-//        .pipe(gulp.dest(pkg.paths.production + '/app/'))
-
-//        // Notify we are done
-//        .pipe(plug.notify({
-//            onLast: true,
-//            message: "linted, bundled, and images compressed!"
-//        }));
-//});
+gulp.task('default', ['bundlejs', 'bundlecss', 'images'], function () {
+    // Copy the CSS to prod
+    return plug.notify({
+            onLast: true,
+            message: "linted, bundled, and images compressed!"
+        });
+});
 
 /*
  * Remove *.map, *.js files from the app folder
@@ -117,7 +107,17 @@ gulp.task('cleanMapJs', function(){
         .pipe(plug.clean({force: true}))
 });
 
+var ts = require('gulp-typescript');
+var uglify = require('gulp-uglify');
+
+gulp.task("release", ['bundlecss', 'bundlejs'], function() {
+
+
+
+
+});
+
 // npm i --save-dev gulp-serve
 gulp.task('serve', plug.serve()); // will be served at port :3000
 
-gulp.task('default', ['bundlejs', 'bundlecss', 'images', 'wp8']);
+gulp.task('default', ['bundlejs', 'bundlecss', 'images', 'wp8', 'release']);

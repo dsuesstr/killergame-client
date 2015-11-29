@@ -8875,7 +8875,7 @@ a.button {
   padding: 0px; }
 
 .loading-container .loading {
-  background-color: red; }
+  background-color: #779ECB; }
 
 table, th, td {
   border: 1px solid black;
@@ -8910,5 +8910,8 @@ table, th, td {
 
 .stone:hover {
   background: red; }
+
+.input-readonly {
+  background: #fff; }
 
 /*# sourceMappingURL=default.css.map */

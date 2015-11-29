@@ -9,7 +9,7 @@ module Services {
         ];
 
         constructor(private localStorage: Services.ILocalStorage,
-                    private logger: Services.Logger) {
+                    private logger: Services.ILogger) {
 
         }
 
@@ -22,9 +22,7 @@ module Services {
         }
 
         HasToken = () => {
-            var token = this.GetToken();
-
-            return token != null;
+            return this.GetToken() != null;
         }
 
         GetApiParameters = ():any => {

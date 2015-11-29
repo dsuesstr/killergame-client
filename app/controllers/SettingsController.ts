@@ -2,9 +2,15 @@
 
 module Controllers {
 
+     class PlayerData implements Models.IPlayerUpdate {
+        name:string;
+        email:string;
+        password_1:string;
+        password_2:string;
+    }
+
     class SettingsModel {
-        Username:string;
-        Email:string;
+        Player:Models.IPlayer;
         OldPassword:string;
         NewPassword:string;
         NewPassword2:string;
@@ -21,19 +27,16 @@ module Controllers {
     class SettingsController {
         static $inject = [
             $injections.Angular.$Scope,
-            $injections.Services.Navigation,
-            $injections.Ionic.$ionicPopup,
-            $injections.Ionic.$ionicLoading,
-            $injections.Services.Logger
+            $injections.Services.Logger,
+            $injections.Services.PlayerProvider
         ];
 
         constructor(private $scope: ISettingsScope,
-                    private navigation: Services.INavigation,
-                    private $ionicPopup: any,
-                    private $ionicLoading: any,
-                    private logger: Services.Logger) {
+                    private logger: Services.ILogger,
+                    private playerProvider: Services.IPlayerProvider) {
 
             $scope.Model = new SettingsModel();
+            $scope.Model.Player = this.playerProvider.GetCurrentPlayer();
             $scope.Model.OldPassword = "";
             $scope.Model.NewPassword = "";
             $scope.Model.NewPassword2 = "";
@@ -48,28 +51,37 @@ module Controllers {
         }
 
         private IsFormValid = () => {
-            if(!this.$scope.Model.SettingsForm.$valid)
+            if(!this.$scope.Model.SettingsForm.$valid) {
                 return false
+            }
+
             if(this.IsPasswordRequired()) {
                 return this.$scope.Model.OldPassword !== "" && this.$scope.Model.NewPassword !== "" && this.$scope.Model.NewPassword === this.$scope.Model.NewPassword2
             }
+
             return true;
         }
 
         private Save = () => {
 
-            this.OnSaveSuccess();
+            var playerData = new PlayerData();
+            playerData.name = this.$scope.Model.Player.name;
+            playerData.email = this.$scope.Model.Player.email;
+
+            if(this.$scope.Model.NewPassword !== "") {
+                playerData.password_1 = this.$scope.Model.NewPassword;
+                playerData.password_2 = this.$scope.Model.NewPassword2;
+            }
+
+            this.playerProvider.UpdateCurrentPlayer(playerData).then(this.OnSaveSuccess, this.OnSaveFailed);
         }
 
-        private OnSaveFailed = () => {
-
-            this.logger.logError("Settings not saved", null, this, true);
-
+        private OnSaveSuccess = (player:Models.IPlayer) => {
+            this.logger.LogSuccess("Settings saved", null, this, true);
         }
 
-        private OnSaveSuccess = () => {
-
-            this.logger.logSuccess("Settings saved", null, this, true);
+        private OnSaveFailed = (player:Models.IPlayer) => {
+            this.logger.LogError("Settings not saved", null, this, true);
         }
     }
 
