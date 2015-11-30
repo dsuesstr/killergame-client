@@ -1,19 +1,52 @@
 <ion-view clear-history align-title="center" view-title="Lobby">
-    <!--WP HACK-->
-    <!--<ion-nav-bar align-title="center" class="bar-energized bar bar-header">
-        <ion-nav-buttons side="left">
-            <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-        </ion-nav-buttons>
-    </ion-nav-bar>-->
     <ion-content class="kg-content">
         <ion-refresher
                 pulling-text="Pull to refresh..."
                 on-refresh="Refresh()">
         </ion-refresher>
         <h1>Lobby</h1>
+
+        <h2>Games</h2>
+        <ion-list>
+            <ion-item class="list-header" ng-if="Model.AvailableGames.length > 0">
+                <div class="row">
+                    <div class="col">Player 1</div>
+                    <div class="col">Player 2</div>
+                    <div class="col-10 text-right"></div>
+                    <div class="col-10 text-right"></div>
+                    <div class="col-10 text-right"></div>
+                    <div class="col-10 text-right"></div>
+                </div>
+            </ion-item>
+            <ion-item ng-repeat="game in Model.AvailableGames">
+                <div class="row">
+                    <div class="col" ng-bind="game.player1"></div>
+                    <div class="col" ng-bind="game.player2"></div>
+                    <div class="col-10 text-right">
+                        <i ng-if="!game.canAccept && !game.canStart" class="icon ion-clock"></i>
+                    </div>
+                    <div class="col-10 text-right">
+                    <a ng-click="DeleteGame(game)" ng-if="game.canAccept"><i ng-if="game.canAccept" class="icon ion-thumbsdown"></i></a>
+                    </div>
+                    <div class="col-10 text-right">
+
+                        <a ng-click="AcceptGame(game)" ng-if="game.canAccept"><i ng-if="game.canAccept" class="icon ion-thumbsup"></i></a>
+
+                    </div>
+                    <div class="col-10 text-right">
+                        <a ng-click="StartGame(game)" ng-if="game.canStart"><i class="icon ion-clock"></i></a>
+                        <a ng-click="DeleteGame(game)" ng-if="!game.canAccept"><i class="icon ion-close"></i></a>
+                    </div>
+                </div>
+            </ion-item>
+            <ion-item ng-if="Model.AvailableGames.length === 0">
+                No games available
+            </ion-item>
+        </ion-list>
+
         <h2>Available Players</h2>
         <ion-list>
-            <ion-item class="list-header">
+            <ion-item class="list-header" ng-if="Model.AvailablePlayers.length > 0">
                 <div class="row">
                     <div class="col">Player</div>
                     <div class="col-10"></div>
@@ -23,15 +56,17 @@
             <ion-item ng-repeat="player in Model.AvailablePlayers">
                 <div class="row">
                     <div class="col" ng-bind="player.username"></div>
-                    <div class="col-10 text-right"><a ng-click="ShowPlayer(player)"><i class="icon ion-person"></i></a></div>
-                    <div class="col-10 text-right"><a ng-click="Challenge(player)"><i class="icon ion-ios-game-controller-a"></i></a></div>
+                    <div class="col-10 text-right">
+                        <a ng-click="ShowPlayer(player)"><i class="icon ion-person"></i></a>
+                    </div>
+                    <div class="col-10 text-right">
+                        <a ng-click="ChallengePlayer(player)"><i class="icon ion-ios-game-controller-a"></i></a>
+                    </div>
                 </div>
             </ion-item>
+            <ion-item ng-if="Model.AvailablePlayers.length === 0">
+                No players available
+            </ion-item>
         </ion-list>
-
-        <h2>Ranking</h2>
-        <ranking></ranking>
-        <h2>Game</h2>
-        <field></field>
     </ion-content>
 </ion-view>

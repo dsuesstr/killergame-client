@@ -2,7 +2,7 @@
 module Controllers {
 
     interface IPlayerScope extends angular.IScope {
-        Player:Models.IPlayer
+        Player:Models.Messages.IPlayer
     }
 
     class PlayerController {
@@ -30,11 +30,11 @@ module Controllers {
             this.playerProvider.GetPlayer(playerId).then(this.GetPlayerSuccessful, this.GetPlayerFailed);
         }
 
-        private GetPlayerSuccessful = (player:Models.IPlayer) => {
+        private GetPlayerSuccessful = (player:Models.Messages.IPlayer) => {
             this.$scope.Player = player;
         }
 
-        private GetPlayerFailed = (player:Models.IPlayer) => {
+        private GetPlayerFailed = (player:Models.Messages.IPlayer) => {
 
         }
 

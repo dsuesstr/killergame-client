@@ -1,7 +1,6 @@
 //inject:ts
-/// <reference path="Framework.ts" />
 /// <reference path="Plugins.ts" />
 /// <reference path="Services.ts" />
 /// <reference path="models/Models.ts" />
-/// <reference path="models/messages/Responses.ts" />
+/// <reference path="models/messages/Messages.ts" />
 //end-inject:ts

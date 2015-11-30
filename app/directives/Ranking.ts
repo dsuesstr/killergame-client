@@ -3,10 +3,10 @@
 module Directives {
 
     interface IRankingDirectiveScope extends angular.IScope {
-        Players:Models.IPlayer[];
+        Players:Models.Messages.IPlayer[];
         IsLoaded:boolean;
         HasData:boolean;
-        ShowPlayer(player:Models.IPlayer);
+        ShowPlayer(player:Models.Messages.IPlayer);
     }
 
     class RankingDirective implements angular.IDirective {
@@ -39,22 +39,21 @@ module Directives {
             this.playerProvider.GetAllPlayers(new Models.ListParams()).then(this.GetPlayersSuccessful, this.GetPlayersFailed);
         }
 
-        private ShowPlayer = (player:Models.IPlayer) => {
+        private ShowPlayer = (player:Models.Messages.IPlayer) => {
             this.navigation.Player(player);
         }
 
-        private GetPlayersSuccessful = (players:Models.IPlayer[]) => {
+        private GetPlayersSuccessful = (players:Models.Messages.IPlayer[]) => {
             this.$scope.Players = players;
             this.$scope.HasData = players.length > 0;
             this.$scope.IsLoaded = true;
             this.$scope.$emit($constants.Events.Kg.RankingRefreshComplete);
         }
 
-        private GetPlayersFailed = (players:Models.IPlayer[]) => {
+        private GetPlayersFailed = (players:Models.Messages.IPlayer[]) => {
             this.$scope.Players = null;
             this.$scope.HasData = false;
             this.$scope.IsLoaded = true;
-            this.$scope.HasMore = false;
             this.$scope.$emit($constants.Events.Kg.RankingRefreshComplete);
         }
     }

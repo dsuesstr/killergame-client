@@ -11,12 +11,12 @@ module Controllers {
         AccountForm: angular.IFormController;
     }
 
-    class LoginData implements Models.ILogin {
+    class LoginData implements Models.Messages.ILogin {
         username:string;
         password:string;
     }
 
-    class RegisterData implements Models.IRegister {
+    class RegisterData implements Models.Messages.IRegister {
         username:string;
         password_1:string;
         password_2:string;
@@ -111,11 +111,13 @@ module Controllers {
             return true;
         }
 
-        private OnRegisterSuccessful = (player:Models.IPlayer) => {
-            d
+        private OnRegisterSuccessful = (player:Models.Messages.IPlayer) => {
+            this.$ionicLoading.hide();
+            this.logger.LogSuccess("A Star is born! Hello " + player.username, null, this, true);
+            this.navigation.Lobby();
         };
 
-        private OnLoginSuccessful = (player:Models.IPlayer) => {
+        private OnLoginSuccessful = (player:Models.Messages.IPlayer) => {
             this.$ionicLoading.hide();
             this.logger.LogSuccess("Hello " + player.username, null, this, true);
             this.navigation.Lobby();

@@ -21,12 +21,10 @@ class RegisterComponents {
         new Services.IonicConfigServicesRegister(application);
         new Services.LoginProviderRegister(application);
         new Services.PlayerProviderRegister(application);
+        new Services.GameProviderRegister(application);
         new Services.ConverterRegister(application);
         new Services.ApiSettingsProviderRegister(application);
-
         new Services.UrlsRegister(application);
-
-        new Framework.EventFactoryRegister(application);
 
         new Filters.FormatFilterRegister(application);
         new Filters.DurationFilterRegister(application);

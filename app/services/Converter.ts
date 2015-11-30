@@ -6,7 +6,7 @@ module Services {
         constructor() {
         }
 
-        public ConvertApiPlayer = (apiPlayer:any) : Models.IPlayer => {
+        public ConvertApiPlayer = (apiPlayer:any) : Models.Messages.IPlayer => {
             //var player = new Models.Player();
             //player.PlayerId = apiPlayer.playerId;
             //player.Username = apiPlayer.username;

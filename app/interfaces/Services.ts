@@ -15,7 +15,7 @@ module Services {
     }
 
     export interface IConverter {
-        ConvertApiPlayer(apiPlayer:any):Models.IPlayer;
+        ConvertApiPlayer(apiPlayer:any):Models.Messages.IPlayer;
     }
 
     export interface IOpenLink {
@@ -25,7 +25,7 @@ module Services {
     export interface INavigation {
         Login();
         Lobby();
-        Player(player:Models.IPlayer);
+        Player(player:Models.Messages.IPlayer);
     }
 
     export interface ILocalStorage {
@@ -39,22 +39,35 @@ module Services {
         Register():string;
         Login():string;
         Players():string;
+        Games():string;
+        GamesChallengee():string;
+        GamesChallenger():string;
+        GamesAccepted():string;
+    }
+
+    export interface IGameProvider {
+        GetGames():angular.IPromise<Models.Messages.IGame[]>;
+        GetChallengerGames():angular.IPromise<Models.Messages.IGame[]>;
+        GetChallengeeGames():angular.IPromise<Models.Messages.IGame[]>;
+        GetAcceptedGames():angular.IPromise<Models.Messages.IGame[]>;
+        CreateGame(model:Models.Messages.ICreateGame):angular.IPromise<Models.Messages.IGame>;
+        DeleteGame(game:Models.Messages.IGame):angular.IPromise;
     }
 
     export interface IPlayerProvider {
-        GetPlayer(playerId:string): angular.IPromise<Models.IPlayer>;
-        GetAllPlayers(listParams:Models.IListParams): angular.IPromise<Models.IPlayer[]>;
-        GetAvailablePlayers(listParams:Models.IListParams): angular.IPromise<Models.IPlayer[]>;
-        UpdateCurrentPlayer(player:Models.IPlayerUpdate): angular.IPromise<Models.IPlayer>;
-        SetCurrentPlayer(player:Models.IPlayer);
-        GetCurrentPlayer():Models.IPlayer;
+        GetPlayer(playerId:string): angular.IPromise<Models.Messages.IPlayer>;
+        GetAllPlayers(listParams:Models.IListParams): angular.IPromise<Models.Messages.IPlayer[]>;
+        GetAvailablePlayers(listParams:Models.IListParams): angular.IPromise<Models.Messages.IPlayer[]>;
+        UpdateCurrentPlayer(player:Models.Messages.IPlayerUpdate): angular.IPromise<Models.Messages.IPlayer>;
+        SetCurrentPlayer(player:Models.Messages.IPlayer);
+        GetCurrentPlayer():Models.Messages.IPlayer;
         RemoveCurrentPlayer();
 
     }
 
     export interface ILoginProvider {
-        Login(model:Models.ILogin):angular.IPromise<Models.IPlayer>;
-        Register(model:Models.IRegister):angular.IPromise<Models.IPlayer>;
+        Login(model:Models.Messages.ILogin):angular.IPromise<Models.Messages.IPlayer>;
+        Register(model:Models.Messages.IRegister):angular.IPromise<Models.Messages.IPlayer>;
         IsLoggedIn():boolean;
         Logout();
     }

@@ -1,0 +1,141 @@
+[
+  {
+    "key": "database_0001",
+    "value": "there was an error querying the database",
+    "description": ""
+  },
+  {
+    "key": "database_0002",
+    "value": "there was an error writing to the database",
+    "description": ""
+  },
+  {
+    "key": "player_register_0001",
+    "value": "not all necessary data is set",
+    "description": ""
+  },
+  {
+    "key": "player_register_0002",
+    "value": "passwords do not match",
+    "description": ""
+  },
+  {
+    "key": "player_register_0003",
+    "value": "player already exists in database",
+    "description": ""
+  },{
+  "key": "player_register_0004",
+  "value": "only own player-data can be updated",
+  "description": ""
+},
+  {
+    "key": "player_update_0001",
+    "value": "not all necessary data is set",
+    "description": ""
+  },{
+  "key": "player_update_0002",
+  "value": "email address already exists in database",
+  "description": ""
+},
+  {
+  "key": "player_0001",
+  "value": "player with id <playerId> does not exist",
+  "description": ""
+},
+  {
+    "key": "player_0002",
+    "value": "player with id <username> does not exist",
+    "description": ""
+  },
+  {
+    "key": "player_0003",
+    "value": "player with the given credentials does not exist",
+    "description": ""
+  },
+  {
+    "key": "player_login_0001",
+    "value": "username and/or password is invalid",
+    "description": ""
+  },
+  {
+    "key": "player_auth_0001",
+    "value": "token authentication failed",
+    "description": ""
+  },
+  {
+    "key": "player_auth_0002",
+    "value": "no token provided",
+    "description": ""
+  },
+  {
+    "key": "game_0001",
+    "value": "game with id \"<gameId>\" does not exist",
+    "description": ""
+  },
+  {
+    "key": "game_0002",
+    "value": "game does not belong to user <username>",
+    "description": ""
+  },{
+  "key": "game_0003",
+  "value": "this game is already over",
+  "description": ""
+},{
+  "key": "game_0004",
+  "value": "it is not your turn",
+  "description": ""
+},{
+  "key": "game_0005",
+  "value": "coordinates are not within bounds",
+  "description": ""
+},{
+  "key": "game_0006",
+  "value": "slot <moveData.x>/<moveData.y> cannot be used",
+  "description": ""
+},{
+  "key": "game_0007",
+  "value": "player not found in database",
+  "description": ""
+},{
+  "key": "game_0008",
+  "value": "player1 and/or player2 username not set",
+  "description": ""
+},{
+  "key": "game_0009",
+  "value": "player1 and player2 can't be the same",
+  "description": ""
+},{
+  "key": "game_0010",
+  "value": "cannot create game for other players",
+  "description": ""
+},{
+  "key": "game_0011",
+  "value": "cannot retrieve game of other players",
+  "description": ""
+},{
+  "key": "game_0012",
+  "value": "cannot make move for game of other players",
+  "description": ""
+},{
+  "key": "game_0013",
+  "value": "cannot forfeit game of other players",
+  "description": ""
+},{
+  "key": "game_0014",
+  "value": "",
+  "description": "could not create new game"
+},{
+  "key": "game_0015",
+  "value": "could not initialize new game",
+  "description": ""
+},{
+  "key": "game_0016",
+  "value": "cannot accept challenge of game if user is not the challengee",
+  "description": ""
+},
+  {
+    "key": "game_0017",
+    "value": "cannot accept challenge of game if status is not \"prestart\"",
+    "description": ""
+  }
+]

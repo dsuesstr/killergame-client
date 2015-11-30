@@ -3,6 +3,8 @@
 module Services
 {
     class Urls implements IUrls {
+
+
         static $inject = [
             $injections.Constants.ApiHost
         ];
@@ -21,6 +23,22 @@ module Services
 
         public Players = () :string => {
             return this.apiHost + "player";
+        }
+
+        public Games = ():string => {
+            return this.apiHost + "game";
+        }
+
+        public GamesChallengee = ():string => {
+            return this.Games() + "/challengee";
+        }
+
+        public GamesChallenger = ():string => {
+            return this.Games() + "/challenger";
+        }
+
+        public GamesAccepted = ():string => {
+            return this.Games() + "/accepted";
         }
     }
 

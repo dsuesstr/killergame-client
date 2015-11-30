@@ -16,10 +16,6 @@ module $injections{
         export var PedestrianRouteHost:string = 'PedestrianRouteHost';
     }
 
-    export module Framework{
-        export var EventFactory:string = 'EventFactory';
-    }
-
     export module Filters{
         export var DurationFilter:string = 'duration';
         export var FormatFilter:string = 'format';
@@ -53,10 +49,10 @@ module $injections{
         export var Urls: string = 'Urls';
         export var LoginProvider: string = 'LoginProvider';
         export var PlayerProvider: string = 'PlayerProvider';
+        export var GameProvider: string = 'GameProvider';
         export var ApiSettingsProvider: string = 'ApiSettingsProvider';
         export var Converter: string = 'Converter';
         export var Strings: string = 'Strings';
-        export var EventFactoryProvider: string = 'EventFactoryProvider';
     }
 
     export module Ionic{

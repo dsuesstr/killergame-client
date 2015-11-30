@@ -32,14 +32,13 @@ module Controllers {
       }
 
     private Logout = (message:string, isWarning:boolean) => {
-        this.loginProvider.Logout();
-
         if(isWarning) {
             this.logger.LogWarning(message, null, this, true);
         } else {
             this.logger.Log(message, null, this, true);
         }
 
+        this.loginProvider.Logout();
         this.navigation.Login();
     }
   }

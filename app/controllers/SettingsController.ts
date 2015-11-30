@@ -2,7 +2,7 @@
 
 module Controllers {
 
-     class PlayerData implements Models.IPlayerUpdate {
+     class PlayerData implements Models.Messages.IPlayerUpdate {
         name:string;
         email:string;
         password_1:string;
@@ -10,7 +10,7 @@ module Controllers {
     }
 
     class SettingsModel {
-        Player:Models.IPlayer;
+        Player:Models.Messages.IPlayer;
         OldPassword:string;
         NewPassword:string;
         NewPassword2:string;
@@ -76,11 +76,11 @@ module Controllers {
             this.playerProvider.UpdateCurrentPlayer(playerData).then(this.OnSaveSuccess, this.OnSaveFailed);
         }
 
-        private OnSaveSuccess = (player:Models.IPlayer) => {
+        private OnSaveSuccess = (player:Models.Messages.IPlayer) => {
             this.logger.LogSuccess("Settings saved", null, this, true);
         }
 
-        private OnSaveFailed = (player:Models.IPlayer) => {
+        private OnSaveFailed = (player:Models.Messages.IPlayer) => {
             this.logger.LogError("Settings not saved", null, this, true);
         }
     }

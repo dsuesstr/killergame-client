@@ -24,13 +24,13 @@ module Services {
             return this.apiSettingsProvider.HasToken();
         }
 
-        public Register = (model:Models.IRegister):angular.IPromise<Models.IPlayer> => {
+        public Register = (model:Models.Messages.IRegister):angular.IPromise<Models.Messages.IPlayer> => {
 
             var url = this.urls.Register();
             return this.PostTokenRequest(url, model);
         }
 
-        public Login = (model:Models.ILogin):angular.IPromise<Models.IPlayer> => {
+        public Login = (model:Models.Messages.ILogin):angular.IPromise<Models.Messages.IPlayer> => {
             var url = this.urls.Login();
             return this.PostTokenRequest(url, model);
         }
@@ -40,19 +40,19 @@ module Services {
             this.apiSettingsProvider.RemoveToken();
         }
 
-        private PostTokenRequest = (url:string, data:any) :angular.IPromise<Models.IPlayer> => {
+        private PostTokenRequest = (url:string, data:any) :angular.IPromise<Models.Messages.IPlayer> => {
 
             var params = this.apiSettingsProvider.GetApiParameters();
 
-            var defer = this.$q.defer<Models.IPlayer>();
+            var defer = this.$q.defer<Models.Messages.IPlayer>();
 
             this.$http.post(url, data, params)
-                .success((response: Models.IAccountResponse) => {
+                .success((response: Models.Messages.IAccountResponse) => {
                     this.apiSettingsProvider.SetToken(response.token);
                     this.playerProvider.SetCurrentPlayer(response.player);
                     defer.resolve(response.player);
                 })
-                .error((data:Models.IError, status: number) => {
+                .error((data:Models.Messages.IError, status: number) => {
                     this.apiSettingsProvider.RemoveToken();
                     defer.reject(data.text);
                 });

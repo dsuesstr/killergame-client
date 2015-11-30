@@ -21,9 +21,9 @@ module Services {
                     private localStorage:Services.ILocalStorage) {
         }
 
-        public GetPlayer = (playerId:string):angular.IPromise<Models.IPlayer> => {
+        public GetPlayer = (playerId:string):angular.IPromise<Models.Messages.IPlayer> => {
             var url = this.urls.Register() + "/" + playerId;
-            var defer = this.$q.defer<Models.IPlayer>();
+            var defer = this.$q.defer<Models.Messages.IPlayer>();
             var params = this.apiSettingsProvider.GetApiParameters();
 
             this.$http.get(url, params)
@@ -37,25 +37,25 @@ module Services {
             return defer.promise;
         }
 
-        public GetAllPlayers = (listParams:Models.IListParams) : angular.IPromise<Models.IPlayer[]> => {
+        public GetAllPlayers = (listParams:Models.IListParams) : angular.IPromise<Models.Messages.IPlayer[]> => {
             var url = this.urls.Register();
             url += "/limit/" + listParams.Limit + "/offset/" + listParams.Offset + "/sort/" + listParams.SortColumn + "/" + listParams.SortDirection;
 
             return this.GetPlayersList(url, false);
         }
 
-        public GetAvailablePlayers = (listParams:Models.IListParams) : angular.IPromise<Models.IPlayer[]> => {
+        public GetAvailablePlayers = (listParams:Models.IListParams) : angular.IPromise<Models.Messages.IPlayer[]> => {
 
             var url = this.urls.Players();
             url += "/available/limit/" + listParams.Limit + "/offset/" + listParams.Offset + "/sort/" + listParams.SortColumn + "/" + listParams.SortDirection;
             return this.GetPlayersList(url, true);
         }
 
-        public UpdateCurrentPlayer = (data:Models.IPlayerUpdate):angular.IPromise<Models.IPlayer> => {
+        public UpdateCurrentPlayer = (data:Models.Messages.IPlayerUpdate):angular.IPromise<Models.Messages.IPlayer> => {
             var player = this.GetCurrentPlayer();
             var url = this.urls.Register() + "/" + player.playerId;
             var params = this.apiSettingsProvider.GetSecureApiParameters();
-            var defer = this.$q.defer<Models.IPlayer>();
+            var defer = this.$q.defer<Models.Messages.IPlayer>();
 
             this.$http.put(url, data, params)
                 .success((response: any) => {
@@ -69,11 +69,11 @@ module Services {
             return defer.promise;
         }
 
-        public SetCurrentPlayer = (player:Models.IPlayer) => {
+        public SetCurrentPlayer = (player:Models.Messages.IPlayer) => {
             this.localStorage.save($constants.Keys.PlayerKey, player);
         }
 
-        public GetCurrentPlayer = ():Models.IPlayer => {
+        public GetCurrentPlayer = ():Models.Messages.IPlayer => {
             var player = this.localStorage.get($constants.Keys.PlayerKey);
             if(player == undefined || player == null || player == {}) {
                 this.BroadcastAuthenticationError();
@@ -86,8 +86,8 @@ module Services {
             this.localStorage.remove($constants.Keys.PlayerKey);
         }
 
-        private GetPlayersList = (url:string, secure:boolean): angular.IPromise<Models.IPlayer[]> => {
-            var defer = this.$q.defer<Models.IPlayer[]>();
+        private GetPlayersList = (url:string, secure:boolean): angular.IPromise<Models.Messages.IPlayer[]> => {
+            var defer = this.$q.defer<Models.Messages.IPlayer[]>();
             var params = secure
                 ? this.apiSettingsProvider.GetSecureApiParameters()
                 : this.apiSettingsProvider.GetApiParameters();
@@ -98,10 +98,12 @@ module Services {
                 return defer.promise;
             }
             this.$http.get(url, params)
-                .success((response: Models.IPlayer[]) => {
+                .success((response: Models.Messages.IPlayer[]) => {
                     defer.resolve(response);
                 })
-                .error((error:Models.IError, status: number) => {
+                .error((error:Models.Messages.IError, status: number) => {
+
+                    //TODO: check in a central way (no duplicates por favor)
                     this.logger.LogError(error.key, error, this, false);
                     if(error.key === "player_auth_0001" || error.key == "player_auth_0002") {
                         this.BroadcastAuthenticationError();
