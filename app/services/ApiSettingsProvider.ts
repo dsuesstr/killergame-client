@@ -10,26 +10,25 @@ module Services {
 
         constructor(private localStorage: Services.ILocalStorage,
                     private logger: Services.ILogger) {
-
         }
 
-        RemoveToken = () => {
+        public RemoveToken = () => {
             this.localStorage.remove($constants.Keys.TokenKey);
         }
 
-        SetToken = (token:string) => {
+        public SetToken = (token:string) => {
             this.localStorage.save($constants.Keys.TokenKey, token);
         }
 
-        HasToken = () => {
+        public HasToken = () => {
             return this.GetToken() != null;
         }
 
-        GetApiParameters = ():any => {
+        public GetApiParameters = ():any => {
             return{ timeout: 1000 };
         };
 
-        GetSecureApiParameters = ():any => {
+        public GetSecureApiParameters = ():any => {
             var token = this.GetToken();
             var params = this.GetApiParameters();
 

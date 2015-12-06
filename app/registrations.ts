@@ -22,9 +22,11 @@ class RegisterComponents {
         new Services.LoginProviderRegister(application);
         new Services.PlayerProviderRegister(application);
         new Services.GameProviderRegister(application);
+        new Services.GameHandlerRegister(application);
         new Services.ConverterRegister(application);
         new Services.ApiSettingsProviderRegister(application);
         new Services.UrlsRegister(application);
+        Services.StringsRegister(application);
 
         new Filters.FormatFilterRegister(application);
         new Filters.DurationFilterRegister(application);

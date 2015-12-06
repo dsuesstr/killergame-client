@@ -39,7 +39,7 @@ module Controllers {
             $injections.Ionic.$ionicLoading,
             $injections.Services.Logger,
             $injections.Services.LoginProvider,
-            $injections.Services.PlayerProvider
+            $injections.Services.Strings
         ];
 
         constructor(private $scope: IAccountScope,
@@ -47,11 +47,10 @@ module Controllers {
                     private $ionicLoading: any,
                     private logger: Services.ILogger,
                     private loginProvider: Services.ILoginProvider,
-                    private playerProvider: Services.IPlayerProvider) {
-
+                    private strings: Services.IStrings) {
 
             if(this.loginProvider.IsLoggedIn()) {
-                this.logger.LogSuccess("Hei, you're already logged in", null, this, true);
+                this.logger.LogSuccess(this.strings("client_login_001"), null, this, true);
                 this.navigation.Lobby();
             }
 
@@ -74,16 +73,11 @@ module Controllers {
             login.password = this.$scope.Model.Password;
 
             this.$ionicLoading.show({
-                template: "Let's check that"
+                template: this.strings("client_check_001")
             });
 
             this.loginProvider.Login(login).then(this.OnLoginSuccessful, this.OnError);
         };
-
-        private sleepFor = ( sleepDuration:number) => {
-        var now = new Date().getTime();
-        while(new Date().getTime() < now + sleepDuration){ /* do nothing */ }
-    }
 
         private Register = () => {
 
@@ -95,7 +89,7 @@ module Controllers {
             register.email = this.$scope.Model.Email;
 
             this.$ionicLoading.show({
-                template: "Let's put you in the game"
+                template: this.strings("client_check_001")
             });
 
             this.loginProvider.Register(register).then(this.OnRegisterSuccessful, this.OnError);
@@ -119,7 +113,7 @@ module Controllers {
 
         private OnLoginSuccessful = (player:Models.Messages.IPlayer) => {
             this.$ionicLoading.hide();
-            this.logger.LogSuccess("Hello " + player.username, null, this, true);
+            this.logger.LogSuccess(this.strings("client_register_001") + player.username, null, this, true);
             this.navigation.Lobby();
         };
 

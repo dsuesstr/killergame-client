@@ -6,8 +6,12 @@ module Controllers {
     }
 
     class GameController {
+
+        private intervalPromise:angular.IPromise<void>
+
         static $inject = [
             $injections.Angular.$Scope,
+            $injections.Angular.$IntervalService,
             $injections.Services.Navigation,
             $injections.Ionic.$ionicPopup,
             $injections.Ionic.$ionicLoading,
@@ -15,11 +19,23 @@ module Controllers {
         ];
 
         constructor(private $scope: IGameScope,
+                    private $interval: angular.IIntervalService,
                     private navigation: Services.INavigation,
                     private $ionicPopup: any,
                     private $ionicLoading: any,
                     private logger: Services.ILogger) {
 
+            this.intervalPromise = this.$interval(this.Refresh, 5000);
+            $scope.$on($constants.Events.Destroy, this.CancelRefresh);
+            
+        }
+
+        public Refresh() {
+            console.log("Refresh");
+        }
+
+        private CancelRefresh = () => {
+            this.$interval.cancel(this.intervalPromise);
         }
     }
 

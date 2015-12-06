@@ -1,10 +1,12 @@
 /// <reference path='../min.references.ts'/>
 
 module Services {
+    //TODO: Rename to AccountHandler
     class LoginProvider implements ILoginProvider {
 
         static $inject = [
             $injections.Services.Urls,
+            $injections.Angular.$RootScope,
             $injections.Angular.$HttpService,
             $injections.Angular.$QService,
             $injections.Services.Logger,
@@ -13,6 +15,7 @@ module Services {
         ];
 
         constructor(private urls: Services.IUrls,
+                    private $rootScope: angular.IRootScopeService,
                     private $http: angular.IHttpService,
                     private $q: angular.IQService,
                     private logger: Services.ILogger,
@@ -58,6 +61,10 @@ module Services {
                 });
 
             return defer.promise;
+        }
+
+        private BroadcastAuthenticationError = () => {
+            this.$rootScope.$broadcast($constants.Events.Kg.AuthenticationError)
         }
     }
 

@@ -1,5 +1,17 @@
 [
   {
+    "key": "client_login_001",
+    "value": "Hei, you're already logged in"
+  },
+  {
+    "key": "client_check_001",
+    "value": "Let's check that"
+  },
+  {
+    "key": "client_register_001",
+    "value": "A Star is born! Hello "
+  },
+  {
     "key": "database_0001",
     "value": "there was an error querying the database",
     "description": ""

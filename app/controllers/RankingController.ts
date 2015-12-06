@@ -31,7 +31,6 @@ module Controllers {
         }
 
         private LoadMore = () => {
-            console.log("load");
             this.$scope.$broadcast($constants.Events.Kg.RankingLoadMore);
         }
 

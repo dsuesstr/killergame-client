@@ -20,8 +20,8 @@ module Services {
                     private apiSettingsProvider:Services.IApiSettingsProvider) {
         }
 
-        public CreateGame = (model:Models.Messages.ICreateGame):angular.IPromise<Models.Messages.IGame> => {
-            var url = this.urls.Games();
+        public GetGame = (gameId:string):angular.IPromise<Models.Messages.IGame> => {
+            var url = this.urls.Games + "/" + gameId;
             var defer = this.$q.defer<Models.Messages.IGame>();
             var params = this.apiSettingsProvider.GetSecureApiParameters()
 
@@ -32,7 +32,7 @@ module Services {
                 return defer.promise;
             }
 
-            this.$http.post(url, model, params)
+            this.$http.get(url, params)
                 .success((response:any) => {
                     defer.resolve(response.game);
                 })
@@ -47,12 +47,6 @@ module Services {
                 });
 
             return defer.promise;
-        }
-
-        public DeleteGame = (game:Models.Messages.IGame):angular.IPromise => {
-            //TODO: Not implemented yet
-
-            return null;
         }
 
         public GetGames = ():angular.IPromise<Models.Messages.IGame[]> => {
@@ -81,12 +75,12 @@ module Services {
             return this.GetGameList(this.urls.GamesChallengee());
         }
 
-        public GetAcceptedGames = ():angular.IPromise<Models.Messages.IGame[]> => {
-            return this.GetGameList(this.urls.GamesAccepted());
-        }
-
         public GetChallengerGames = ():angular.IPromise<Models.Messages.IGame[]> => {
             return this.GetGameList(this.urls.GamesChallenger());
+        }
+
+        public GetAcceptedGames = ():angular.IPromise<Models.Messages.IGame[]> => {
+            return this.GetGameList(this.urls.GamesAccepted());
         }
 
         private GetGameList = (url:string):angular.IPromise<Models.Messages.IGame[]> => {

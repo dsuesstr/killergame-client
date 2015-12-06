@@ -18,24 +18,32 @@ module Controllers {
         ChallengePlayer(player:Models.Messages.IPlayer);
         DeleteGame(game:Models.Messages.IGame);
         ShowPlayer(player:Models.Messages.IPlayer);
+        AcceptGame(game:Models.Messages.IGame);
     }
 
     class LobbyController {
+
+        private intervalPromise:angular.IPromise<void>;
+        
         static $inject = [
             $injections.Angular.$Scope,
             $injections.Angular.$QService,
+            $injections.Angular.$IntervalService,
             $injections.Ionic.$ionicPopup,
             $injections.Services.PlayerProvider,
             $injections.Services.GameProvider,
+            $injections.Services.GameHandler,
             $injections.Services.Navigation,
             $injections.Services.Logger
         ];
 
         constructor(private $scope: ILobbyScope,
                     private $q: angular.IQService,
+                    private $interval: angular.IIntervalService,
                     private $ionicPopup: any,
                     private playerProvider: Services.IPlayerProvider,
                     private gameProvider: Services.IGameProvider,
+                    private gameHandler: Services.IGameHandler,
                     private navigation: Services.INavigation,
                     private logger: Services.ILogger) {
 
@@ -45,8 +53,16 @@ module Controllers {
             $scope.ChallengePlayer = this.ChallengePlayer;
             $scope.DeleteGame = this.DeleteGame;
             $scope.ShowPlayer = this.ShowPlayer;
+            $scope.AcceptGame = this.AcceptGame;
 
             this.Refresh();
+
+            this.intervalPromise = this.$interval(this.Refresh, 5000);
+            $scope.$on($constants.Events.Destroy, this.CancelRefresh);
+        }
+
+        private CancelRefresh = () => {
+            this.$interval.cancel(this.intervalPromise);
         }
 
         private ShowPlayer = (player:Models.Messages.IPlayer) => {
@@ -69,11 +85,23 @@ module Controllers {
 
             confirmChallenge.then((result:boolean) => {
                 if(result) {
-                    this.gameProvider.DeleteGame(game).then(this.CreateGameSuccessful, this.CreateGameFailed)
+                    //TODO: then what?
+                    this.gameHandler.DeleteGame(game.gameId);//.then(this.GameUpdateSuccessful, this.GameUpdateFailed)
                 }
             });
+        }
 
+        private AcceptGame = (game:Models.Messages.IGame) => {
+            var confirmChallenge = this.$ionicPopup.confirm( {
+                title: "Sure?",
+                template: "are you sure that you want to accept this challenge?"
+            });
 
+            confirmChallenge.then((result:boolean) => {
+                if(result) {
+                    this.gameHandler.AcceptGame(game.gameId).then(this.GameUpdateSuccessful, this.GameUpdateFailed)
+                }
+            });
         }
 
         private ChallengePlayer = (player:Models.Messages.IPlayer) => {
@@ -87,19 +115,19 @@ module Controllers {
                 if(result) {
                     var createGame = new CreateGame();
                     createGame.player2 = player.username;
-                    createGame.fieldHeight = 10;
-                    createGame.fieldWidth = 10;
+                    createGame.fieldHeight = undefined;
+                    createGame.fieldWidth = undefined;
 
-                    this.gameProvider.CreateGame(createGame).then(this.CreateGameSuccessful, this.CreateGameFailed)
+                    this.gameHandler.CreateGame(createGame).then(this.GameUpdateSuccessful, this.GameUpdateFailed)
                 }
             });
         }
 
-        private CreateGameSuccessful = (game:Models.Messages.IGame) => {
+        private GameUpdateSuccessful = (game:Models.Messages.IGame) => {
             this.Refresh();
         }
 
-        private CreateGameFailed = (game:Models.Messages.IGame) => {
+        private GameUpdateFailed = (game:Models.Messages.IGame) => {
             //TODO:
         }
 
@@ -108,6 +136,8 @@ module Controllers {
             this.$scope.Model.AvailableGames = data[1];
             this.CheckGames();
             this.$scope.$broadcast($constants.Events.Scroll.RefreshComplete);
+            console.log("Refreshed");
+
         }
 
         private CheckGames = () => {

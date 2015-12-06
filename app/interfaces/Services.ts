@@ -1,11 +1,11 @@
 /// <reference path='../min.references.ts'/>
 
 module Services {
-
     export interface IStrings {
-        (key: string, ...args: any[]): string;
+        (key: string):string;
     }
 
+    //change to IApiSettingsHandler
     export interface IApiSettingsProvider {
         GetApiParameters():any;
         GetSecureApiParameters():any;
@@ -45,13 +45,27 @@ module Services {
         GamesAccepted():string;
     }
 
+    export interface IGameHandler {
+        CreateGame(model:Models.Messages.ICreateGame):angular.IPromise<Models.Messages.IGame>;
+        MakeMove(gameId:string, x:number, y:number):angular.IPromise<Models.Messages.IGame[]>;
+        Forfeit(gameId:string):angular.IPromise<Models.Messages.IGame[]>;
+        DeleteGame(gameId:string):angular.IPromise<void>;
+        AcceptGame(gameId:string):angular.IPromise<Models.Messages.IGame>;
+    }
+
     export interface IGameProvider {
+        GetGame(gameId:string):angular.IPromise<Models.Messages.IGame>;
         GetGames():angular.IPromise<Models.Messages.IGame[]>;
         GetChallengerGames():angular.IPromise<Models.Messages.IGame[]>;
         GetChallengeeGames():angular.IPromise<Models.Messages.IGame[]>;
         GetAcceptedGames():angular.IPromise<Models.Messages.IGame[]>;
-        CreateGame(model:Models.Messages.ICreateGame):angular.IPromise<Models.Messages.IGame>;
-        DeleteGame(game:Models.Messages.IGame):angular.IPromise;
+    }
+
+    //TODO: Move from IPlayerProvider
+    export interface IPlayerHandler {
+        UpdateCurrentPlayer(player:Models.Messages.IPlayerUpdate): angular.IPromise<Models.Messages.IPlayer>;
+        SetCurrentPlayer(player:Models.Messages.IPlayer);
+        RemoveCurrentPlayer();
     }
 
     export interface IPlayerProvider {
@@ -62,9 +76,10 @@ module Services {
         SetCurrentPlayer(player:Models.Messages.IPlayer);
         GetCurrentPlayer():Models.Messages.IPlayer;
         RemoveCurrentPlayer();
-
     }
 
+
+    //TODO: change to IAccountHandler
     export interface ILoginProvider {
         Login(model:Models.Messages.ILogin):angular.IPromise<Models.Messages.IPlayer>;
         Register(model:Models.Messages.IRegister):angular.IPromise<Models.Messages.IPlayer>;

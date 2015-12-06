@@ -50,6 +50,7 @@ module $injections{
         export var LoginProvider: string = 'LoginProvider';
         export var PlayerProvider: string = 'PlayerProvider';
         export var GameProvider: string = 'GameProvider';
+        export var GameHandler: string = 'GameHandler';
         export var ApiSettingsProvider: string = 'ApiSettingsProvider';
         export var Converter: string = 'Converter';
         export var Strings: string = 'Strings';
@@ -61,6 +62,7 @@ module $injections{
         export var $ionicHistory: string = '$ionicHistory';
         export var $ionicConfig: string = '$ionicConfig';
         export var $ionicScrollDelegate: string = '$ionicScrollDelegate';
+        export var $ionicBackdrop: string = '$ionicBackdrop';
     }
 
     export module Angular{
@@ -75,6 +77,7 @@ module $injections{
         export var $HttpProvider:string = '$httpProvider';
         export var $QService:string = '$q';
         export var $TimeoutService:string = '$timeout';
+        export var $IntervalService:string = '$interval';
         export var $Window:string = '$window';
         export var $SCEDelegateProvider:string = '$sceDelegateProvider';
     }

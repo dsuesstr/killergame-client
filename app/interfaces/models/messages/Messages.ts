@@ -56,6 +56,7 @@ module Models {
             key:string;
         }
 
+        //TODO: Rename to IAccount
         export interface IAccountResponse {
             token:string;
             player:IPlayer;
