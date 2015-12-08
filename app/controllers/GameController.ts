@@ -5,11 +5,13 @@ module Controllers {
         Forfeit();
         MakeMove(x:number,y:number);
         GetSizeArray(size:number);
+        GetFieldValue(x:number,y:number):string
         Game:Models.Messages.IGame;
         CanMove:boolean;
         Player1Class:string;
         Player2Class:string;
         OtherPlayer:string;
+        Field:any;
     }
 
     class GameController {
@@ -46,6 +48,7 @@ module Controllers {
 
             $scope.Forfeit = this.Forfeit;
             $scope.MakeMove = this.MakeMove;
+            $scope.GetFieldValue = this.GetFieldValue;
             $scope.GetSizeArray = this.GetSizeArray;
             $scope.$on($constants.Events.Destroy, this.CancelRefresh);
 
@@ -79,6 +82,19 @@ module Controllers {
 
         }
 
+        private GetFieldValue = (x:number, y:number):string => {
+
+            if(this.$scope.Field == undefined)
+                return "";
+
+            var value = this.$scope.Field[x][y];
+
+            if(value == "")
+                return "-";
+
+            return value;
+        };
+
         private GetSizeArray = (size:number) => {
             return[0,1,2,3,4,5,6,7,8,9];
         };
@@ -103,7 +119,8 @@ module Controllers {
             this.$scope.CanMove = this.GetCanMove(game);
             this.$scope.OtherPlayer = game.player1 == this.currentPlayer.username ? game.player2 : game.player1;
             this.$scope.Player1Class = game.activePlayer == "player1" ? "player-active" : "";
-            this.$scope.Player2Class = game.activePlayer == "player2" ? "player-active" : "";
+            this.$scope.Player2Class = game.activePlayer == "player2" ? "active" : "";
+            this.$scope.Field = JSON.parse(game.field);
         }
 
         private GetCanMove = (game:Models.Messages.IGame) => {

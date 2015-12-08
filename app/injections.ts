@@ -55,7 +55,6 @@ module $injections{
         export var GameHandler: string = 'GameHandler';
         export var ApiSettingsHandler: string = 'ApiSettingsHandler';
         export var ApiSettingsProvider: string = 'ApiSettingsProvider';
-        export var Converter: string = 'Converter';
         export var Strings: string = 'Strings';
     }
 

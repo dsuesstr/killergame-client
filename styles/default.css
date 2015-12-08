@@ -8921,7 +8921,8 @@ table, th, td {
   font-size: 150%; }
 
 .action:hover {
-  cursor: pointer; }
+  cursor: pointer;
+  color: #779ECB; }
 
 .item-ranking:hover {
   cursor: pointer;

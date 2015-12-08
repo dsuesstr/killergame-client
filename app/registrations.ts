@@ -24,7 +24,7 @@ class RegisterComponents {
         new Services.PlayerProviderRegister(application);
         new Services.GameProviderRegister(application);
         new Services.GameHandlerRegister(application);
-        new Services.ConverterRegister(application);
+
         new Services.ApiSettingsHandlerRegister(application);
         new Services.UrlsRegister(application);
         Services.StringsRegister(application);

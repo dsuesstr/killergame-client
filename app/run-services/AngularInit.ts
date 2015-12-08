@@ -2,7 +2,7 @@
 class AngularInit {
     constructor() {
         angular.module($injections.Constants.AppName)
-            .constant($injections.Constants.ApiHost, "https://killergame-rest.herokuapp.com/") //
+            .constant($injections.Constants.ApiHost, "http://localhost:3000/") //
             .constant($injections.Constants.$Enumerable, (<any>window).Enumerable)
             .constant($injections.Plugins.NetworkConnectionPlugin, this.getNetworkConnectionPlugin())
             .constant($injections.Constants.$JQuery, $)

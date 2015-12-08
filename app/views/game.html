@@ -20,8 +20,7 @@
 
         <div class="game-field">
             <div class="row" ng-repeat="x in GetSizeArray(Size)">
-                <div class="game-field-stone col-10" ng-repeat="y in GetSizeArray(Size)" ng-click="MakeMove(x,y)">
-                    {{x}}, {{y}}
+                <div class="game-field-stone col-10" ng-repeat="y in GetSizeArray(Size)" ng-click="MakeMove(x,y)" ng-bind="GetFieldValue(x,y)">
                 </div>
             </div>
         </div>

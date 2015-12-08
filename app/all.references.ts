@@ -29,7 +29,6 @@
 /// <reference path="services/GameHandler.ts" />
 /// <reference path="services/ApiSettingsHandler.ts" />
 /// <reference path="services/LocalStorage.ts" />
-/// <reference path="services/Converter.ts" />
 /// <reference path="services/OpenLink.ts" />
 /// <reference path="services/Strings.ts" />
 /// <reference path="directives/Ranking.ts" />
