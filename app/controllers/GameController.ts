@@ -1,17 +1,24 @@
 /// <reference path='../min.references.ts'/>
 module Controllers {
 
+    class Stone {
+        X:number;
+        Y:number;
+        IsPlayer1:boolean;
+        IsPlayer2:boolean;
+    }
+
     interface IGameScope extends angular.IScope {
         Forfeit();
         MakeMove(x:number,y:number);
         GetSizeArray(size:number);
-        GetFieldValue(x:number,y:number):string
+        GetFieldValue(x:number,y:number):Stone
         Game:Models.Messages.IGame;
         CanMove:boolean;
         Player1Class:string;
         Player2Class:string;
         OtherPlayer:string;
-        Field:any;
+        Field:Array<Array<Stone>>;
     }
 
     class GameController {
@@ -79,20 +86,15 @@ module Controllers {
         }
 
         private MakeMoveFailed = (game:Models.Messages.IGame) => {
-
+            this.Refresh();
+            this.intervalPromise = this.$interval(this.Refresh, $constants.Intervals.GameRefreshInterval);
         }
 
-        private GetFieldValue = (x:number, y:number):string => {
-
+        private GetFieldValue = (x:number, y:number):Stone => {
             if(this.$scope.Field == undefined)
-                return "";
+                return null;
 
-            var value = this.$scope.Field[x][y];
-
-            if(value == "")
-                return "-";
-
-            return value;
+            return this.$scope.Field[x][y];
         };
 
         private GetSizeArray = (size:number) => {
@@ -104,8 +106,6 @@ module Controllers {
         }
 
         private GetGameSuccess = (game:Models.Messages.IGame) => {
-
-
             this.SetGameInfo(game);
             this.$ionicLoading.hide();
         }
@@ -120,7 +120,30 @@ module Controllers {
             this.$scope.OtherPlayer = game.player1 == this.currentPlayer.username ? game.player2 : game.player1;
             this.$scope.Player1Class = game.activePlayer == "player1" ? "player-active" : "";
             this.$scope.Player2Class = game.activePlayer == "player2" ? "active" : "";
-            this.$scope.Field = JSON.parse(game.field);
+            this.$scope.Field = this.SetField(game.field);
+        }
+
+        private SetField = (fieldString:string):Array<Array<Stone>> => {
+            var fieldArray = JSON.parse(fieldString);
+            var field = new Array<Array<Stone>>();
+
+            for(var x = 0; x < fieldArray.length; x++) {
+
+                var row = new Array<Stone>();
+
+                for(var y = 0; y < fieldArray[x].length; y++) {
+                    var stone = new Stone();
+                    stone.IsPlayer1 = fieldArray[x][y] == "x";
+                    stone.IsPlayer2 = fieldArray[x][y] == "o";
+                    stone.X = x;
+                    stone.Y = y;
+                    row.push(stone);
+                }
+
+                field.push(row);
+            }
+
+            return field;
         }
 
         private GetCanMove = (game:Models.Messages.IGame) => {

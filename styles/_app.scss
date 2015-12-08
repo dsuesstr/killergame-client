@@ -52,20 +52,12 @@ table, th, td {
 .kg-content {
     padding: 10px;
 }
-
-.game-field-stone {
-}
-
-.game-field-stone:hover {
-    background: red;
-}
-
 .input-readonly {
     background: #fff;
 }
 
 .player-active {
-    color:blue;
+    color:$calm;
 }
 
 .icon-large {
@@ -82,3 +74,15 @@ table, th, td {
     background: $stable;
 }
 
+.stone-free:hover {
+    background: $dark;
+    cursor:pointer;
+}
+
+.stone-player-1 {
+    background-color: $energized;
+}
+
+.stone-player-2 {
+    background-color: $balanced;
+}

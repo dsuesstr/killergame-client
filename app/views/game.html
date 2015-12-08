@@ -20,7 +20,12 @@
 
         <div class="game-field">
             <div class="row" ng-repeat="x in GetSizeArray(Size)">
-                <div class="game-field-stone col-10" ng-repeat="y in GetSizeArray(Size)" ng-click="MakeMove(x,y)" ng-bind="GetFieldValue(x,y)">
+                <div class=" col-10" ng-repeat="y in GetSizeArray(Size)" >
+                    <div ng-repeat="stone in [GetFieldValue(x,y)]">
+                        <div class="stone-player-1" ng-if="stone.IsPlayer1">&nbsp;</div>
+                        <div class="stone-player-2" ng-if="stone.IsPlayer2">&nbsp;</div>
+                        <div class="stone-free" ng-if="!stone.IsPlayer1 && !stone.IsPlayer2" ng-click="MakeMove(x,y)">&nbsp;</div>
+                    </div>
                 </div>
             </div>
         </div>

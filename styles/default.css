@@ -8908,14 +8908,11 @@ table, th, td {
 .kg-content {
   padding: 10px; }
 
-.game-field-stone:hover {
-  background: red; }
-
 .input-readonly {
   background: #fff; }
 
 .player-active {
-  color: blue; }
+  color: #779ECB; }
 
 .icon-large {
   font-size: 150%; }
@@ -8927,5 +8924,15 @@ table, th, td {
 .item-ranking:hover {
   cursor: pointer;
   background: #f8f8f8; }
+
+.stone-free:hover {
+  background: #444;
+  cursor: pointer; }
+
+.stone-player-1 {
+  background-color: #ffc900; }
+
+.stone-player-2 {
+  background-color: #33cd5f; }
 
 /*# sourceMappingURL=default.css.map */
