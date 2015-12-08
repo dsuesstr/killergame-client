@@ -64,6 +64,20 @@ table, th, td {
     background: #fff;
 }
 
-.active {
+.player-active {
     color:blue;
 }
+
+.icon-large {
+    font-size: 150%;
+}
+
+.action:hover {
+    cursor:pointer;
+}
+
+.item-ranking:hover {
+    cursor:pointer;
+    background: $stable;
+}
+

@@ -102,8 +102,8 @@ module Controllers {
             this.$scope.Game = game;
             this.$scope.CanMove = this.GetCanMove(game);
             this.$scope.OtherPlayer = game.player1 == this.currentPlayer.username ? game.player2 : game.player1;
-            this.$scope.Player1Class = game.activePlayer == "player1" ? "active" : "";
-            this.$scope.Player2Class = game.activePlayer == "player2" ? "active" : "";
+            this.$scope.Player1Class = game.activePlayer == "player1" ? "player-active" : "";
+            this.$scope.Player2Class = game.activePlayer == "player2" ? "player-active" : "";
         }
 
         private GetCanMove = (game:Models.Messages.IGame) => {

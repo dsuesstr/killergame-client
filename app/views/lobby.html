@@ -15,8 +15,6 @@
                     <div class="col-10 text-right"></div>
                     <div class="col-10 text-right"></div>
                     <div class="col-10 text-right"></div>
-                    <div class="col-10 text-right"></div>
-                    <div class="col-10 text-right"></div>
                 </div>
             </ion-item>
             <ion-item ng-repeat="game in Model.AvailableGames">
@@ -24,21 +22,15 @@
                     <div class="col" ng-bind="game.player1"></div>
                     <div class="col" ng-bind="game.player2"></div>
                     <div class="col-10 text-right">
-                        <i ng-if="!game.canAccept && !game.canStart" class="icon ion-clock"></i>
+                        <i ng-if="!game.canAccept && !game.canStart" class="icon ion-clock icon-large"></i>
                     </div>
                     <div class="col-10 text-right">
-                    <a ng-click="DeleteGame(game)" ng-if="game.canAccept"><i ng-if="game.canAccept" class="icon ion-thumbsdown"></i></a>
+                        <a ng-click="AcceptGame(game)" ng-if="game.canAccept" class="action"><i class="icon ion-checkmark-circled icon-large"></i></a>
+                        <a ng-click="StartGame(game)" ng-if="game.canStart" class="action"><i class="icon ion-arrow-right-a icon-large"></i></a>
                     </div>
                     <div class="col-10 text-right">
-                        <a ng-click="AcceptGame(game)" ng-if="game.canAccept"><i ng-if="game.canAccept" class="icon ion-thumbsup"></i></a>
-
-                    </div>
-                    <div class="col-10 text-right">
-                        <a ng-click="StartGame(game)" ng-if="game.canStart"><i class="icon ion-arrow-right-a"></i></a>
-                    </div>
-                    <div class="col-10 text-right">
-
-                        <a ng-click="DeleteGame(game)" ng-if="!game.canAccept"><i class="icon ion-close"></i></a>
+                        <a ng-click="DeleteGame(game)" ng-if="game.canAccept" class="action"><i class="icon ion-close-circled icon-large"></i></a>
+                        <a ng-click="DeleteGame(game)" ng-if="!game.canAccept" class="action"><i class="icon ion-close-circled icon-large"></i></a>
                     </div>
                 </div>
             </ion-item>
@@ -60,10 +52,10 @@
                 <div class="row">
                     <div class="col" ng-bind="player.username"></div>
                     <div class="col-10 text-right">
-                        <a ng-click="ShowPlayer(player)"><i class="icon ion-person"></i></a>
+                        <a ng-click="ShowPlayer(player)" class="action"><i class="icon ion-person icon-large"></i></a>
                     </div>
                     <div class="col-10 text-right">
-                        <a ng-click="ChallengePlayer(player)"><i class="icon ion-ios-game-controller-a"></i></a>
+                        <a ng-click="ChallengePlayer(player)" class="action"><i class="icon ion-ios-game-controller-a icon-large"></i></a>
                     </div>
                 </div>
             </ion-item>

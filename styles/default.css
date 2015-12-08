@@ -8914,7 +8914,17 @@ table, th, td {
 .input-readonly {
   background: #fff; }
 
-.active {
+.player-active {
   color: blue; }
+
+.icon-large {
+  font-size: 150%; }
+
+.action:hover {
+  cursor: pointer; }
+
+.item-ranking:hover {
+  cursor: pointer;
+  background: #f8f8f8; }
 
 /*# sourceMappingURL=default.css.map */
