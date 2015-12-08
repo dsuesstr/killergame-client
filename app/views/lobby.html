@@ -16,6 +16,7 @@
                     <div class="col-10 text-right"></div>
                     <div class="col-10 text-right"></div>
                     <div class="col-10 text-right"></div>
+                    <div class="col-10 text-right"></div>
                 </div>
             </ion-item>
             <ion-item ng-repeat="game in Model.AvailableGames">
@@ -29,12 +30,14 @@
                     <a ng-click="DeleteGame(game)" ng-if="game.canAccept"><i ng-if="game.canAccept" class="icon ion-thumbsdown"></i></a>
                     </div>
                     <div class="col-10 text-right">
-
                         <a ng-click="AcceptGame(game)" ng-if="game.canAccept"><i ng-if="game.canAccept" class="icon ion-thumbsup"></i></a>
 
                     </div>
                     <div class="col-10 text-right">
-                        <a ng-click="StartGame(game)" ng-if="game.canStart"><i class="icon ion-clock"></i></a>
+                        <a ng-click="StartGame(game)" ng-if="game.canStart"><i class="icon ion-arrow-right-a"></i></a>
+                    </div>
+                    <div class="col-10 text-right">
+
                         <a ng-click="DeleteGame(game)" ng-if="!game.canAccept"><i class="icon ion-close"></i></a>
                     </div>
                 </div>

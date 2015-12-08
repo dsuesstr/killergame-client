@@ -1,5 +1,31 @@
 <ion-view clear-history align-title="center" view-title="Game">
     <ion-content class="kg-content"  scroll="false">
         <h1>Game</h1>
+        <div class="row">
+            <div class="col-33">
+                <h2 ng-bind="Game.player1" ng-class="Player1Class"></h2>
+            </div>
+            <div class="col-33 text-center">
+                <h2>vs.</h2>
+            </div>
+            <div class="col-33 text-right">
+                <h2 ng-bind="Game.player2" ng-class="Player2Class"></h2>
+            </div>
+        </div>
+        <div class="row">
+            <h3>
+                It's  <span ng-if="CanMove">your</span> <span ng-hide="CanMove" ng-bind="OtherPlayer"></span> turn
+            </h3>
+        </div>
+
+        <div class="game-field">
+            <div class="row" ng-repeat="x in GetSizeArray(Size)">
+                <div class="game-field-stone col-10" ng-repeat="y in GetSizeArray(Size)" ng-click="MakeMove(x,y)">
+                    {{x}}, {{y}}
+                </div>
+            </div>
+        </div>
+        <span ng-bind="Game.status"></span>
+        <button class="button button-block button-calm" ng-click="Forfeit()">Forfeit Game</button>
     </ion-content>
 </ion-view>

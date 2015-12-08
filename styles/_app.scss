@@ -53,13 +53,17 @@ table, th, td {
     padding: 10px;
 }
 
-.stone {
+.game-field-stone {
 }
 
-.stone:hover {
+.game-field-stone:hover {
     background: red;
 }
 
 .input-readonly {
     background: #fff;
+}
+
+.active {
+    color:blue;
 }

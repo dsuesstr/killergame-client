@@ -6,12 +6,14 @@ module Services {
     }
 
     //change to IApiSettingsHandler
-    export interface IApiSettingsProvider {
+    export interface IApiSettingsHandler {
         GetApiParameters():any;
         GetSecureApiParameters():any;
         HasToken():boolean;
         RemoveToken();
         SetToken(token:string);
+        VerifyParams(params:any):boolean;
+        CheckResponse(error:Models.Messages.IError):boolean;
     }
 
     export interface IConverter {
@@ -25,14 +27,15 @@ module Services {
     export interface INavigation {
         Login();
         Lobby();
+        Game(game:Models.Messages.IGame);
         Player(player:Models.Messages.IPlayer);
     }
 
     export interface ILocalStorage {
-        get(key: string): any;
-        save(key: string, data: any): void;
-        remove(key: string): void;
-        clearAll(): void;
+        Get(key: string): any;
+        Save(key: string, data: any): void;
+        Remove(key: string): void;
+        ClearAll(): void;
     }
 
     export interface IUrls {
@@ -47,8 +50,8 @@ module Services {
 
     export interface IGameHandler {
         CreateGame(model:Models.Messages.ICreateGame):angular.IPromise<Models.Messages.IGame>;
-        MakeMove(gameId:string, x:number, y:number):angular.IPromise<Models.Messages.IGame[]>;
-        Forfeit(gameId:string):angular.IPromise<Models.Messages.IGame[]>;
+        MakeMove(gameId:string, x:number, y:number):angular.IPromise<Models.Messages.IGame>;
+        Forfeit(gameId:string):angular.IPromise<Models.Messages.IGame>;
         DeleteGame(gameId:string):angular.IPromise<void>;
         AcceptGame(gameId:string):angular.IPromise<Models.Messages.IGame>;
     }
@@ -80,7 +83,7 @@ module Services {
 
 
     //TODO: change to IAccountHandler
-    export interface ILoginProvider {
+    export interface IAccountHandler {
         Login(model:Models.Messages.ILogin):angular.IPromise<Models.Messages.IPlayer>;
         Register(model:Models.Messages.IRegister):angular.IPromise<Models.Messages.IPlayer>;
         IsLoggedIn():boolean;

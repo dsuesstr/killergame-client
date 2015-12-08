@@ -38,7 +38,7 @@ module Controllers {
             $injections.Services.Navigation,
             $injections.Ionic.$ionicLoading,
             $injections.Services.Logger,
-            $injections.Services.LoginProvider,
+            $injections.Services.AccountHandler,
             $injections.Services.Strings
         ];
 
@@ -46,10 +46,10 @@ module Controllers {
                     private navigation: Services.INavigation,
                     private $ionicLoading: any,
                     private logger: Services.ILogger,
-                    private loginProvider: Services.ILoginProvider,
+                    private accountHandler: Services.IAccountHandler,
                     private strings: Services.IStrings) {
 
-            if(this.loginProvider.IsLoggedIn()) {
+            if(this.accountHandler.IsLoggedIn()) {
                 this.logger.LogSuccess(this.strings("client_login_001"), null, this, true);
                 this.navigation.Lobby();
             }
@@ -76,7 +76,7 @@ module Controllers {
                 template: this.strings("client_check_001")
             });
 
-            this.loginProvider.Login(login).then(this.OnLoginSuccessful, this.OnError);
+            this.accountHandler.Login(login).then(this.OnLoginSuccessful, this.OnError);
         };
 
         private Register = () => {
@@ -92,7 +92,7 @@ module Controllers {
                 template: this.strings("client_check_001")
             });
 
-            this.loginProvider.Register(register).then(this.OnRegisterSuccessful, this.OnError);
+            this.accountHandler.Register(register).then(this.OnRegisterSuccessful, this.OnError);
         };
 
         private IsFormValid = () => {

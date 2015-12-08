@@ -7,40 +7,47 @@ module Controllers {
   }
 
   class MenuController {
-    static $inject = [
-      $injections.Angular.$Scope,
-      $injections.Services.Logger,
-      $injections.Services.Navigation,
-      $injections.Services.LoginProvider
-    ];
+      static $inject = [
+          $injections.Angular.$Scope,
+          $injections.Angular.$Window,
+          $injections.Services.Logger,
+          $injections.Services.Navigation,
+          $injections.Services.AccountHandler
+      ];
 
-      constructor(private $scope: IMenuScope,
-                  private logger: Services.ILogger,
-                  private navigation: Services.INavigation,
-                  private loginProvider: Services.ILoginProvider) {
+      constructor(private $scope:IMenuScope,
+                  private $window:angular.IWindowService,
+                  private logger:Services.ILogger,
+                  private navigation:Services.INavigation,
+                  private accountHandler:Services.IAccountHandler) {
 
-          if(!this.loginProvider.IsLoggedIn()) {
+          if (!this.accountHandler.IsLoggedIn()) {
               this.HandleAuthenticationError();
           }
 
           $scope.Logout = this.Logout;
           $scope.$on($constants.Events.Kg.AuthenticationError, this.HandleAuthenticationError);
-    }
+          $scope.$on($constants.Events.Destroy, this.DestroyMenu);
+      }
+
+      private DestroyMenu = () => {
+          console.log("Destroymenu");
+      }
 
       private HandleAuthenticationError = () => {
           this.Logout("Please login first", true)
       }
 
-    private Logout = (message:string, isWarning:boolean) => {
-        if(isWarning) {
-            this.logger.LogWarning(message, null, this, true);
-        } else {
-            this.logger.Log(message, null, this, true);
-        }
+      private     Logout = (message:string, isWarning:boolean) => {
+          if (isWarning) {
+              this.logger.LogWarning(message, null, this, true);
+          } else {
+              this.logger.Log(message, null, this, true);
+          }
 
-        this.loginProvider.Logout();
-        this.navigation.Login();
-    }
+          this.accountHandler.Logout();
+          this.navigation.Login();
+      }
   }
 
   export class MenuControllerRegister {

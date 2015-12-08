@@ -9,7 +9,7 @@ module Services {
             $injections.Angular.$QService,
             $injections.Angular.$RootScope,
             $injections.Services.Logger,
-            $injections.Services.ApiSettingsProvider
+            $injections.Services.ApiSettingsHandler
         ];
 
         constructor(private urls:Services.IUrls,
@@ -17,17 +17,15 @@ module Services {
                     private $q:angular.IQService,
                     private $rootScope:angular.IRootScopeService,
                     private logger:Services.ILogger,
-                    private apiSettingsProvider:Services.IApiSettingsProvider) {
+                    private apiSettingsHandler:Services.IApiSettingsHandler) {
         }
 
         public GetGame = (gameId:string):angular.IPromise<Models.Messages.IGame> => {
-            var url = this.urls.Games + "/" + gameId;
+            var url = this.urls.Games() + "/" + gameId;
             var defer = this.$q.defer<Models.Messages.IGame>();
-            var params = this.apiSettingsProvider.GetSecureApiParameters()
+            var params = this.apiSettingsHandler.GetSecureApiParameters()
 
-            //TODO: check in a central way (no duplicates por favor)
-            if(params == null) {
-                this.BroadcastAuthenticationError();
+            if(!this.apiSettingsHandler.VerifyParams(params)) {
                 defer.reject(null);
                 return defer.promise;
             }
@@ -37,12 +35,7 @@ module Services {
                     defer.resolve(response.game);
                 })
                 .error((error:Models.Messages.IError, status: number) => {
-                    //TODO: check in a central way (no duplicates por favor)
-                    this.logger.LogError(error.key, error, this, false);
-                    if(error.key === "player_auth_0001" || error.key == "player_auth_0002") {
-                        this.BroadcastAuthenticationError();
-                    }
-
+                    this.apiSettingsHandler.CheckResponse(error);
                     defer.reject(error);
                 });
 
@@ -85,11 +78,9 @@ module Services {
 
         private GetGameList = (url:string):angular.IPromise<Models.Messages.IGame[]> => {
             var defer = this.$q.defer<Models.Messages.IGame[]>();
-            var params = this.apiSettingsProvider.GetSecureApiParameters()
+            var params = this.apiSettingsHandler.GetSecureApiParameters()
 
-            //TODO: check in a central way (no duplicates por favor)
-            if(params == null) {
-                this.BroadcastAuthenticationError();
+            if(!this.apiSettingsHandler.VerifyParams(params)) {
                 defer.reject(null);
                 return defer.promise;
             }
@@ -99,20 +90,12 @@ module Services {
                     defer.resolve(response.games);
                 })
                 .error((error:Models.Messages.IError, status: number) => {
-                    //TODO: check in a central way (no duplicates por favor)
-                    this.logger.LogError(error.key, error, this, false);
-                    if(error.key === "player_auth_0001" || error.key == "player_auth_0002") {
-                        this.BroadcastAuthenticationError();
-                    }
+                    this.apiSettingsHandler.CheckResponse(error);
 
                     defer.reject(error);
                 });
 
             return defer.promise;
-        }
-
-        private BroadcastAuthenticationError = () => {
-            this.$rootScope.$broadcast($constants.Events.Kg.AuthenticationError)
         }
     }
 

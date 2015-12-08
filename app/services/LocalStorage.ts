@@ -4,27 +4,26 @@ module Services {
 
     class LocalStorage implements ILocalStorage {
 
-        get(key:string):any {
+        Get(key:string):any {
             var value = localStorage.getItem(key);
             return  JSON.parse(value);
         }
 
-        save(key:string, data):void {
+        Save(key:string, data):void {
             localStorage.setItem(key, JSON.stringify(data));
         }
 
-        remove(key:string):void {
+        Remove(key:string):void {
             localStorage.removeItem(key);
         }
 
-        clearAll():void {
+        ClearAll():void {
             localStorage.clear();
         }
     }
 
     export class LocalStorageRegister{
-        constructor($module:angular.IModule)
-        {
+        constructor($module:angular.IModule) {
             $module.service($injections.Services.LocalStorage, LocalStorage);
         }
     }

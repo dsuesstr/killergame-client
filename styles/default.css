@@ -8908,10 +8908,13 @@ table, th, td {
 .kg-content {
   padding: 10px; }
 
-.stone:hover {
+.game-field-stone:hover {
   background: red; }
 
 .input-readonly {
   background: #fff; }
+
+.active {
+  color: blue; }
 
 /*# sourceMappingURL=default.css.map */

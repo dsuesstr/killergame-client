@@ -8,7 +8,7 @@ module Services {
             $injections.Angular.$QService,
             $injections.Angular.$RootScope,
             $injections.Services.Logger,
-            $injections.Services.ApiSettingsProvider,
+            $injections.Services.ApiSettingsHandler,
             $injections.Services.LocalStorage
         ];
 
@@ -17,14 +17,14 @@ module Services {
                     private $q:angular.IQService,
                     private $rootScope:angular.IRootScopeService,
                     private logger:Services.ILogger,
-                    private apiSettingsProvider:Services.IApiSettingsProvider,
+                    private apiSettingsHandler:Services.IApiSettingsHandler,
                     private localStorage:Services.ILocalStorage) {
         }
 
         public GetPlayer = (playerId:string):angular.IPromise<Models.Messages.IPlayer> => {
             var url = this.urls.Register() + "/" + playerId;
             var defer = this.$q.defer<Models.Messages.IPlayer>();
-            var params = this.apiSettingsProvider.GetApiParameters();
+            var params = this.apiSettingsHandler.GetApiParameters();
 
             this.$http.get(url, params)
                 .success((response: any) => {
@@ -54,15 +54,21 @@ module Services {
         public UpdateCurrentPlayer = (data:Models.Messages.IPlayerUpdate):angular.IPromise<Models.Messages.IPlayer> => {
             var player = this.GetCurrentPlayer();
             var url = this.urls.Register() + "/" + player.playerId;
-            var params = this.apiSettingsProvider.GetSecureApiParameters();
+            var params = this.apiSettingsHandler.GetSecureApiParameters();
             var defer = this.$q.defer<Models.Messages.IPlayer>();
+
+            if(!this.apiSettingsHandler.VerifyParams(params)) {
+                defer.reject(null);
+                return defer.promise;
+            }
 
             this.$http.put(url, data, params)
                 .success((response: any) => {
                     this.SetCurrentPlayer(response.player);
                     defer.resolve(response.player);
                 })
-                .error((data: any, status: number) => {
+                .error((error:Models.Messages.IError, status: number) => {
+                    this.apiSettingsHandler.CheckResponse(error);
                     defer.reject(null);
                 });
 
@@ -70,53 +76,44 @@ module Services {
         }
 
         public SetCurrentPlayer = (player:Models.Messages.IPlayer) => {
-            this.localStorage.save($constants.Keys.PlayerKey, player);
+            this.localStorage.Save($constants.Keys.PlayerKey, player);
         }
 
         public GetCurrentPlayer = ():Models.Messages.IPlayer => {
-            var player = this.localStorage.get($constants.Keys.PlayerKey);
+            var player = this.localStorage.Get($constants.Keys.PlayerKey);
             if(player == undefined || player == null || player == {}) {
-                this.BroadcastAuthenticationError();
+                //TODO: what then
             }
 
             return player;
         }
 
         public RemoveCurrentPlayer = () => {
-            this.localStorage.remove($constants.Keys.PlayerKey);
+            this.localStorage.Remove($constants.Keys.PlayerKey);
         }
 
         private GetPlayersList = (url:string, secure:boolean): angular.IPromise<Models.Messages.IPlayer[]> => {
             var defer = this.$q.defer<Models.Messages.IPlayer[]>();
             var params = secure
-                ? this.apiSettingsProvider.GetSecureApiParameters()
-                : this.apiSettingsProvider.GetApiParameters();
+                ? this.apiSettingsHandler.GetSecureApiParameters()
+                : this.apiSettingsHandler.GetApiParameters();
 
-            if(params == null) {
-                this.BroadcastAuthenticationError();
+            if(!this.apiSettingsHandler.VerifyParams(params)) {
                 defer.reject(null);
                 return defer.promise;
             }
+
             this.$http.get(url, params)
                 .success((response: Models.Messages.IPlayer[]) => {
                     defer.resolve(response);
                 })
                 .error((error:Models.Messages.IError, status: number) => {
-
-                    //TODO: check in a central way (no duplicates por favor)
-                    this.logger.LogError(error.key, error, this, false);
-                    if(error.key === "player_auth_0001" || error.key == "player_auth_0002") {
-                        this.BroadcastAuthenticationError();
-                    }
+                    this.apiSettingsHandler.CheckResponse(error);
 
                     defer.reject(error.key);
                 });
 
             return defer.promise;
-        }
-
-        private BroadcastAuthenticationError = () => {
-            this.$rootScope.$broadcast($constants.Events.Kg.AuthenticationError)
         }
     }
 

@@ -11,7 +11,7 @@ module Services {
             $injections.Ionic.$ionicPopup,
         ];
 
-        constructor(private $rootScope:Framework.IRootScope,
+        constructor(private $rootScope:angular.IRootScopeService,
                     $window:angular.IWindowService,
                     networkConnectionPlugin:Plugins.NetworkConnection.INetworkConnection,
                     $navigator:any,

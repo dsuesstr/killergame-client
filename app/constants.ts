@@ -24,6 +24,11 @@ module $constants
         }
     }
 
+    export module Intervals {
+        export var LobbyRefreshInterval = 5000;
+        export var GameRefreshInterval = 5000;
+    }
+
     export module Keys {
         export var TokenKey:string = "kgToken";
         export var PlayerKey:string = "kgPlayer";

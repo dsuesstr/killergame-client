@@ -7,6 +7,7 @@ class RegisterComponents {
 
         new Controllers.MenuControllerRegister(application);
         new Controllers.LobbyControllerRegister(application);
+        new Controllers.InfoControllerRegister(application);
         new Controllers.PlayerControllerRegister(application);
         new Controllers.RankingControllerRegister(application);
         new Controllers.SettingsControllerRegister(application);
@@ -19,12 +20,12 @@ class RegisterComponents {
         new Services.NavigationRegister(application);
         new Services.ClearHistoryServicesRegister(application);
         new Services.IonicConfigServicesRegister(application);
-        new Services.LoginProviderRegister(application);
+        new Services.AccountHandlerRegister(application);
         new Services.PlayerProviderRegister(application);
         new Services.GameProviderRegister(application);
         new Services.GameHandlerRegister(application);
         new Services.ConverterRegister(application);
-        new Services.ApiSettingsProviderRegister(application);
+        new Services.ApiSettingsHandlerRegister(application);
         new Services.UrlsRegister(application);
         Services.StringsRegister(application);
 

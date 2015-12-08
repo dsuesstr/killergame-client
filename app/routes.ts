@@ -45,7 +45,7 @@ module Routes {
                     }
                 }
             }).state($injections.Routes.GameState, {
-                url: "/game/:id",
+                url: "/game/:gameId",
                 views: {
                     'menuContent': {
                         templateUrl: "app/views/game.html",
@@ -60,7 +60,16 @@ module Routes {
                         controller: $injections.Controllers.RankingController
                     }
                 }
-            }).state($injections.Routes.SettingsState, {
+            }).state($injections.Routes.InfoState, {
+                    url: "/info",
+                    views: {
+                        'menuContent': {
+                            templateUrl: "app/views/info.html",
+                            controller: $injections.Controllers.InfoController
+                        }
+                    }
+                })
+                .state($injections.Routes.SettingsState, {
                 url: "/settings",
                 views: {
                     'menuContent': {
