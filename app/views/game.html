@@ -22,9 +22,15 @@
             <div class="row" ng-repeat="x in GetSizeArray(Size)">
                 <div class=" col-10" ng-repeat="y in GetSizeArray(Size)" >
                     <div ng-repeat="stone in [GetFieldValue(x,y)]">
-                        <div class="stone-player-1" ng-if="stone.IsPlayer1">&nbsp;</div>
-                        <div class="stone-player-2" ng-if="stone.IsPlayer2">&nbsp;</div>
-                        <div class="stone-free" ng-if="!stone.IsPlayer1 && !stone.IsPlayer2" ng-click="MakeMove(x,y)">&nbsp;</div>
+                        <div ng-class="IsCheckerTypeA(x, y) ? 'slot-a' : 'slot-b'" class="slot-occupied" ng-if="stone.IsPlayer1 || stone.IsPlayer2">
+                            <div class="stone-player-1" ng-if="stone.IsPlayer1">&nbsp;</div>
+                            <div class="stone-player-2" ng-if="stone.IsPlayer2">&nbsp;</div>
+                        </div>
+
+                        <div ng-class="IsCheckerTypeA(x, y) ? 'slot-a' : 'slot-b'" class="slot-available" ng-if="!stone.IsPlayer1 && !stone.IsPlayer2" ng-click="MakeMove(x,y)">
+                            <div ng-class="IsCheckerTypeA(x, y) ? 'slot-a' : 'slot-b'"></div>
+                        </div>
+                        <!-- @todo make available who's turn it is (and then use ng-class) -->
                     </div>
                 </div>
             </div>

@@ -50,7 +50,7 @@ table, th, td {
 }
 
 .kg-content {
-    padding: 10px;
+    padding: 5vw;
 }
 .input-readonly {
     background: #fff;
@@ -74,15 +74,75 @@ table, th, td {
     background: $stable;
 }
 
-.stone-free:hover {
-    background: $dark;
-    cursor:pointer;
+// playing field styles
+$field__stone_player1_border: #D0A600;
+$field__stone_player1_inner: #7F6100;
+$field__stone_player1_outer: #FFC900;
+$field__stone_shadow: 1px 1px 6px 1px rgba(0,0,0,0.5);
+
+$field__available_a: #D7D7D7;
+$field__available_b: #E3E3E3;
+
+$field__stone_diameter: 9vw;
+
+.game-field {
+    width: 90vw;
+    .col-10 {
+        // adapting ionic's classes for killergame's needs
+        width: $field__stone_diameter;
+        height: $field__stone_diameter;
+    }
+}
+
+// adapting ionic's classes for killergame's needs
+.row + .row {
+    margin-top: 0;
+}
+
+.slot-a {
+    background-color: $field__available_a;
+}
+
+.slot-b {
+    background-color: $field__available_b;
+}
+
+.slot-available {
+    div { //
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+
+        width: $field__stone_diameter;
+        height: $field__stone_diameter;
+    }
+    &:hover {
+        div {
+            background: $dark;
+            cursor: cell;
+
+            border-radius: $field__stone_diameter / 2;
+        }
+    }
 }
 
 .stone-player-1 {
-    background-color: $energized;
+    border-radius: $field__stone_diameter / 2;
+    border: 2px solid $field__stone_player1_border; //
+    // background-color: $energized;
+    background: radial-gradient(ellipse at center, $field__stone_player1_inner 1%, $field__stone_player1_inner 25%, $field__stone_player1_outer 100%);
+    box-shadow: $field__stone_shadow;
+    cursor: not-allowed;
+
+    width: $field__stone_diameter;
+    height: $field__stone_diameter;
 }
 
 .stone-player-2 {
     background-color: $balanced;
+    border-radius: 23px;
+    cursor: not-allowed;
+
+    width: $field__stone_diameter;
+    height: $field__stone_diameter;
 }

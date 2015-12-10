@@ -12,6 +12,7 @@ module Controllers {
         Forfeit();
         MakeMove(x:number,y:number);
         GetSizeArray(size:number);
+        IsCheckerTypeA(x:number,y:number);
         GetFieldValue(x:number,y:number):Stone
         Game:Models.Messages.IGame;
         CanMove:boolean;
@@ -57,6 +58,7 @@ module Controllers {
             $scope.MakeMove = this.MakeMove;
             $scope.GetFieldValue = this.GetFieldValue;
             $scope.GetSizeArray = this.GetSizeArray;
+            $scope.IsCheckerTypeA = this.IsCheckerTypeA;
             $scope.$on($constants.Events.Destroy, this.CancelRefresh);
 
             this.intervalPromise = this.$interval(this.Refresh, $constants.Intervals.GameRefreshInterval);
@@ -99,6 +101,19 @@ module Controllers {
 
         private GetSizeArray = (size:number) => {
             return[0,1,2,3,4,5,6,7,8,9];
+        };
+
+        /**
+         * returns true if the modulo operation of both given values is equal
+         * is used to "checker" the field
+         *
+         * @author Julian Mollik <jule@creative-coding.net>
+         * @param {number} x
+         * @param {number} y
+         * @returns {boolean}
+         */
+        private IsCheckerTypeA = (x:number, y:number) => {
+            return (x % 2 === y % 2);
         };
 
         private Refresh = () => {
