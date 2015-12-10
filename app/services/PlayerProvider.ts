@@ -33,21 +33,21 @@ module Services {
                 });
 
             return defer.promise;
-        }
+        };
 
         public GetAllPlayers = (listParams:Models.IListParams) : angular.IPromise<Models.Messages.IPlayer[]> => {
             var url = this.urls.Register();
             url += "/limit/" + listParams.Limit + "/offset/" + listParams.Offset + "/sort/" + listParams.SortColumn + "/" + listParams.SortDirection;
 
             return this.GetPlayersList(url, false);
-        }
+        };
 
         public GetAvailablePlayers = (listParams:Models.IListParams) : angular.IPromise<Models.Messages.IPlayer[]> => {
 
             var url = this.urls.Players();
             url += "/available/limit/" + listParams.Limit + "/offset/" + listParams.Offset + "/sort/" + listParams.SortColumn + "/" + listParams.SortDirection;
             return this.GetPlayersList(url, true);
-        }
+        };
 
         public UpdateCurrentPlayer = (data:Models.Messages.IPlayerUpdate):angular.IPromise<Models.Messages.IPlayer> => {
             var player = this.GetCurrentPlayer();
@@ -71,11 +71,11 @@ module Services {
                 });
 
             return defer.promise;
-        }
+        };
 
         public SetCurrentPlayer = (player:Models.Messages.IPlayer) => {
             this.localStorage.Save($constants.Keys.PlayerKey, player);
-        }
+        };
 
         public GetCurrentPlayer = ():Models.Messages.IPlayer => {
             var player = this.localStorage.Get($constants.Keys.PlayerKey);
@@ -84,11 +84,11 @@ module Services {
             }
 
             return player;
-        }
+        };
 
         public RemoveCurrentPlayer = () => {
             this.localStorage.Remove($constants.Keys.PlayerKey);
-        }
+        };
 
         private GetPlayersList = (url:string, secure:boolean): angular.IPromise<Models.Messages.IPlayer[]> => {
             var defer = this.$q.defer<Models.Messages.IPlayer[]>();

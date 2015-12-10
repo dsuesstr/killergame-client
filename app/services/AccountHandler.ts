@@ -22,23 +22,23 @@ module Services {
 
         public IsLoggedIn = ():boolean => {
             return this.apiSettingsHandler.HasToken();
-        }
+        };
 
         public Register = (model:Models.Messages.IRegister):angular.IPromise<Models.Messages.IPlayer> => {
 
             var url = this.urls.Register();
             return this.PostTokenRequest(url, model);
-        }
+        };
 
         public Login = (model:Models.Messages.ILogin):angular.IPromise<Models.Messages.IPlayer> => {
             var url = this.urls.Login();
             return this.PostTokenRequest(url, model);
-        }
+        };
 
         public Logout = () => {
             this.playerProvider.RemoveCurrentPlayer();
             this.apiSettingsHandler.RemoveToken();
-        }
+        };
 
         private PostTokenRequest = (url:string, data:any) :angular.IPromise<Models.Messages.IPlayer> => {
 
@@ -53,13 +53,11 @@ module Services {
                 })
                 .error((data:Models.Messages.IError, status: number) => {
                     this.apiSettingsHandler.RemoveToken();
-                    defer.reject(data.key);
+                    defer.reject(data);
                 });
 
             return defer.promise;
         }
-
-
     }
 
     export class AccountHandlerRegister {

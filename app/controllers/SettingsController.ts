@@ -50,7 +50,7 @@ module Controllers {
 
         private IsPasswordRequired = () => {
             return this.$scope.Model.OldPassword !== "" ||  this.$scope.Model.NewPassword !== "" ||  this.$scope.Model.NewPassword2 !== "";
-        }
+        };
 
         private IsFormValid = () => {
             if(!this.$scope.Model.SettingsForm.$valid) {
@@ -62,7 +62,7 @@ module Controllers {
             }
 
             return true;
-        }
+        };
 
         private Save = () => {
 
@@ -76,11 +76,11 @@ module Controllers {
             }
 
             this.playerProvider.UpdateCurrentPlayer(playerData).then(this.OnSaveSuccess, this.OnSaveFailed);
-        }
+        };
 
         private OnSaveSuccess = (player:Models.Messages.IPlayer) => {
             this.logger.LogSuccess(this.strings("client_settins_001"), null, this, true);
-        }
+        };
 
         private OnSaveFailed = (player:Models.Messages.IPlayer) => {
             this.logger.LogError(this.strings("client_settins_002"), null, this, true);

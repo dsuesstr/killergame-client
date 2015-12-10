@@ -8,8 +8,8 @@ module Controllers {
     }
 
     class LobbyModel {
-        AvailablePlayers:Models.Messages.IPlayer[]
-        AvailableGames:Models.Messages.IGame[]
+        AvailablePlayers:Models.Messages.IPlayer[];
+        AvailableGames:Models.Messages.IGame[];
         CurrentPlayer:Models.Messages.IPlayer
     }
 
@@ -70,23 +70,23 @@ module Controllers {
 
         private CancelRefresh = () => {
             this.$interval.cancel(this.intervalPromise);
-        }
+        };
 
         private ShowPlayer = (player:Models.Messages.IPlayer) => {
             this.navigation.Player(player);
-        }
+        };
 
         private Refresh = () => {
             this.$q.all([
                 this.playerProvider.GetAvailablePlayers(new Models.ListParams()),
                 this.gameProvider.GetGames()
             ]).then(this.GetDataSuccessful, this.GetDataFailed);
-        }
+        };
 
         private DeleteGame = (game:Models.Messages.IGame) => {
 
             var confirmDelete = this.$ionicPopup.confirm( {
-                title: "Cancel/Decline challenge",
+                title: "Cancel/Decline game",
                 template: "are you sure that you want to cancel this challenge?"
             });
 
@@ -96,13 +96,14 @@ module Controllers {
                     this.gameHandler.DeleteGame(game.gameId);//.then(this.GameUpdateSuccessful, this.GameUpdateFailed)
                 }
             });
-        }
+        };
 
         private StartGame = (game:Models.Messages.IGame) => {
             this.navigation.Game(game);
-        }
+        };
 
         private AcceptGame = (game:Models.Messages.IGame) => {
+            debugger;
             var confirmAccept = this.$ionicPopup.confirm( {
                 title: "Accept challenge",
                 template: "Are you sure that you want to accept this challenge?"
@@ -113,7 +114,7 @@ module Controllers {
                     this.gameHandler.AcceptGame(game.gameId).then(this.GameAcceptSuccessful, this.GameAcceptFailed)
                 }
             });
-        }
+        };
 
         private ChallengePlayer = (player:Models.Messages.IPlayer) => {
 
@@ -132,24 +133,25 @@ module Controllers {
                     this.gameHandler.CreateGame(createGame).then(this.GameUpdateSuccessful, this.GameUpdateFailed)
                 }
             });
-        }
+        };
 
         private GameAcceptSuccessful = (game:Models.Messages.IGame) => {
             this.CancelRefresh();
             this.navigation.Game(game);
-        }
+        };
 
         private GameAcceptFailed = (game:Models.Messages.IGame) => {
             //TODO:
-        }
+        };
 
         private GameUpdateSuccessful = (game:Models.Messages.IGame) => {
+
             this.Refresh();
-        }
+        };
 
         private GameUpdateFailed = (game:Models.Messages.IGame) => {
             //TODO:
-        }
+        };
 
         private GetDataSuccessful = (data:any) => {
             this.$scope.Model.AvailablePlayers = data[0];
@@ -157,7 +159,7 @@ module Controllers {
             this.CheckGames();
             this.$scope.$broadcast($constants.Events.Scroll.RefreshComplete);
 
-        }
+        };
 
         private CheckGames = () => {
             var currentPlayer = this.playerProvider.GetCurrentPlayer();
@@ -169,7 +171,7 @@ module Controllers {
 
                 this.$scope.Model.AvailableGames[i].canStart = this.$scope.Model.AvailableGames[i].status == $constants.Game.States.Ready;
             }
-        }
+        };
 
         private GetDataFailed = (data:any) => {
             this.$scope.Model.AvailablePlayers = null;

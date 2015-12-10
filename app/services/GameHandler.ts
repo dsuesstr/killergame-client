@@ -43,8 +43,7 @@ module Services {
                 });
 
             return defer.promise;
-
-        }
+        };
 
         public Forfeit = (gameId:string):angular.IPromise<Models.Messages.IGame> => {
             var url = this.urls.Games() + "/" + gameId + "/forfeit";
@@ -58,15 +57,14 @@ module Services {
 
             this.$http.put(url, {}, params).success((response:any) => {
                 defer.resolve(response.game);
-            })
-                .error((error:Models.Messages.IError, status: number) => {
+            }).error((error:Models.Messages.IError, status: number) => {
                     this.apiSettingsHandler.CheckResponse(error);
 
                     defer.reject(error);
                 });
 
             return defer.promise;
-        }
+        };
 
         public CreateGame = (model:Models.Messages.ICreateGame):angular.IPromise<Models.Messages.IGame> => {
             var url = this.urls.Games();
@@ -89,7 +87,7 @@ module Services {
                 });
 
             return defer.promise;
-        }
+        };
 
         public DeleteGame = (gameId:string):angular.IPromise<void> => {
             //TODO: handle this
@@ -114,7 +112,7 @@ module Services {
                 });
 
             return defer.promise;
-        }
+        };
 
         public AcceptGame = (gameId:string):angular.IPromise<Models.Messages.IGame> => {
             var url = this.urls.Games() + "/" + gameId + "/accept";
@@ -128,7 +126,6 @@ module Services {
 
             this.$http.put(url, {}, params)
                 .success((response: any) => {
-
                     defer.resolve(response.game);
                 })
                 .error((error:Models.Messages.IError, status: number) => {
@@ -138,10 +135,50 @@ module Services {
                 });
 
             return defer.promise;
-        }
+        };
 
-        private  GetLastMove = (oldField:any, newField:any) => {
+        public GetField = (fieldString:string):Array<Array<Models.Stone>> => {
+            var fieldArray = JSON.parse(fieldString);
+            var field = [];
 
+            for(var x = 0; x < fieldArray.length; x++) {
+
+                var row = [];
+
+                for(var y = 0; y < fieldArray[x].length; y++) {
+                    var stone = new Models.Stone();
+                    stone.IsPlayer1 = fieldArray[x][y] == $constants.Game.Stones.Player1;
+                    stone.IsPlayer2 = fieldArray[x][y] == $constants.Game.Stones.Player2;
+                    stone.X = x;
+                    stone.Y = y;
+                    row.push(stone);
+                }
+
+                field.push(row);
+            }
+            return field;
+        };
+
+        public GetLastMove = (oldField:Array<Array<Models.Stone>>, newField:Array<Array<Models.Stone>>):Models.Stone => {
+
+            for(var x = 0; x < newField.length; x++) {
+                for (var y = 0; y < newField[x].length; y++) {
+                    if (angular.isDefined(oldField)) {
+                        if (newField[x][y] === oldField[x][y]) {
+                            continue;
+                        }
+
+                        return newField[x][y];
+                    }
+                    else {
+                        if(newField[x][y].IsPlayer1 || newField[x][y].IsPlayer2) {
+
+                            return newField[x][y];
+                        }
+                    }
+                }
+            }
+            return null;
         }
     }
 

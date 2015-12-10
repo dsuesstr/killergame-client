@@ -14,15 +14,15 @@ module Services {
 
         public RemoveToken = () => {
             this.localStorage.Remove($constants.Keys.TokenKey);
-        }
+        };
 
         public SetToken = (token:string) => {
             this.localStorage.Save($constants.Keys.TokenKey, token);
-        }
+        };
 
         public HasToken = () => {
             return this.GetToken() != null;
-        }
+        };
 
         public GetApiParameters = ():any => {
             return{ timeout: 1000 };
@@ -41,7 +41,7 @@ module Services {
             };
 
             return params;
-        }
+        };
 
         public VerifyParams = (params):boolean => {
             if(params != null) {
@@ -50,7 +50,7 @@ module Services {
 
             this.BroadcastAuthenticationError();
             return false;
-        }
+        };
 
         public CheckResponse = (error:Models.Messages.IError):boolean => {
             if(error == null) {
@@ -63,14 +63,14 @@ module Services {
             }
 
             return true;
-        }
+        };
 
         private GetToken = ():string => {
             var token = this.localStorage.Get($constants.Keys.TokenKey);
             if(token == undefined || token == "") { return null; }
 
             return token;
-        }
+        };
 
         private BroadcastAuthenticationError = () => {
             this.$rootScope.$broadcast($constants.Events.Kg.AuthenticationError)

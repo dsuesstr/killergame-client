@@ -33,7 +33,6 @@ class RegisterComponents {
         new Filters.DurationFilterRegister(application);
 
         new Directives.RankingDirectiveRegister(application);
-        new Directives.FieldDirectiveRegister(application);
     }
 }
 

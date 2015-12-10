@@ -97,13 +97,13 @@ module Controllers {
 
         private IsFormValid = () => {
             if(!this.$scope.Model.AccountForm.$valid)
-                return false
+                return false;
 
             if(this.$scope.Model.IsRegister)
                 return this.$scope.Model.Password === this.$scope.Model.Password2;
 
             return true;
-        }
+        };
 
         private OnRegisterSuccessful = (player:Models.Messages.IPlayer) => {
             this.$ionicLoading.hide();

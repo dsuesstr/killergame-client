@@ -1,12 +1,6 @@
 /// <reference path='../min.references.ts'/>
 module Controllers {
 
-    class Stone {
-        X:number;
-        Y:number;
-        IsPlayer1:boolean;
-        IsPlayer2:boolean;
-    }
 
     interface IGameScope extends angular.IScope {
         Forfeit();
@@ -14,7 +8,7 @@ module Controllers {
         MakeMove(x:number,y:number);
         GetSizeArray(size:number):Array<number>;
         IsCheckerTypeA(x:number,y:number);
-        GetFieldValue(x:number,y:number):Stone
+        GetFieldValue(x:number,y:number):Models.Stone
         Game:Models.Messages.IGame;
         CanMove:boolean;
         GameLoaded:boolean;
@@ -22,14 +16,16 @@ module Controllers {
         Player1Class:string;
         Player2Class:string;
         OtherPlayer:string;
+        LastMove:Models.Stone;
         CurrentPlayer:Models.Messages.IPlayer;
-        Field:Array<Array<Stone>>;
+        Field:Array<Array<Models.Stone>>;
     }
 
     class GameController {
 
         private intervalPromise:angular.IPromise<void>;
-        private previousState:string = ""
+        private previousState:string = "";
+        private previousField:Array<Array<Models.Stone>>;
         private gameId:string;
 
         static $inject = [
@@ -58,6 +54,10 @@ module Controllers {
                     private gameHandler: Services.IGameHandler,
                     private logger: Services.ILogger) {
 
+            this.$ionicLoading.show({
+                template: "Loading"
+            });
+
             $scope.Forfeit = this.Forfeit;
             $scope.LeaveGame = this.LeaveGame;
             $scope.MakeMove = this.MakeMove;
@@ -70,10 +70,7 @@ module Controllers {
             $scope.GameLoaded = false;
             $scope.ResultMessage = "";
 
-            this.$ionicLoading.show({
-                template: "Loading"
-            });
-
+            this.gameId = this.GetGameId();
             this.intervalPromise = this.$interval(this.Refresh, $constants.Intervals.GameRefreshInterval);
             this.Refresh();
         }
@@ -87,19 +84,19 @@ module Controllers {
             else {
                 this.logger.LogWarning("It's not your turn mate!", null, this, true);
             }
-        }
+        };
 
         private MakeMoveSuccessful = (game:Models.Messages.IGame) => {
             this.SetGameInfo(game);
             this.intervalPromise = this.$interval(this.Refresh, $constants.Intervals.GameRefreshInterval);
-        }
+        };
 
         private MakeMoveFailed = (game:Models.Messages.IGame) => {
             this.Refresh();
             this.intervalPromise = this.$interval(this.Refresh, $constants.Intervals.GameRefreshInterval);
-        }
+        };
 
-        private GetFieldValue = (x:number, y:number):Stone => {
+        private GetFieldValue = (x:number, y:number):Models.Stone => {
             if(this.$scope.Field == undefined)
                 return null;
 
@@ -111,7 +108,7 @@ module Controllers {
                 size = 10;
             }
 
-            var arr = new Array<number>();
+            var arr = [];
             for(var i = 0; i < size; i++) {
                 arr.push(i);
             }
@@ -133,19 +130,18 @@ module Controllers {
         };
 
         private Refresh = () => {
-            this.gameId = this.GetGameId();
             this.gameProvider.GetGame(this.gameId).then(this.GetGameSuccess, this.GetGameFailed);
-        }
+        };
 
         private GetGameSuccess = (game:Models.Messages.IGame) => {
             this.SetGameInfo(game);
             this.$ionicLoading.hide();
             this.$scope.GameLoaded = true;
-        }
+        };
 
         private GetGameFailed = (game:Models.Messages.IGame) => {
 
-        }
+        };
 
         private SetGameInfo = (game:Models.Messages.IGame) => {
             this.$scope.Game = game;
@@ -153,7 +149,9 @@ module Controllers {
             this.$scope.OtherPlayer = game.player1 == this.$scope.CurrentPlayer.username ? game.player2 : game.player1;
             this.$scope.Player1Class = game.activePlayer == $constants.Game.Player1 ? "player-active" : "";
             this.$scope.Player2Class = game.activePlayer == $constants.Game.Player2 ? "active" : "";
-            this.$scope.Field = this.SetField(game.field);
+            this.$scope.Field = this.gameHandler.GetField(game.field);
+            this.$scope.LastMove = this.gameHandler.GetLastMove(this.previousField, this.$scope.Field);
+            this.previousField = this.$scope.Field;
 
             if(game.status == $constants.Game.States.Finished) {
                 this.CancelRefresh();
@@ -166,7 +164,7 @@ module Controllers {
             }
 
             this.previousState = game.status;
-        }
+        };
 
         private HandleResult = (result:string, showToast:boolean) => {
 
@@ -193,30 +191,7 @@ module Controllers {
             }
 
             this.logger.Log(this.$scope.ResultMessage, null, this, showToast);
-        }
-
-        private SetField = (fieldString:string):Array<Array<Stone>> => {
-            var fieldArray = JSON.parse(fieldString);
-            var field = new Array<Array<Stone>>();
-
-            for(var x = 0; x < fieldArray.length; x++) {
-
-                var row = new Array<Stone>();
-
-                for(var y = 0; y < fieldArray[x].length; y++) {
-                    var stone = new Stone();
-                    stone.IsPlayer1 = fieldArray[x][y] == $constants.Game.Stones.Player1;
-                    stone.IsPlayer2 = fieldArray[x][y] == $constants.Game.Stones.Player2;
-                    stone.X = x;
-                    stone.Y = y;
-                    row.push(stone);
-                }
-
-                field.push(row);
-            }
-
-            return field;
-        }
+        };
 
         private GetCanMove = (game:Models.Messages.IGame) => {
             if(game.player1 == this.$scope.CurrentPlayer.username) {
@@ -224,7 +199,7 @@ module Controllers {
             }
 
             return game.activePlayer == $constants.Game.Player2;
-        }
+        };
 
         private Forfeit = () => {
             var confirmForfeit = this.$ionicPopup.confirm( {
@@ -238,16 +213,16 @@ module Controllers {
                     this.gameHandler.Forfeit(this.$scope.Game.gameId).then(this.ForfeitSuccessful, this.ForfeitFailed)
                 }
             });
-        }
+        };
 
         private ForfeitSuccessful = (game:Models.Messages.IGame) => {
             this.logger.Log("You just forfeited the game? LOL!", null, this, true);
             this.navigation.Lobby();
-        }
+        };
 
         private ForfeitFailed = (game:Models.Messages.IGame) => {
 
-        }
+        };
 
         private GetGameId = () => {
             var gameId = this.$stateParams[$constants.Params.GameId];
@@ -255,7 +230,7 @@ module Controllers {
                 return false;
 
             return gameId;
-        }
+        };
 
         private LeaveGame = () => {
             this.CancelRefresh();
@@ -265,7 +240,7 @@ module Controllers {
             else {
                 this.navigation.Lobby();
             }
-        }
+        };
 
         private CancelRefresh = () => {
             this.$interval.cancel(this.intervalPromise);

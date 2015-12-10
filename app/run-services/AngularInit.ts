@@ -15,7 +15,6 @@ class AngularInit {
         return value !== null && value !== undefined;
     }
 
-
     private getNetworkConnectionPlugin() {
         if (this.isDefined(navigator) && this.isDefined((<any>navigator).connection))
             return (<any>navigator).connection;

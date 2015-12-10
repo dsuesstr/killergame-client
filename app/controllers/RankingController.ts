@@ -28,15 +28,15 @@ module Controllers {
         private Refresh = () => {
             this.$scope.$broadcast($constants.Events.Kg.RankingRefresh);
 
-        }
+        };
 
         private LoadMore = () => {
             this.$scope.$broadcast($constants.Events.Kg.RankingLoadMore);
-        }
+        };
 
         private RefreshComplete = () => {
             this.$scope.$broadcast($constants.Events.Scroll.RefreshComplete);
-        }
+        };
 
         private LoadMoreComplete = (event, data:boolean) => {
             this.$scope.HasMoreData = data;

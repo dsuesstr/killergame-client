@@ -28,15 +28,15 @@ module Controllers {
             var playerId = this.GetPlayerId();
 
             this.playerProvider.GetPlayer(playerId).then(this.GetPlayerSuccessful, this.GetPlayerFailed);
-        }
+        };
 
         private GetPlayerSuccessful = (player:Models.Messages.IPlayer) => {
             this.$scope.Player = player;
-        }
+        };
 
         private GetPlayerFailed = (player:Models.Messages.IPlayer) => {
 
-        }
+        };
 
         private GetPlayerId = () => {
             var playerId = this.$stateParams[$constants.Params.PlayerId];

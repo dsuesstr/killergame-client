@@ -54,6 +54,8 @@ module Services {
         Forfeit(gameId:string):angular.IPromise<Models.Messages.IGame>;
         DeleteGame(gameId:string):angular.IPromise<void>;
         AcceptGame(gameId:string):angular.IPromise<Models.Messages.IGame>;
+        GetField(fieldString:string):Array<Array<Models.Stone>>;
+        GetLastMove(oldField:Array<Array<Models.Stone>>, newField:Array<Array<Models.Stone>>):Models.Stone;
     }
 
     export interface IGameProvider {

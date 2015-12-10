@@ -4,20 +4,20 @@ module Services {
 
     class LocalStorage implements ILocalStorage {
 
-        Get(key:string):any {
+        public Get(key:string):any {
             var value = localStorage.getItem(key);
             return  JSON.parse(value);
         }
 
-        Save(key:string, data):void {
+        public Save(key:string, data):void {
             localStorage.setItem(key, JSON.stringify(data));
         }
 
-        Remove(key:string):void {
+        public Remove(key:string):void {
             localStorage.removeItem(key);
         }
 
-        ClearAll():void {
+        public ClearAll():void {
             localStorage.clear();
         }
     }

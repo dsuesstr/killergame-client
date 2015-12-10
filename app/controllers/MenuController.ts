@@ -9,14 +9,12 @@ module Controllers {
   class MenuController {
       static $inject = [
           $injections.Angular.$Scope,
-          $injections.Angular.$Window,
           $injections.Services.Logger,
           $injections.Services.Navigation,
           $injections.Services.AccountHandler
       ];
 
       constructor(private $scope:IMenuScope,
-                  private $window:angular.IWindowService,
                   private logger:Services.ILogger,
                   private navigation:Services.INavigation,
                   private accountHandler:Services.IAccountHandler) {
@@ -31,14 +29,14 @@ module Controllers {
       }
 
       private DestroyMenu = () => {
-          console.log("Destroymenu");
-      }
+          //console.log("Destroymenu");
+      };
 
       private HandleAuthenticationError = () => {
           this.Logout("Please login first", true)
-      }
+      };
 
-      private     Logout = (message:string, isWarning:boolean) => {
+      private Logout = (message:string, isWarning:boolean) => {
           if (isWarning) {
               this.logger.LogWarning(message, null, this, true);
           } else {

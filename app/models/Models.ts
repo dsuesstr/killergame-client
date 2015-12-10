@@ -1,6 +1,14 @@
 /// <reference path='../min.references.ts'/>
 
 module Models {
+
+    export class Stone {
+        X:number;
+        Y:number;
+        IsPlayer1:boolean;
+        IsPlayer2:boolean;
+    }
+
     export class ListParams implements IListParams {
         Limit:number;
         Offset:number;
