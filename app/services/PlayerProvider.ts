@@ -6,7 +6,6 @@ module Services {
             $injections.Services.Urls,
             $injections.Angular.$HttpService,
             $injections.Angular.$QService,
-            $injections.Angular.$RootScope,
             $injections.Services.Logger,
             $injections.Services.ApiSettingsHandler,
             $injections.Services.LocalStorage
@@ -15,7 +14,6 @@ module Services {
         constructor(private urls:Services.IUrls,
                     private $http:angular.IHttpService,
                     private $q:angular.IQService,
-                    private $rootScope:angular.IRootScopeService,
                     private logger:Services.ILogger,
                     private apiSettingsHandler:Services.IApiSettingsHandler,
                     private localStorage:Services.ILocalStorage) {

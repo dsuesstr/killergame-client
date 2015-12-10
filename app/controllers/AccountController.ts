@@ -107,7 +107,7 @@ module Controllers {
 
         private OnRegisterSuccessful = (player:Models.Messages.IPlayer) => {
             this.$ionicLoading.hide();
-            this.logger.LogSuccess("A Star is born! Hello " + player.username, null, this, true);
+            this.logger.LogSuccess(this.strings("client_login_001") + player.username, null, this, true);
             this.navigation.Lobby();
         };
 
@@ -117,9 +117,9 @@ module Controllers {
             this.navigation.Lobby();
         };
 
-        private OnError = (message:string) => {
+        private OnError = (key:string) => {
             this.$ionicLoading.hide();
-            this.logger.LogError(message, null, this, true);
+            this.logger.LogError(this.strings(key), null, this, true);
             this.$scope.Model.Password = "";
             this.$scope.Model.Password2 = "";
         };

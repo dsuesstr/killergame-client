@@ -11,7 +11,7 @@ module Controllers {
     interface IGameScope extends angular.IScope {
         Forfeit();
         MakeMove(x:number,y:number);
-        GetSizeArray(size:number);
+        GetSizeArray(size:number):Array<number>;
         IsCheckerTypeA(x:number,y:number);
         GetFieldValue(x:number,y:number):Stone
         Game:Models.Messages.IGame;
@@ -19,13 +19,14 @@ module Controllers {
         Player1Class:string;
         Player2Class:string;
         OtherPlayer:string;
+        CurrentPlayer:Models.Messages.IPlayer;
         Field:Array<Array<Stone>>;
     }
 
     class GameController {
 
         private intervalPromise:angular.IPromise<void>;
-        private currentPlayer:Models.Messages.IPlayer;
+
         private gameId:string;
 
         static $inject = [
@@ -62,10 +63,10 @@ module Controllers {
             $scope.$on($constants.Events.Destroy, this.CancelRefresh);
 
             this.intervalPromise = this.$interval(this.Refresh, $constants.Intervals.GameRefreshInterval);
-            this.currentPlayer = playerProvider.GetCurrentPlayer();
+            $scope.CurrentPlayer = playerProvider.GetCurrentPlayer();
             this.gameId = this.GetGameId();
             this.$ionicLoading.show({
-                template: "wait"
+                template: "Loading"
             });
             this.Refresh();
 
@@ -99,8 +100,17 @@ module Controllers {
             return this.$scope.Field[x][y];
         };
 
-        private GetSizeArray = (size:number) => {
-            return[0,1,2,3,4,5,6,7,8,9];
+        private GetSizeArray = (size:number):Array<number> => {
+            if(size == undefined) {
+                size = 10;
+            }
+
+            var arr = new Array<number>();
+            for(var i = 0; i < size; i++) {
+                arr.push(i);
+            }
+
+            return arr;
         };
 
         /**
@@ -132,10 +142,22 @@ module Controllers {
         private SetGameInfo = (game:Models.Messages.IGame) => {
             this.$scope.Game = game;
             this.$scope.CanMove = this.GetCanMove(game);
-            this.$scope.OtherPlayer = game.player1 == this.currentPlayer.username ? game.player2 : game.player1;
-            this.$scope.Player1Class = game.activePlayer == "player1" ? "player-active" : "";
-            this.$scope.Player2Class = game.activePlayer == "player2" ? "active" : "";
+            this.$scope.OtherPlayer = game.player1 == this.$scope.CurrentPlayer.username ? game.player2 : game.player1;
+            this.$scope.Player1Class = game.activePlayer == $constants.Game.Player1 ? "player-active" : "";
+            this.$scope.Player2Class = game.activePlayer == $constants.Game.Player2 ? "active" : "";
             this.$scope.Field = this.SetField(game.field);
+
+            if(game.status == $constants.Game.States.Finished) {
+                this.CancelRefresh();
+                /*debugger;
+                if(game.result == this.$scope.CurrentPlayer.playerId) {
+                    this.logger.LogSuccess("You won! AMAZING!", null, this, true);
+                } else {
+                    this.logger.Log("You lost! Good luck next time!", null, this, true);
+                }
+                //TODO: Show winning
+                */
+            }
         }
 
         private SetField = (fieldString:string):Array<Array<Stone>> => {
@@ -148,8 +170,8 @@ module Controllers {
 
                 for(var y = 0; y < fieldArray[x].length; y++) {
                     var stone = new Stone();
-                    stone.IsPlayer1 = fieldArray[x][y] == "x";
-                    stone.IsPlayer2 = fieldArray[x][y] == "o";
+                    stone.IsPlayer1 = fieldArray[x][y] == $constants.Game.Stones.Player1;
+                    stone.IsPlayer2 = fieldArray[x][y] == $constants.Game.Stones.Player2;
                     stone.X = x;
                     stone.Y = y;
                     row.push(stone);
@@ -162,16 +184,16 @@ module Controllers {
         }
 
         private GetCanMove = (game:Models.Messages.IGame) => {
-            if(game.player1 == this.currentPlayer.username) {
-                return game.activePlayer == "player1";
+            if(game.player1 == this.$scope.CurrentPlayer.username) {
+                return game.activePlayer == $constants.Game.Player1;
             }
 
-            return game.activePlayer == "player2";
+            return game.activePlayer == $constants.Game.Player2;
         }
 
         private Forfeit = () => {
             var confirmForfeit = this.$ionicPopup.confirm( {
-                title: "Sure?",
+                title: "Forefeit game",
                 template: "a quiter never wins. a winner never quits?"
             });
 
@@ -193,11 +215,15 @@ module Controllers {
         }
 
         private GetGameId = () => {
-            var gameId = this.$stateParams['gameId'];
+            var gameId = this.$stateParams[$constants.Params.GameId];
             if (this.$angular.isUndefined(gameId))
                 return false;
 
             return gameId;
+        }
+
+        private LeaveGame = () => {
+
         }
 
         private CancelRefresh = () => {

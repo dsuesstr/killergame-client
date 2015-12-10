@@ -39,7 +39,7 @@ module Controllers {
         }
 
         private GetPlayerId = () => {
-            var playerId = this.$stateParams['playerId'];
+            var playerId = this.$stateParams[$constants.Params.PlayerId];
             if (this.$angular.isUndefined(playerId)) return false;
             return playerId;
         }

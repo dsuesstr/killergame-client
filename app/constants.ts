@@ -24,6 +24,29 @@ module $constants
         }
     }
 
+    export module Game {
+        export var Player1 = "player1";
+        export var Player2 = "player2";
+
+        export module Stones {
+            export var Player1 = "x";
+            export var Player2 = "o";
+            export var Free = "";
+        }
+
+        export module States {
+            export var Prestart = "prestart";
+            export var Ready = "ready";
+            export var InProgress = "inprogress";
+            export var Finished = "finished";
+        }
+    }
+
+    export module Params {
+        export var PlayerId = "playerId";
+        export var GameId = "gameId";
+    }
+
     export module Intervals {
         export var LobbyRefreshInterval = 1000;
         export var GameRefreshInterval = 1000;

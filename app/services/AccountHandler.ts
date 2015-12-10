@@ -53,7 +53,7 @@ module Services {
                 })
                 .error((data:Models.Messages.IError, status: number) => {
                     this.apiSettingsHandler.RemoveToken();
-                    defer.reject(data.text);
+                    defer.reject(data.key);
                 });
 
             return defer.promise;

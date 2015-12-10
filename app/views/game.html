@@ -19,8 +19,8 @@
         </div>
 
         <div class="game-field">
-            <div class="row" ng-repeat="x in GetSizeArray(Size)">
-                <div class=" col-10" ng-repeat="y in GetSizeArray(Size)" >
+            <div class="row" ng-repeat="x in GetSizeArray(Game.width)">
+                <div class=" col-10" ng-repeat="y in GetSizeArray(Game.height)" >
                     <div ng-repeat="stone in [GetFieldValue(x,y)]">
                         <div ng-class="IsCheckerTypeA(x, y) ? 'slot-a' : 'slot-b'" class="slot-occupied" ng-if="stone.IsPlayer1 || stone.IsPlayer2">
                             <div class="stone-player-1" ng-if="stone.IsPlayer1">&nbsp;</div>
@@ -36,6 +36,7 @@
             </div>
         </div>
         <span ng-bind="Game.status"></span>
-        <button class="button button-block button-calm" ng-click="Forfeit()">Forfeit Game</button>
+        <button class="button button-block button-calm" ng-click="Forfeit()" ng-if="Game.status !== $constants.Game.States.Finished">Forfeit Game</button>
+        <button class="button button-block button-calm" ng-click="LeaveGame()" ng-if="Game.status === $constants.Game.States.Finished">Back to lobby</button>
     </ion-content>
 </ion-view>

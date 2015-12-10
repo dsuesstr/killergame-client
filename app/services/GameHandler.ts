@@ -7,7 +7,6 @@ module Services {
             $injections.Services.Urls,
             $injections.Angular.$HttpService,
             $injections.Angular.$QService,
-            $injections.Angular.$RootScope,
             $injections.Services.Logger,
             $injections.Services.ApiSettingsHandler
         ];
@@ -15,7 +14,6 @@ module Services {
         constructor(private urls:Services.IUrls,
                     private $http:angular.IHttpService,
                     private $q:angular.IQService,
-                    private $rootScope:angular.IRootScopeService,
                     private logger:Services.ILogger,
                     private apiSettingsHandler:Services.IApiSettingsHandler) {
         }
@@ -58,7 +56,7 @@ module Services {
                 return defer.promise;
             }
 
-            this.$http.put(url, params).success((response:any) => {
+            this.$http.put(url, {}, params).success((response:any) => {
                 defer.resolve(response.game);
             })
                 .error((error:Models.Messages.IError, status: number) => {
@@ -96,7 +94,7 @@ module Services {
         public DeleteGame = (gameId:string):angular.IPromise<void> => {
             //TODO: handle this
 
-            var url = this.urls.Games() + "/" + gameId + "/accept";
+            var url = this.urls.Games() + "/" + gameId;
             var defer = this.$q.defer<void>();
             var params = this.apiSettingsHandler.GetSecureApiParameters()
 

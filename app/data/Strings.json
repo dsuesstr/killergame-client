@@ -12,6 +12,18 @@
     "value": "A Star is born! Hello "
   },
   {
+    "key": "client_login_001",
+    "value": "Hello "
+  },
+  {
+    "key": "client_settings_001",
+    "value": "Settings saved"
+  },
+  {
+    "key": "client_settings_002",
+    "value": "Settings not saved"
+  },
+  {
     "key": "database_0001",
     "value": "there was an error querying the database",
     "description": ""

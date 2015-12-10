@@ -10,6 +10,7 @@ module Controllers {
     class LobbyModel {
         AvailablePlayers:Models.Messages.IPlayer[]
         AvailableGames:Models.Messages.IGame[]
+        CurrentPlayer:Models.Messages.IPlayer
     }
 
     interface ILobbyScope extends angular.IScope {
@@ -35,6 +36,7 @@ module Controllers {
             $injections.Services.GameProvider,
             $injections.Services.GameHandler,
             $injections.Services.Navigation,
+            $injections.Services.Strings,
             $injections.Services.Logger
         ];
 
@@ -46,16 +48,19 @@ module Controllers {
                     private gameProvider: Services.IGameProvider,
                     private gameHandler: Services.IGameHandler,
                     private navigation: Services.INavigation,
+                    private strings: Services.IStrings,
                     private logger: Services.ILogger) {
 
 
             $scope.Model = new LobbyModel();
+            $scope.Model.CurrentPlayer = this.playerProvider.GetCurrentPlayer();
             $scope.Refresh = this.Refresh;
             $scope.ChallengePlayer = this.ChallengePlayer;
             $scope.DeleteGame = this.DeleteGame;
             $scope.ShowPlayer = this.ShowPlayer;
             $scope.AcceptGame = this.AcceptGame;
             $scope.StartGame = this.StartGame;
+
 
             this.Refresh();
 
@@ -81,7 +86,7 @@ module Controllers {
         private DeleteGame = (game:Models.Messages.IGame) => {
 
             var confirmDelete = this.$ionicPopup.confirm( {
-                title: "Sure?",
+                title: "Cancel/Decline challenge",
                 template: "are you sure that you want to cancel this challenge?"
             });
 
@@ -99,8 +104,8 @@ module Controllers {
 
         private AcceptGame = (game:Models.Messages.IGame) => {
             var confirmAccept = this.$ionicPopup.confirm( {
-                title: "Sure?",
-                template: "are you sure that you want to accept this challenge?"
+                title: "Accept challenge",
+                template: "Are you sure that you want to accept this challenge?"
             });
 
             confirmAccept.then((result:boolean) => {
@@ -113,8 +118,8 @@ module Controllers {
         private ChallengePlayer = (player:Models.Messages.IPlayer) => {
 
             var confirmChallenge = this.$ionicPopup.confirm( {
-                title: "Sure?",
-                template: "are you sure that you want to challenge " + player.username + "?"
+                title: "Challenge player",
+                template: "Are you sure that you want to challenge " + player.username + "?"
             });
 
             confirmChallenge.then((result:boolean) => {
@@ -131,7 +136,6 @@ module Controllers {
 
         private GameAcceptSuccessful = (game:Models.Messages.IGame) => {
             this.CancelRefresh();
-            debugger;
             this.navigation.Game(game);
         }
 
@@ -159,11 +163,11 @@ module Controllers {
             var currentPlayer = this.playerProvider.GetCurrentPlayer();
 
             for (var i = 0; i < this.$scope.Model.AvailableGames.length; i++) {
-                if (this.$scope.Model.AvailableGames[i].status == "prestart") {
+                if (this.$scope.Model.AvailableGames[i].status == $constants.Game.States.Prestart) {
                     this.$scope.Model.AvailableGames[i].canAccept = this.$scope.Model.AvailableGames[i].player2 === currentPlayer.username;
                 }
 
-                this.$scope.Model.AvailableGames[i].canStart = this.$scope.Model.AvailableGames[i].status == "ready";
+                this.$scope.Model.AvailableGames[i].canStart = this.$scope.Model.AvailableGames[i].status == $constants.Game.States.Ready;
             }
         }
 

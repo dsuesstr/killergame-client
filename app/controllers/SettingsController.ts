@@ -28,12 +28,14 @@ module Controllers {
         static $inject = [
             $injections.Angular.$Scope,
             $injections.Services.Logger,
-            $injections.Services.PlayerProvider
+            $injections.Services.PlayerProvider,
+            $injections.Services.Strings
         ];
 
         constructor(private $scope: ISettingsScope,
                     private logger: Services.ILogger,
-                    private playerProvider: Services.IPlayerProvider) {
+                    private playerProvider: Services.IPlayerProvider,
+                    private strings: Services.IStrings) {
 
             $scope.Model = new SettingsModel();
             $scope.Model.Player = this.playerProvider.GetCurrentPlayer();
@@ -77,11 +79,11 @@ module Controllers {
         }
 
         private OnSaveSuccess = (player:Models.Messages.IPlayer) => {
-            this.logger.LogSuccess("Settings saved", null, this, true);
+            this.logger.LogSuccess(this.strings("client_settins_001"), null, this, true);
         }
 
         private OnSaveFailed = (player:Models.Messages.IPlayer) => {
-            this.logger.LogError("Settings not saved", null, this, true);
+            this.logger.LogError(this.strings("client_settins_002"), null, this, true);
         }
     }
 
