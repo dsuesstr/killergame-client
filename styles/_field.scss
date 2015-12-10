@@ -41,6 +41,10 @@ $field__stone_diameter: 9vw;
   }
 }
 
+.game-wait {
+  cursor: wait;
+}
+
 // adapting ionic's classes for killergame's needs
 .row + .row {
   margin-top: 0;
@@ -54,20 +58,28 @@ $field__stone_diameter: 9vw;
   background-color: $slot_available_b;
 }
 
-.slot-available {
-  div { //
-    box-sizing: border-box;
+.slot-occupied {
+  div {
     @include slot-dimensions;
+    box-sizing: border-box;
+  }
+}
+
+.slot-available {
+  div {
+    @include slot-dimensions;
+    box-sizing: border-box;
+    cursor: cell;
   }
   &:hover {
     div {
       @include stone-player;
       cursor: cell;
     }
-    div.player1 {
+    div.player-1 {
       @include stone-player-1;
     }
-    div.player2 {
+    div.player-2 {
       @include stone-player-2;
     }
   }
