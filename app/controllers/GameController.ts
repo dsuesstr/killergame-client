@@ -160,16 +160,15 @@ module Controllers {
 
                 if(this.previousState == "") {
                     this.logger.Log("This game is already finished", null, this, true);
-                    return;
                 }
 
-                this.HandleResult(game.result);
+                this.HandleResult(game.result, this.previousState !== "");
             }
 
             this.previousState = game.status;
         }
 
-        private HandleResult = (result:string) => {
+        private HandleResult = (result:string, showToast:boolean) => {
 
             var isPlayer1 = this.$scope.Game.player1 == this.$scope.CurrentPlayer.username;
             var player1 = isPlayer1 ? "You" : this.$scope.Game.player1;
@@ -183,17 +182,17 @@ module Controllers {
                     this.$scope.ResultMessage = player2 + " forfeited the game. " + player1 + " won!";
                     break;
                 case $constants.Game.Results.WinPlayer1:
-                    this.$scope.ResultMessage = player1 + " won against" + player2;
+                    this.$scope.ResultMessage = player1 + " won against " + player2;
                     break;
                 case $constants.Game.Results.WinPlayer2:
-                    this.$scope.ResultMessage = player2 + " won against" + player1;
+                    this.$scope.ResultMessage = player2 + " won against " + player1;
                     break;
                 case $constants.Game.Results.Draw:
                     default:
                     return;
             }
 
-            this.logger.Log(this.$scope.ResultMessage, null, this, true);
+            this.logger.Log(this.$scope.ResultMessage, null, this, showToast);
         }
 
         private SetField = (fieldString:string):Array<Array<Stone>> => {

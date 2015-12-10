@@ -8931,6 +8931,9 @@ table, th, td {
     width: 9vw;
     height: 9vw; }
 
+.game-wait {
+  cursor: wait; }
+
 .row + .row {
   margin-top: 0; }
 
@@ -8940,31 +8943,48 @@ table, th, td {
 .slot-b {
   background-color: #E3E3E3; }
 
-.slot-available div {
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
+.slot-occupied div {
   width: 9vw;
-  height: 9vw; }
+  height: 9vw;
+  box-sizing: border-box; }
+
+.slot-available div {
+  width: 9vw;
+  height: 9vw;
+  box-sizing: border-box;
+  cursor: cell; }
 .slot-available:hover div {
-  background: #444;
-  cursor: cell;
-  border-radius: 4.5vw; }
+  border-radius: 4.5vw;
+  box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.5);
+  width: 9vw;
+  height: 9vw;
+  position: relative;
+  cursor: cell; }
+.slot-available:hover div.player-1 {
+  border: 2px solid #D0A600;
+  background: radial-gradient(ellipse at center, #7F6100 1%, #7F6100 25%, #FFC900 100%); }
+.slot-available:hover div.player-2 {
+  border: 2px solid #0AB237;
+  background: radial-gradient(ellipse at center, #19662F 1%, #19662F 25%, #0CCC42 100%); }
 
 .stone-player-1 {
   border-radius: 4.5vw;
+  box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.5);
+  width: 9vw;
+  height: 9vw;
+  position: relative;
   border: 2px solid #D0A600;
   background: radial-gradient(ellipse at center, #7F6100 1%, #7F6100 25%, #FFC900 100%);
-  box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.5);
-  cursor: not-allowed;
-  width: 9vw;
-  height: 9vw; }
+  cursor: not-allowed; }
 
 .stone-player-2 {
-  background-color: #33cd5f;
-  border-radius: 23px;
-  cursor: not-allowed;
+  border-radius: 4.5vw;
+  box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.5);
   width: 9vw;
-  height: 9vw; }
+  height: 9vw;
+  position: relative;
+  border: 2px solid #0AB237;
+  background: radial-gradient(ellipse at center, #19662F 1%, #19662F 25%, #0CCC42 100%);
+  cursor: not-allowed; }
 
 /*# sourceMappingURL=default.css.map */

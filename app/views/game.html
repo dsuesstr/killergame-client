@@ -27,25 +27,27 @@
                             <button class="button button-calm" ng-click="LeaveGame()" ng-if="Game.status === 'finished'"><i class="icon ion-home"></i></button>
                     </ion-item>
                 </ion-list>
-            </div>
-            <br>
-            <div class="game-field">
-                <div class="row" ng-repeat="x in GetSizeArray(Game.width)">
-                    <div class=" col-10" ng-repeat="y in GetSizeArray(Game.height)" >
-                        <div ng-repeat="stone in [GetFieldValue(x,y)]">
-                            <div ng-class="IsCheckerTypeA(x, y) ? 'slot-a' : 'slot-b'" class="slot-occupied" ng-if="stone.IsPlayer1 || stone.IsPlayer2">
-                                <div class="stone-player-1" ng-if="stone.IsPlayer1">&nbsp;</div>
-                                <div class="stone-player-2" ng-if="stone.IsPlayer2">&nbsp;</div>
-                            </div>
-
+        <div class="game-field" ng-class="CanMove ? '' : 'game-wait'">
+            <div class="row" ng-repeat="x in GetSizeArray(Game.width)">
+                <div class="col-10" ng-repeat="y in GetSizeArray(Game.height)" >
+                    <div ng-repeat="stone in [GetFieldValue(x,y)]">
+                        <div ng-class="IsCheckerTypeA(x, y) ? 'slot-a' : 'slot-b'" class="slot-occupied" ng-if="stone.IsPlayer1 || stone.IsPlayer2">
+                            <div ng-class="stone.IsPlayer1 ? 'stone-player-1' : 'stone-player-2'"></div>
+                        </div>
+                        <div ng-if="CanMove">
                             <div ng-class="IsCheckerTypeA(x, y) ? 'slot-a' : 'slot-b'" class="slot-available" ng-if="!stone.IsPlayer1 && !stone.IsPlayer2" ng-click="MakeMove(x,y)">
-                                <div ng-class="IsCheckerTypeA(x, y) ? 'slot-a' : 'slot-b'"></div>
+                                <div ng-class="CurrentPlayer.username == Game.player1 ? 'player-1' : 'player-2'"></div>
                             </div>
-                            <!-- @todo make available who's turn it is (and then use ng-class) -->
+                        </div>
+                        <div ng-if="!(stone.IsPlayer1 || stone.IsPlayer2) && !CanMove">
+                            <div ng-class="IsCheckerTypeA(x, y) ? 'slot-a' : 'slot-b'" class="slot-occupied">
+                                <div></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </ion-content>
 </ion-view>
