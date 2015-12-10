@@ -103,7 +103,6 @@ module Controllers {
         };
 
         private AcceptGame = (game:Models.Messages.IGame) => {
-            debugger;
             var confirmAccept = this.$ionicPopup.confirm( {
                 title: "Accept challenge",
                 template: "Are you sure that you want to accept this challenge?"
