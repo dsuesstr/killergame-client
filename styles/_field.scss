@@ -1,0 +1,86 @@
+$stone_player1_border: #D0A600;
+$stone_player1_inner: #7F6100;
+$stone_player1_outer: #FFC900;
+$stone_player2_border: #0AB237;
+$stone_player2_inner: #19662F;
+$stone_player2_outer: #0CCC42;
+$stone_shadow: 1px 1px 6px 1px rgba(0,0,0,0.5);
+
+$slot_available_a: #D7D7D7;
+$slot_available_b: #E3E3E3;
+
+$field__stone_diameter: 9vw;
+
+@mixin slot-dimensions {
+  width: $field__stone_diameter;
+  height: $field__stone_diameter;
+}
+
+@mixin stone-player {
+  border-radius: $field__stone_diameter / 2;
+  box-shadow: $stone_shadow;
+  @include slot-dimensions;
+  position: relative;
+}
+
+@mixin stone-player-1 {
+  border: 2px solid $stone_player1_border;
+  background: radial-gradient(ellipse at center, $stone_player1_inner 1%, $stone_player1_inner 25%, $stone_player1_outer 100%);
+}
+
+@mixin stone-player-2 {
+  border: 2px solid $stone_player2_border;
+  background: radial-gradient(ellipse at center, $stone_player2_inner 1%, $stone_player2_inner 25%, $stone_player2_outer 100%);
+}
+
+.game-field {
+  width: 90vw;
+  .col-10 {
+    // adapting ionic's classes for killergame's needs
+    @include slot-dimensions;
+  }
+}
+
+// adapting ionic's classes for killergame's needs
+.row + .row {
+  margin-top: 0;
+}
+
+.slot-a {
+  background-color: $slot_available_a;
+}
+
+.slot-b {
+  background-color: $slot_available_b;
+}
+
+.slot-available {
+  div { //
+    box-sizing: border-box;
+    @include slot-dimensions;
+  }
+  &:hover {
+    div {
+      @include stone-player;
+      cursor: cell;
+    }
+    div.player1 {
+      @include stone-player-1;
+    }
+    div.player2 {
+      @include stone-player-2;
+    }
+  }
+}
+
+.stone-player-1 {
+  @include stone-player;
+  @include stone-player-1;
+  cursor: not-allowed;
+}
+
+.stone-player-2 {
+  @include stone-player;
+  @include stone-player-2;
+  cursor: not-allowed;
+}
