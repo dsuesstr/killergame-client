@@ -10,12 +10,15 @@ module Controllers {
 
     interface IGameScope extends angular.IScope {
         Forfeit();
+        LeaveGame();
         MakeMove(x:number,y:number);
         GetSizeArray(size:number):Array<number>;
         IsCheckerTypeA(x:number,y:number);
         GetFieldValue(x:number,y:number):Stone
         Game:Models.Messages.IGame;
         CanMove:boolean;
+        GameLoaded:boolean;
+        ResultMessage:string;
         Player1Class:string;
         Player2Class:string;
         OtherPlayer:string;
@@ -26,7 +29,7 @@ module Controllers {
     class GameController {
 
         private intervalPromise:angular.IPromise<void>;
-
+        private previousState:string = ""
         private gameId:string;
 
         static $inject = [
@@ -56,20 +59,23 @@ module Controllers {
                     private logger: Services.ILogger) {
 
             $scope.Forfeit = this.Forfeit;
+            $scope.LeaveGame = this.LeaveGame;
             $scope.MakeMove = this.MakeMove;
             $scope.GetFieldValue = this.GetFieldValue;
             $scope.GetSizeArray = this.GetSizeArray;
             $scope.IsCheckerTypeA = this.IsCheckerTypeA;
-            $scope.$on($constants.Events.Destroy, this.CancelRefresh);
-
-            this.intervalPromise = this.$interval(this.Refresh, $constants.Intervals.GameRefreshInterval);
+            $scope.$on($constants.Events.Destroy, this.LeaveGame);
             $scope.CurrentPlayer = playerProvider.GetCurrentPlayer();
-            this.gameId = this.GetGameId();
+            $scope.CanMove = false;
+            $scope.GameLoaded = false;
+            $scope.ResultMessage = "";
+
             this.$ionicLoading.show({
                 template: "Loading"
             });
-            this.Refresh();
 
+            this.intervalPromise = this.$interval(this.Refresh, $constants.Intervals.GameRefreshInterval);
+            this.Refresh();
         }
 
         private MakeMove = (x:number,y:number) => {
@@ -127,12 +133,14 @@ module Controllers {
         };
 
         private Refresh = () => {
+            this.gameId = this.GetGameId();
             this.gameProvider.GetGame(this.gameId).then(this.GetGameSuccess, this.GetGameFailed);
         }
 
         private GetGameSuccess = (game:Models.Messages.IGame) => {
             this.SetGameInfo(game);
             this.$ionicLoading.hide();
+            this.$scope.GameLoaded = true;
         }
 
         private GetGameFailed = (game:Models.Messages.IGame) => {
@@ -149,15 +157,43 @@ module Controllers {
 
             if(game.status == $constants.Game.States.Finished) {
                 this.CancelRefresh();
-                /*debugger;
-                if(game.result == this.$scope.CurrentPlayer.playerId) {
-                    this.logger.LogSuccess("You won! AMAZING!", null, this, true);
-                } else {
-                    this.logger.Log("You lost! Good luck next time!", null, this, true);
+
+                if(this.previousState == "") {
+                    this.logger.Log("This game is already finished", null, this, true);
+                    return;
                 }
-                //TODO: Show winning
-                */
+
+                this.HandleResult(game.result);
             }
+
+            this.previousState = game.status;
+        }
+
+        private HandleResult = (result:string) => {
+
+            var isPlayer1 = this.$scope.Game.player1 == this.$scope.CurrentPlayer.username;
+            var player1 = isPlayer1 ? "You" : this.$scope.Game.player1;
+            var player2 = !isPlayer1 ? "You" : this.$scope.Game.player2;
+
+            switch(result) {
+                case $constants.Game.Results.ForfeitPlayer1:
+                    this.$scope.ResultMessage = player1 + " forfeited the game. " + player2 + " won";
+                    break;
+                case $constants.Game.Results.ForfeitPlayer2:
+                    this.$scope.ResultMessage = player2 + " forfeited the game. " + player1 + " won!";
+                    break;
+                case $constants.Game.Results.WinPlayer1:
+                    this.$scope.ResultMessage = player1 + " won against" + player2;
+                    break;
+                case $constants.Game.Results.WinPlayer2:
+                    this.$scope.ResultMessage = player2 + " won against" + player1;
+                    break;
+                case $constants.Game.Results.Draw:
+                    default:
+                    return;
+            }
+
+            this.logger.Log(this.$scope.ResultMessage, null, this, true);
         }
 
         private SetField = (fieldString:string):Array<Array<Stone>> => {
@@ -206,7 +242,7 @@ module Controllers {
         }
 
         private ForfeitSuccessful = (game:Models.Messages.IGame) => {
-            this.logger.Log("You lost against this guy? LOL!", null, this, true);
+            this.logger.Log("You just forfeited the game? LOL!", null, this, true);
             this.navigation.Lobby();
         }
 
@@ -223,7 +259,13 @@ module Controllers {
         }
 
         private LeaveGame = () => {
-
+            this.CancelRefresh();
+            if(this.$scope.Game.status !== $constants.Game.States.Finished) {
+                this.gameHandler.Forfeit(this.gameId).then(this.ForfeitSuccessful, this.ForfeitFailed);
+            }
+            else {
+                this.navigation.Lobby();
+            }
         }
 
         private CancelRefresh = () => {

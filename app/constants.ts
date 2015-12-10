@@ -40,6 +40,14 @@ module $constants
             export var InProgress = "inprogress";
             export var Finished = "finished";
         }
+
+        export module Results {
+            export var ForfeitPlayer1 = "forfeit_player1";
+            export var ForfeitPlayer2 = "forfeit_player2";
+            export var WinPlayer1 = "win_player1";
+            export var WinPlayer2 = "win_player2";
+            export var Draw = "draw";
+        }
     }
 
     export module Params {
