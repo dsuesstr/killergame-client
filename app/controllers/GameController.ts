@@ -8,6 +8,7 @@ module Controllers {
         MakeMove(x:number,y:number);
         GetSizeArray(size:number):Array<number>;
         IsCheckerTypeA(x:number,y:number);
+        IsWinningStone(x:number,y:number);
         GetFieldValue(x:number,y:number):Models.Stone
         Game:Models.Messages.IGame;
         CanMove:boolean;
@@ -64,6 +65,7 @@ module Controllers {
             $scope.GetFieldValue = this.GetFieldValue;
             $scope.GetSizeArray = this.GetSizeArray;
             $scope.IsCheckerTypeA = this.IsCheckerTypeA;
+            $scope.IsWinningStone = this.IsWinningStone;
             $scope.$on($constants.Events.Destroy, this.LeaveGame);
             $scope.CurrentPlayer = playerProvider.GetCurrentPlayer();
             $scope.CanMove = false;
@@ -127,6 +129,25 @@ module Controllers {
          */
         private IsCheckerTypeA = (x:number, y:number) => {
             return (x % 2 === y % 2);
+        };
+
+        /**
+         * checks if the given x/y coordinates are in the winning coordinates array of the game and if so, returns true
+         * otherwise false
+         *
+         * @author Julian Mollik <jule@creative-coding.net>
+         * @param {number} x
+         * @param {number} y
+         * @returns {boolean}
+         */
+        private IsWinningStone = (x:number, y:number) => {
+            var i;
+            for (i = 0; i < this.$scope.Game.setCoord.length; i++) {
+                if (this.$scope.Game.setCoord[i][0] === x && this.$scope.Game.setCoord[i][1] === y) {
+                    return true;
+                }
+            }
+            return false;
         };
 
         private Refresh = () => {

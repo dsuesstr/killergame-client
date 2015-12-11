@@ -6,6 +6,10 @@ $stone_player2_inner: #19662F;
 $stone_player2_outer: #0CCC42;
 $stone_shadow: 1px 1px 6px 1px rgba(0,0,0,0.5);
 
+$win_shadow_1: rgba(255, 0, 0, 0.8);
+$win_shadow_2: rgba(255, 0, 0, 0);
+$win_border: rgba(255, 0, 0, 0.7);
+
 $slot_available_a: #D7D7D7;
 $slot_available_b: #E3E3E3;
 
@@ -17,7 +21,7 @@ $field__stone_diameter: 9vw;
 }
 
 @mixin stone-player {
-  border-radius: $field__stone_diameter / 2;
+  border-radius: 50%;
   box-shadow: $stone_shadow;
   @include slot-dimensions;
   position: relative;
@@ -95,4 +99,21 @@ $field__stone_diameter: 9vw;
   @include stone-player;
   @include stone-player-2;
   cursor: not-allowed;
+}
+
+.stone-win {
+  border-color: $win_border; // overwrite player's border-color
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 $win_shadow_1;
+  }
+  70% {
+    box-shadow: 0 0 0 1vw $win_shadow_2;
+  }
+  100% {
+    box-shadow: 0 0 0 0 $win_shadow_2;
+  }
 }

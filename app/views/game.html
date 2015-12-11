@@ -32,7 +32,7 @@
                 <div class="col-10" ng-repeat="y in GetSizeArray(Game.height)" >
                     <div ng-repeat="stone in [GetFieldValue(x,y)]">
                         <div ng-class="IsCheckerTypeA(x, y) ? 'slot-a' : 'slot-b'" class="slot-occupied" ng-if="stone.IsPlayer1 || stone.IsPlayer2">
-                            <div ng-class="stone.IsPlayer1 ? 'stone-player-1' : 'stone-player-2'"></div>
+                            <div ng-class="stone.IsPlayer1 ? 'stone-player-1' : 'stone-player-2'" class="{{IsWinningStone(x, y) ? 'stone-win' : ''}}"></div>
                         </div>
                         <div ng-if="CanMove">
                             <div ng-class="IsCheckerTypeA(x, y) ? 'slot-a' : 'slot-b'" class="slot-available" ng-if="!stone.IsPlayer1 && !stone.IsPlayer2" ng-click="MakeMove(x,y)">
