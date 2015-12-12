@@ -75,15 +75,15 @@ module Controllers {
                 playerData.password_2 = this.$scope.Model.NewPassword2;
             }
 
-            this.playerProvider.UpdateCurrentPlayer(playerData).then(this.OnSaveSuccess, this.OnSaveFailed);
+            this.playerProvider.UpdateCurrentPlayer(playerData).then(this.OnSaveSuccess, this.OnError);
         };
 
         private OnSaveSuccess = (player:Models.Messages.IPlayer) => {
-            this.logger.LogSuccess(this.strings("client_settins_001"), null, this, true);
+            this.logger.LogSuccess(this.strings("settings_saved"), null, this, true);
         };
 
-        private OnSaveFailed = (player:Models.Messages.IPlayer) => {
-            this.logger.LogError(this.strings("client_settins_002"), null, this, true);
+        private OnError = (error:Models.Messages.IError) => {
+            this.logger.LogApiError(error, this, true);
         }
     }
 

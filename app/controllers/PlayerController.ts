@@ -27,15 +27,15 @@ module Controllers {
         private LoadPlayer = () => {
             var playerId = this.GetPlayerId();
 
-            this.playerProvider.GetPlayer(playerId).then(this.GetPlayerSuccessful, this.GetPlayerFailed);
+            this.playerProvider.GetPlayer(playerId).then(this.GetPlayerSuccessful, this.OnError);
         };
 
         private GetPlayerSuccessful = (player:Models.Messages.IPlayer) => {
             this.$scope.Player = player;
         };
 
-        private GetPlayerFailed = (player:Models.Messages.IPlayer) => {
-
+        private OnError = (error:Models.Messages.IError) => {
+            this.logger.LogApiError(error, this, true);
         };
 
         private GetPlayerId = () => {

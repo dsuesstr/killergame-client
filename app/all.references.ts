@@ -16,7 +16,6 @@
 /// <reference path="controllers/AccountController.ts" />
 /// <reference path="controllers/InfoController.ts" />
 /// <reference path="controllers/MenuController.ts" />
-/// <reference path="filters/DurationFilter.ts" />
 /// <reference path="filters/FormatFilter.ts" />
 /// <reference path="interfaces/Plugins.ts" />
 /// <reference path="interfaces/Services.ts" />

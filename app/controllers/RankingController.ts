@@ -27,7 +27,6 @@ module Controllers {
 
         private Refresh = () => {
             this.$scope.$broadcast($constants.Events.Kg.RankingRefresh);
-
         };
 
         private LoadMore = () => {

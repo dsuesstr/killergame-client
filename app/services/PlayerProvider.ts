@@ -6,7 +6,6 @@ module Services {
             $injections.Services.Urls,
             $injections.Angular.$HttpService,
             $injections.Angular.$QService,
-            $injections.Services.Logger,
             $injections.Services.ApiSettingsHandler,
             $injections.Services.LocalStorage
         ];
@@ -14,7 +13,6 @@ module Services {
         constructor(private urls:Services.IUrls,
                     private $http:angular.IHttpService,
                     private $q:angular.IQService,
-                    private logger:Services.ILogger,
                     private apiSettingsHandler:Services.IApiSettingsHandler,
                     private localStorage:Services.ILocalStorage) {
         }
@@ -74,11 +72,11 @@ module Services {
         };
 
         public SetCurrentPlayer = (player:Models.Messages.IPlayer) => {
-            this.localStorage.Save($constants.Keys.PlayerKey, player);
+            this.localStorage.Save($constants.Keys.Player, player);
         };
 
         public GetCurrentPlayer = ():Models.Messages.IPlayer => {
-            var player = this.localStorage.Get($constants.Keys.PlayerKey);
+            var player = this.localStorage.Get($constants.Keys.Player);
             if(player == undefined || player == null || player == {}) {
                 //TODO: what then
             }
@@ -87,7 +85,7 @@ module Services {
         };
 
         public RemoveCurrentPlayer = () => {
-            this.localStorage.Remove($constants.Keys.PlayerKey);
+            this.localStorage.Remove($constants.Keys.Player);
         };
 
         private GetPlayersList = (url:string, secure:boolean): angular.IPromise<Models.Messages.IPlayer[]> => {

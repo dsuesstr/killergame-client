@@ -2,55 +2,46 @@
 
 module Services
 {
-    class Text {
-        Key:string;
-        Text:string;
-    }
-
     class Strings  {
         private format:Function = null;
-        private texts:Array<Object> = null;
-        //private texts:Array<Text> = null;
 
         static $inject = [
             $injections.Angular.$filter,
             $injections.Angular.$HttpService,
             $injections.Angular.$QService,
-            $injections.Services.Logger
+            $injections.Constants.$Enumerable,
+            $injections.Services.LocalStorage,
+            $injections.Services.Logger,
         ];
 
         constructor(private $filter:angular.IFilterService,
                     private $http:angular.IHttpService,
                     private $q:angular.IQService,
+                    private $enumerable: linqjs.EnumerableStatic,
+                    private localStorage:Services.ILocalStorage,
                     private logger:Services.ILogger) {
 
             this.format = $filter($injections.Filters.FormatFilter);
 
-            if(this.texts === null) {
-                this.LoadStrings().then(this.StringsLoaded, this.StringsLoadedFailed)
-            }
+            this.LoadStrings().then(this.StringsLoaded, this.StringsLoadedFailed)
         }
 
-        private StringsLoaded = (texts:Array<Object>) => {
-            console.log(texts);
-            this.texts = texts
-        }
-
-        private StringsLoadedFailed = (texts:Array<Object>) => {
-            this.texts = null;
-        }
-
-        public Format:IStrings = (key:string) => {
-            //var texts = this.texts;
-            //console.log(typeof texts)
-            if(typeof this.texts === "undefined") {
+        public Format:IStrings = (key:string, ...args:any[]) => {
+            var texts = this.localStorage.Get($constants.Keys.Strings)
+            if(!angular.isDefined(texts)) {
                 return key;
             }
-            //this.logger.Log("", this.texts[0], this, false)
-            //console.log(this.texts);
-            //debugger;
-//debugger;
-            //return this.texts[key];
+            var result = this.$enumerable.from(texts).firstOrDefault(x => x.key == key);
+
+            if(result !== null) {
+                return result.value.replace(/{(\d+)}/g, function(match, number) {
+                    return typeof args[number] != 'undefined'
+                        ? args[number]
+                        : match
+                        ;
+                });
+            }
+
             return key;
         };
 
@@ -60,26 +51,23 @@ module Services
 
             this.$http.get('app/data/Strings.json')
                 .success((response:Array<any>) => {
-                this.logger.Log("Strings.json loaded", response, this, false);
                     defer.resolve(response);
-                    //debugger;
-                   /* this.texts = new Array<Text>();
-                    for(var i = 0;i <response.length; i++) {
-                        var text = new Text();
-                        text.Key = response[0].key;
-                        text.Text = response[0].value;
-                        this.texts.push(text);
-                    }*/
-
-                    //this.texts = response;
-            })
+                })
                 .error((response:any, status:number) => {
-                    this.logger.LogError("Can't load Strings.json", response, this, false);
-                    defer.reject(null)
+                    defer.reject(response)
                 });
 
             return defer.promise;
         }
+
+        private StringsLoaded = (texts:Array<string>) => {
+            this.logger.Log("Strings loaded", texts, this, false);
+            this.localStorage.Save($constants.Keys.Strings, texts);
+        };
+
+        private StringsLoadedFailed = (error:any) => {
+            this.logger.LogError("Can't load strings", error, this, false);
+        };
     }
 
     export function StringsRegister ($module:angular.IModule) {

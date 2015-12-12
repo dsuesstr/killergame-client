@@ -2,7 +2,7 @@
 
 module Services {
     export interface IStrings {
-        (key: string):string;
+        (key: string, ...args:any[]):string;
     }
 
     //change to IApiSettingsHandler
@@ -97,6 +97,7 @@ module Services {
         LogWarning(message:string, data:any, source:any, showToast:boolean);
         LogSuccess(message:string, data:any, source:any, showToast:boolean);
         LogError(message:string, data:any, source:any, showToast:boolean);
+        LogApiError(error:Models.Messages.IError, source:any, showToast:boolean);
         GetLogFn(moduleId:any, fnName:string):any;
     }
 }

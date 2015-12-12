@@ -33,7 +33,7 @@ module Controllers {
       };
 
       private HandleAuthenticationError = () => {
-          this.Logout("Please login first", true)
+          this.Logout("login_first", true)
       };
 
       private Logout = (message:string, isWarning:boolean) => {

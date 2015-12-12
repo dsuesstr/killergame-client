@@ -13,11 +13,11 @@ module Services {
         }
 
         public RemoveToken = () => {
-            this.localStorage.Remove($constants.Keys.TokenKey);
+            this.localStorage.Remove($constants.Keys.Token);
         };
 
         public SetToken = (token:string) => {
-            this.localStorage.Save($constants.Keys.TokenKey, token);
+            this.localStorage.Save($constants.Keys.Token, token);
         };
 
         public HasToken = () => {
@@ -66,7 +66,7 @@ module Services {
         };
 
         private GetToken = ():string => {
-            var token = this.localStorage.Get($constants.Keys.TokenKey);
+            var token = this.localStorage.Get($constants.Keys.Token);
             if(token == undefined || token == "") { return null; }
 
             return token;

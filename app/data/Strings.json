@@ -1,5 +1,9 @@
 [
   {
+    "key": "challenge_confirm",
+    "value": "Really? You want to challenge {0} to a duel?"
+  },
+  {
     "key": "client_login_001",
     "value": "Hei, you're already logged in"
   },

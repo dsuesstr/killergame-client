@@ -61,7 +61,8 @@ module $constants
     }
 
     export module Keys {
-        export var TokenKey:string = "kgToken";
-        export var PlayerKey:string = "kgPlayer";
+        export var Token:string = "kgToken";
+        export var Player:string = "kgPlayer";
+        export var Strings:string = "kgStrings";
     }
 }

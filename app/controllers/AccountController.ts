@@ -50,7 +50,7 @@ module Controllers {
                     private strings: Services.IStrings) {
 
             if(this.accountHandler.IsLoggedIn()) {
-                this.logger.LogSuccess(this.strings("client_login_001"), null, this, true);
+                this.logger.LogSuccess(this.strings("login_already"), null, this, true);
                 this.navigation.Lobby();
             }
 
@@ -73,7 +73,7 @@ module Controllers {
             login.password = this.$scope.Model.Password;
 
             this.$ionicLoading.show({
-                template: this.strings("client_check_001")
+                template: this.strings("login_wait")
             });
 
             this.accountHandler.Login(login).then(this.OnLoginSuccessful, this.OnError);
@@ -89,7 +89,7 @@ module Controllers {
             register.email = this.$scope.Model.Email;
 
             this.$ionicLoading.show({
-                template: this.strings("client_check_001")
+                template: this.strings("login_wait")
             });
 
             this.accountHandler.Register(register).then(this.OnRegisterSuccessful, this.OnError);
@@ -107,21 +107,21 @@ module Controllers {
 
         private OnRegisterSuccessful = (player:Models.Messages.IPlayer) => {
             this.$ionicLoading.hide();
-            this.logger.LogSuccess(this.strings("client_login_001") + player.username, null, this, true);
+            this.logger.LogSuccess(this.strings("login_successful") + player.username, null, this, true);
             this.navigation.Lobby();
         };
 
         private OnLoginSuccessful = (player:Models.Messages.IPlayer) => {
             this.$ionicLoading.hide();
-            this.logger.LogSuccess(this.strings("client_register_001") + player.username, null, this, true);
+            this.logger.LogSuccess(this.strings("register_successful") + player.username, null, this, true);
             this.navigation.Lobby();
         };
 
-        private OnError = (key:string) => {
-            this.$ionicLoading.hide();
-            this.logger.LogError(this.strings(key), null, this, true);
+        private OnError = (error:Models.Messages.IError) => {
+            this.logger.LogApiError(error, this, true);
             this.$scope.Model.Password = "";
             this.$scope.Model.Password2 = "";
+            this.$ionicLoading.hide();
         };
     }
 

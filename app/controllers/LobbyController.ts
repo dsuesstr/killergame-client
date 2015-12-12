@@ -61,7 +61,6 @@ module Controllers {
             $scope.AcceptGame = this.AcceptGame;
             $scope.StartGame = this.StartGame;
 
-
             this.Refresh();
 
             this.intervalPromise = this.$interval(this.Refresh, $constants.Intervals.LobbyRefreshInterval);
@@ -84,16 +83,13 @@ module Controllers {
         };
 
         private DeleteGame = (game:Models.Messages.IGame) => {
-
-            var confirmDelete = this.$ionicPopup.confirm( {
-                title: "Cancel/Decline game",
-                template: "are you sure that you want to cancel this challenge?"
-            });
-
-            confirmDelete.then((result:boolean) => {
+            this.$ionicPopup.confirm( {
+                title: this.strings("delete_confirm_title"),
+                template: this.strings("delete_confirm")
+            }).then((result:boolean) => {
                 if(result) {
                     //TODO: then what?
-                    this.gameHandler.DeleteGame(game.gameId);//.then(this.GameUpdateSuccessful, this.GameUpdateFailed)
+                    this.gameHandler.DeleteGame(game.gameId).then(this.Refresh, this.OnError)
                 }
             });
         };
@@ -103,53 +99,30 @@ module Controllers {
         };
 
         private AcceptGame = (game:Models.Messages.IGame) => {
-            var confirmAccept = this.$ionicPopup.confirm( {
-                title: "Accept challenge",
-                template: "Are you sure that you want to accept this challenge?"
-            });
-
-            confirmAccept.then((result:boolean) => {
+            this.$ionicPopup.confirm( {
+                title: this.strings("accept_confirm_title"),
+                template: this.strings("accept_confirm"),
+            }).then((result:boolean) => {
                 if(result) {
-                    this.gameHandler.AcceptGame(game.gameId).then(this.GameAcceptSuccessful, this.GameAcceptFailed)
+                    this.gameHandler.AcceptGame(game.gameId).then(this.GameAcceptSuccessful, this.OnError)
                 }
             });
         };
 
         private ChallengePlayer = (player:Models.Messages.IPlayer) => {
-
-            var confirmChallenge = this.$ionicPopup.confirm( {
-                title: "Challenge player",
-                template: "Are you sure that you want to challenge " + player.username + "?"
-            });
-
-            confirmChallenge.then((result:boolean) => {
+            this.$ionicPopup.confirm( {
+                title: this.strings("challenge_confirm_title"),
+                template: this.strings("challenge_confirm", player.username)
+            }).then((result:boolean) => {
                 if(result) {
                     var createGame = new CreateGame();
                     createGame.player2 = player.username;
                     createGame.fieldHeight = undefined;
                     createGame.fieldWidth = undefined;
 
-                    this.gameHandler.CreateGame(createGame).then(this.GameUpdateSuccessful, this.GameUpdateFailed)
+                    this.gameHandler.CreateGame(createGame).then(this.GameUpdateSuccessful, this.OnError)
                 }
             });
-        };
-
-        private GameAcceptSuccessful = (game:Models.Messages.IGame) => {
-            this.CancelRefresh();
-            this.navigation.Game(game);
-        };
-
-        private GameAcceptFailed = (game:Models.Messages.IGame) => {
-            //TODO:
-        };
-
-        private GameUpdateSuccessful = (game:Models.Messages.IGame) => {
-
-            this.Refresh();
-        };
-
-        private GameUpdateFailed = (game:Models.Messages.IGame) => {
-            //TODO:
         };
 
         private GetDataSuccessful = (data:any) => {
@@ -157,7 +130,27 @@ module Controllers {
             this.$scope.Model.AvailableGames = data[1];
             this.CheckGames();
             this.$scope.$broadcast($constants.Events.Scroll.RefreshComplete);
+        };
 
+        private GetDataFailed = (data:any) => {
+            this.logger.LogError("GetDataFailed", data, this, false);
+            this.$scope.Model.AvailablePlayers = null;
+            this.$scope.Model.AvailableGames = null;
+            this.$scope.$broadcast($constants.Events.Scroll.RefreshComplete);
+        };
+
+
+        private GameAcceptSuccessful = (game:Models.Messages.IGame) => {
+            this.CancelRefresh();
+            this.navigation.Game(game);
+        };
+
+        private GameUpdateSuccessful = (game:Models.Messages.IGame) => {
+            this.Refresh();
+        };
+
+        private OnError = (error:Models.Messages.IError) => {
+            this.logger.LogApiError(error, this, true);
         };
 
         private CheckGames = () => {
@@ -171,12 +164,6 @@ module Controllers {
                 this.$scope.Model.AvailableGames[i].canStart = this.$scope.Model.AvailableGames[i].status == $constants.Game.States.Ready;
             }
         };
-
-        private GetDataFailed = (data:any) => {
-            this.$scope.Model.AvailablePlayers = null;
-            this.$scope.Model.AvailableGames = null;
-            this.$scope.$broadcast($constants.Events.Scroll.RefreshComplete);
-        }
     }
 
     export class LobbyControllerRegister {

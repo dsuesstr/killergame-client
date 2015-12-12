@@ -30,7 +30,6 @@ class RegisterComponents {
         Services.StringsRegister(application);
 
         new Filters.FormatFilterRegister(application);
-        new Filters.DurationFilterRegister(application);
 
         new Directives.RankingDirectiveRegister(application);
     }

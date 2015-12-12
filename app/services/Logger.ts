@@ -32,6 +32,10 @@ module Services {
             this.LogIt(message, data, source, showToast, "error");
         };
 
+        public LogApiError = (error:Models.Messages.IError, source:any, showToast:boolean) => {
+            this.LogError(error.key, error, source, showToast);
+        };
+
         public GetLogFn = (moduleId:any, fnName:string): any => {
             fnName = fnName || 'log';
             switch (fnName.toLowerCase()) { // convert aliases

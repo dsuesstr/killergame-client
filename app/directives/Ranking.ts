@@ -18,15 +18,15 @@ module Directives {
         static $inject = [
             $injections.Services.Navigation,
             $injections.Services.PlayerProvider,
+            $injections.Services.Logger
         ];
 
-
         constructor(private navigation: Services.INavigation,
-                    private playerProvider: Services.IPlayerProvider
-            ) {
+                    private playerProvider: Services.IPlayerProvider,
+                    private logger: Services.ILogger) {
         }
 
-        link = ($scope:IRankingDirectiveScope, $element, $attr) => {
+        link = ($scope:IRankingDirectiveScope) => {
             this.$scope = $scope;
             this.$scope.ShowPlayer = this.ShowPlayer;
             this.$scope.$on($constants.Events.Kg.RankingRefresh, this.Refresh);
@@ -36,7 +36,7 @@ module Directives {
         private Refresh = () => {
             this.$scope.IsLoaded = false;
             this.$scope.HasData = false;
-            this.playerProvider.GetAllPlayers(new Models.ListParams()).then(this.GetPlayersSuccessful, this.GetPlayersFailed);
+            this.playerProvider.GetAllPlayers(new Models.ListParams()).then(this.GetPlayersSuccessful, this.OnError);
         };
 
         private ShowPlayer = (player:Models.Messages.IPlayer) => {
@@ -50,11 +50,12 @@ module Directives {
             this.$scope.$emit($constants.Events.Kg.RankingRefreshComplete);
         };
 
-        private GetPlayersFailed = (players:Models.Messages.IPlayer[]) => {
+        private OnError = (error:Models.Messages.IError) => {
             this.$scope.Players = null;
             this.$scope.HasData = false;
             this.$scope.IsLoaded = true;
             this.$scope.$emit($constants.Events.Kg.RankingRefreshComplete);
+            this.logger.LogApiError(error, this, true);
         }
     }
 

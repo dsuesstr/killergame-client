@@ -26,11 +26,10 @@
                     </div>
                     <div class="col-10 text-right">
                         <a ng-click="AcceptGame(game)" ng-if="game.canAccept" class="action"><i class="icon ion-checkmark-circled icon-large"></i></a>
-                        <a ng-click="StartGame(game)" ng-if="game.canStart" class="action"><i class="icon ion-arrow-right-a icon-large"></i></a>
                     </div>
                     <div class="col-10 text-right">
-                        <a ng-click="DeleteGame(game)" ng-if="game.canAccept" class="action"><i class="icon ion-close-circled icon-large"></i></a>
-                        <a ng-click="DeleteGame(game)" ng-if="!game.canAccept" class="action"><i class="icon ion-close-circled icon-large"></i></a>
+                        <a ng-click="DeleteGame(game)" ng-if="!game.canStart" class="action"><i class="icon ion-close-circled icon-large"></i></a>
+                        <a ng-click="StartGame(game)" ng-if="game.canStart" class="action"><i class="icon ion-arrow-right-a icon-large"></i></a>
                     </div>
                 </div>
             </ion-item>
