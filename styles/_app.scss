@@ -1,6 +1,7 @@
 // generic styles
 
 a {
+    // @todo eventually add an "external link indicator" like "ion-android-open"
     color: $calm;
     text-decoration: none;
     display: inline-block;
@@ -14,6 +15,25 @@ a {
     &:hover{
         &:after{
             width: 100%;
+        }
+    }
+}
+
+.disable-user-behavior {
+    a {
+        &:after {
+            border-bottom: none; // disable the underline effect in the slide-in-menu
+        }
+    }
+}
+
+.kg-list {
+    a {
+        color: #000000;
+        transition: 0.5s linear 0s;
+        &:hover {
+            color: #000000;
+            text-shadow: -1px 1px 7px $calm, 1px -1px 7px $calm;
         }
     }
 }
@@ -75,6 +95,7 @@ table, th, td {
 
 .kg-content {
     padding: 5vw;
+    margin-bottom: 44px; // to cancle out the footer height
 }
 .input-readonly {
     background: #fff;
