@@ -1,9 +1,33 @@
+// generic styles
+
+a {
+    color: $calm;
+    text-decoration: none;
+    display: inline-block;
+    &:after {
+        content: '';
+        display: block;
+        border-bottom: 1px solid $calm;
+        width: 0;
+        transition: 0.5s ease;
+    }
+    &:hover{
+        &:after{
+            width: 100%;
+        }
+    }
+}
+
+em {
+    font-style: italic;
+}
+
 .row {
-    padding: 0px;
+    padding: 0;
 }
 
 .col {
-    padding: 0px;
+    padding: 0;
 }
 
 .loading-container {
@@ -34,7 +58,7 @@ table, th, td {
 }
 
 .custom-item {
-    padding: 0px;
+    padding: 0;
 }
 
 .logo {
@@ -48,7 +72,6 @@ table, th, td {
 .item-content .icon {
     margin-right: 10px;
 }
-
 
 .kg-content {
     padding: 5vw;
