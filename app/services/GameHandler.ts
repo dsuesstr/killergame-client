@@ -1,24 +1,28 @@
 /// <reference path='../min.references.ts'/>
 
 module Services {
+
+    class Coordinates implements Models.Messages.ICoordinates {
+        x:number;
+        y:number;
+    }
+
     class GameHandler implements IGameHandler {
 
         static $inject = [
             $injections.Services.Urls,
             $injections.Angular.$HttpService,
             $injections.Angular.$QService,
-            $injections.Services.Logger,
             $injections.Services.ApiSettingsHandler
         ];
 
         constructor(private urls:Services.IUrls,
                     private $http:angular.IHttpService,
                     private $q:angular.IQService,
-                    private logger:Services.ILogger,
                     private apiSettingsHandler:Services.IApiSettingsHandler) {
         }
 
-        public MakeMove = (gameId:string, x:number, y:number):angular.IPromise<Models.Messages.IGame> => {
+        public MakeMove = (gameId:string, stone:Models.Stone):angular.IPromise<Models.Messages.IGame> => {
             var url = this.urls.Games() + "/" + gameId;
             var defer = this.$q.defer<Models.Messages.IGame>();
             var params = this.apiSettingsHandler.GetSecureApiParameters()
@@ -28,17 +32,15 @@ module Services {
                 return defer.promise;
             }
 
-            var model = {
-                x: x,
-                y: y
-            };
+            var coordinates = new Coordinates();
+            coordinates.x = stone.X;
+            coordinates.y = stone.Y;
 
-            this.$http.put(url, model, params).success((response:any) => {
+            this.$http.put(url, coordinates, params).success((response:any) => {
                 defer.resolve(response.game);
             })
                 .error((error:Models.Messages.IError, status: number) => {
                     this.apiSettingsHandler.CheckResponse(error);
-
                     defer.reject(error);
                 });
 
@@ -59,7 +61,6 @@ module Services {
                 defer.resolve(response.game);
             }).error((error:Models.Messages.IError, status: number) => {
                     this.apiSettingsHandler.CheckResponse(error);
-
                     defer.reject(error);
                 });
 
@@ -82,10 +83,8 @@ module Services {
                 })
                 .error((error:Models.Messages.IError, status: number) => {
                     this.apiSettingsHandler.CheckResponse(error);
-
                     defer.reject(error);
                 });
-
             return defer.promise;
         };
 
@@ -107,8 +106,7 @@ module Services {
                 })
                 .error((error:Models.Messages.IError, status: number) => {
                     this.apiSettingsHandler.CheckResponse(error);
-
-                    defer.reject();
+                    defer.reject(error);
                 });
 
             return defer.promise;
@@ -130,7 +128,6 @@ module Services {
                 })
                 .error((error:Models.Messages.IError, status: number) => {
                     this.apiSettingsHandler.CheckResponse(error);
-
                     defer.reject(error);
                 });
 

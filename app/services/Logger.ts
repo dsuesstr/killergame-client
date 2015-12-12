@@ -10,6 +10,9 @@ module Services {
             toastr.options.hideDuration = 500;
             toastr.options.positionClass = "toast-top-right";
             toastr.options.closeButton = true;
+            toastr.options.preventDuplicates = true;
+            toastr.options.newestOnTop = true;
+            toastr.options.progressBar = true;
         }
 
         public Log = (message:string, data:any, source:any, showToast:boolean) => {

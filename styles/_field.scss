@@ -79,6 +79,7 @@ $field__stone_diameter: 9vw;
     div {
       @include stone-player;
       cursor: cell;
+      opacity: 0.5;
     }
     div.player-1 {
       @include stone-player-1;

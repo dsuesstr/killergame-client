@@ -9,7 +9,7 @@ module Models {
         IsPlayer2:boolean;
     }
 
-    export class ListParams implements IListParams {
+    export class ListParams {
         Limit:number;
         Offset:number;
         SortColumn:string;

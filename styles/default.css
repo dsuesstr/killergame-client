@@ -8868,11 +8868,27 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+a {
+  color: #779ECB;
+  text-decoration: none;
+  display: inline-block; }
+  a:after {
+    content: '';
+    display: block;
+    border-bottom: 1px solid #779ECB;
+    width: 0;
+    transition: 0.5s ease; }
+  a:hover:after {
+    width: 100%; }
+
+em {
+  font-style: italic; }
+
 .row {
-  padding: 0px; }
+  padding: 0; }
 
 .col {
-  padding: 0px; }
+  padding: 0; }
 
 .loading-container .loading {
   background-color: #779ECB; }
@@ -8894,7 +8910,7 @@ table, th, td {
   font-size: 0.75em; }
 
 .custom-item {
-  padding: 0px; }
+  padding: 0; }
 
 .logo {
   height: 30px; }
@@ -8925,6 +8941,12 @@ table, th, td {
   cursor: pointer;
   background: #f8f8f8; }
 
+.card-game {
+  margin: 0;
+  padding: 0; }
+  .card-game > .item {
+    padding: 0; }
+
 .game-field {
   width: 90vw; }
   .game-field .col-10 {
@@ -8954,12 +8976,13 @@ table, th, td {
   box-sizing: border-box;
   cursor: cell; }
 .slot-available:hover div {
-  border-radius: 4.5vw;
+  border-radius: 50%;
   box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.5);
   width: 9vw;
   height: 9vw;
   position: relative;
-  cursor: cell; }
+  cursor: cell;
+  opacity: 0.5; }
 .slot-available:hover div.player-1 {
   border: 2px solid #D0A600;
   background: radial-gradient(ellipse at center, #7F6100 1%, #7F6100 25%, #FFC900 100%); }
@@ -8968,7 +8991,7 @@ table, th, td {
   background: radial-gradient(ellipse at center, #19662F 1%, #19662F 25%, #0CCC42 100%); }
 
 .stone-player-1 {
-  border-radius: 4.5vw;
+  border-radius: 50%;
   box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.5);
   width: 9vw;
   height: 9vw;
@@ -8978,7 +9001,7 @@ table, th, td {
   cursor: not-allowed; }
 
 .stone-player-2 {
-  border-radius: 4.5vw;
+  border-radius: 50%;
   box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.5);
   width: 9vw;
   height: 9vw;
@@ -8986,5 +9009,17 @@ table, th, td {
   border: 2px solid #0AB237;
   background: radial-gradient(ellipse at center, #19662F 1%, #19662F 25%, #0CCC42 100%);
   cursor: not-allowed; }
+
+.stone-win {
+  border-color: rgba(255, 0, 0, 0.7);
+  animation: pulse 2s infinite; }
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.8); }
+  70% {
+    box-shadow: 0 0 0 1vw rgba(255, 0, 0, 0); }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } }
 
 /*# sourceMappingURL=default.css.map */

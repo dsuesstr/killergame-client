@@ -1,6 +1,11 @@
 module Models {
     export module Messages {
 
+        export interface ICoordinates {
+            x:number;
+            y:number;
+        }
+
         export interface IGame {
             player1:string;
             player2:string;

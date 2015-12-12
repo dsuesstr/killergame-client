@@ -50,7 +50,7 @@ module Services {
 
     export interface IGameHandler {
         CreateGame(model:Models.Messages.ICreateGame):angular.IPromise<Models.Messages.IGame>;
-        MakeMove(gameId:string, x:number, y:number):angular.IPromise<Models.Messages.IGame>;
+        MakeMove(gameId:string, stone:Models.Stone):angular.IPromise<Models.Messages.IGame>;
         Forfeit(gameId:string):angular.IPromise<Models.Messages.IGame>;
         DeleteGame(gameId:string):angular.IPromise<void>;
         AcceptGame(gameId:string):angular.IPromise<Models.Messages.IGame>;
@@ -75,8 +75,8 @@ module Services {
 
     export interface IPlayerProvider {
         GetPlayer(playerId:string): angular.IPromise<Models.Messages.IPlayer>;
-        GetAllPlayers(listParams:Models.IListParams): angular.IPromise<Models.Messages.IPlayer[]>;
-        GetAvailablePlayers(listParams:Models.IListParams): angular.IPromise<Models.Messages.IPlayer[]>;
+        GetAllPlayers(listParams:Models.ListParams): angular.IPromise<Models.Messages.IPlayer[]>;
+        GetAvailablePlayers(listParams:Models.ListParams): angular.IPromise<Models.Messages.IPlayer[]>;
         UpdateCurrentPlayer(player:Models.Messages.IPlayerUpdate): angular.IPromise<Models.Messages.IPlayer>;
         SetCurrentPlayer(player:Models.Messages.IPlayer);
         GetCurrentPlayer():Models.Messages.IPlayer;

@@ -1,11 +1,9 @@
 /// <reference path='../min.references.ts'/>
 module Controllers {
-
-
     interface IGameScope extends angular.IScope {
         Forfeit();
         LeaveGame();
-        MakeMove(x:number,y:number);
+        MakeMove(stone:Models.Stone);
         GetSizeArray(size:number):Array<number>;
         IsCheckerTypeA(x:number,y:number);
         IsWinningStone(x:number,y:number);
@@ -33,6 +31,8 @@ module Controllers {
             $injections.Angular.$Scope,
             $injections.Angular.$IntervalService,
             $injections.UIRouter.$StateParams,
+            $injections.UIRouter.$StateService,
+            $injections.Angular.$Window,
             $injections.Constants.$Angular,
             $injections.Services.Navigation,
             $injections.Ionic.$ionicPopup,
@@ -46,6 +46,8 @@ module Controllers {
         constructor(private $scope: IGameScope,
                     private $interval: angular.IIntervalService,
                     private $stateParams:angular.ui.IStateParamsService,
+                    private $state:angular.ui.IStateService,
+                    private $window:angular.IWindowService,
                     private $angular:angular.IAngularStatic,
                     private navigation: Services.INavigation,
                     private $ionicPopup: any,
@@ -66,22 +68,32 @@ module Controllers {
             $scope.GetSizeArray = this.GetSizeArray;
             $scope.IsCheckerTypeA = this.IsCheckerTypeA;
             $scope.IsWinningStone = this.IsWinningStone;
-            $scope.$on($constants.Events.Destroy, this.LeaveGame);
+
+
             $scope.CurrentPlayer = playerProvider.GetCurrentPlayer();
             $scope.CanMove = false;
             $scope.GameLoaded = false;
             $scope.ResultMessage = "";
+
+            $scope.$on($constants.Events.Destroy, this.LeaveGame);
+
+            this.$window.onbeforeunload = this.ExitApp;
 
             this.gameId = this.GetGameId();
             this.intervalPromise = this.$interval(this.Refresh, $constants.Intervals.GameRefreshInterval);
             this.Refresh();
         }
 
-        private MakeMove = (x:number,y:number) => {
+        private ExitApp = (event:any) => {
+            //TODO: allow refresh?
+            this.gameHandler.Forfeit(this.$scope.Game.gameId);
+        }
+
+        private MakeMove = (stone:Models.Stone) => {
             if(this.$scope.CanMove) {
                 this.CancelRefresh();
                 this.$scope.CanMove = false;
-                this.gameHandler.MakeMove(this.$scope.Game.gameId, x, y).then(this.MakeMoveSuccessful, this.MakeMoveFailed);
+                this.gameHandler.MakeMove(this.$scope.Game.gameId, stone).then(this.MakeMoveSuccessful, this.MakeMoveFailed);
             }
             else {
                 this.logger.LogWarning("It's not your turn mate!", null, this, true);
@@ -93,8 +105,8 @@ module Controllers {
             this.intervalPromise = this.$interval(this.Refresh, $constants.Intervals.GameRefreshInterval);
         };
 
-        private MakeMoveFailed = (game:Models.Messages.IGame) => {
-            this.Refresh();
+        private MakeMoveFailed = (error:Models.Messages.IError) => {
+            this.logger.LogError(error.key, error, this, true);
             this.intervalPromise = this.$interval(this.Refresh, $constants.Intervals.GameRefreshInterval);
         };
 
@@ -160,8 +172,8 @@ module Controllers {
             this.$scope.GameLoaded = true;
         };
 
-        private GetGameFailed = (game:Models.Messages.IGame) => {
-
+        private GetGameFailed = (error:Models.Messages.IError) => {
+            this.logger.LogError(error.key, error, this, true);
         };
 
         private SetGameInfo = (game:Models.Messages.IGame) => {
@@ -215,6 +227,9 @@ module Controllers {
         };
 
         private GetCanMove = (game:Models.Messages.IGame) => {
+            if(game.status == $constants.Game.States.Finished) {
+                return false;
+            }
             if(game.player1 == this.$scope.CurrentPlayer.username) {
                 return game.activePlayer == $constants.Game.Player1;
             }
@@ -233,6 +248,11 @@ module Controllers {
                     this.CancelRefresh();
                     this.gameHandler.Forfeit(this.$scope.Game.gameId).then(this.ForfeitSuccessful, this.ForfeitFailed)
                 }
+                else {
+                    if(this.$state.current.name !== $injections.Routes.GameState) {
+                        this.navigation.Game(this.$scope.Game);
+                    }
+                }
             });
         };
 
@@ -241,8 +261,8 @@ module Controllers {
             this.navigation.Lobby();
         };
 
-        private ForfeitFailed = (game:Models.Messages.IGame) => {
-
+        private ForfeitFailed = (error:Models.Messages.IError) => {
+            this.logger.LogError(error.key, error, this, true);
         };
 
         private GetGameId = () => {
@@ -256,7 +276,7 @@ module Controllers {
         private LeaveGame = () => {
             this.CancelRefresh();
             if(this.$scope.Game.status !== $constants.Game.States.Finished) {
-                this.gameHandler.Forfeit(this.gameId).then(this.ForfeitSuccessful, this.ForfeitFailed);
+                this.Forfeit();
             }
             else {
                 this.navigation.Lobby();

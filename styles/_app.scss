@@ -98,3 +98,12 @@ table, th, td {
     background: $stable;
 }
 
+
+.card-game {
+    margin:0;
+    padding: 0;
+
+    > .item {
+        padding: 0;
+    }
+}

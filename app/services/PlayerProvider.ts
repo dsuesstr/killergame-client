@@ -35,14 +35,14 @@ module Services {
             return defer.promise;
         };
 
-        public GetAllPlayers = (listParams:Models.IListParams) : angular.IPromise<Models.Messages.IPlayer[]> => {
+        public GetAllPlayers = (listParams:Models.ListParams) : angular.IPromise<Models.Messages.IPlayer[]> => {
             var url = this.urls.Register();
             url += "/limit/" + listParams.Limit + "/offset/" + listParams.Offset + "/sort/" + listParams.SortColumn + "/" + listParams.SortDirection;
 
             return this.GetPlayersList(url, false);
         };
 
-        public GetAvailablePlayers = (listParams:Models.IListParams) : angular.IPromise<Models.Messages.IPlayer[]> => {
+        public GetAvailablePlayers = (listParams:Models.ListParams) : angular.IPromise<Models.Messages.IPlayer[]> => {
 
             var url = this.urls.Players();
             url += "/available/limit/" + listParams.Limit + "/offset/" + listParams.Offset + "/sort/" + listParams.SortColumn + "/" + listParams.SortDirection;
