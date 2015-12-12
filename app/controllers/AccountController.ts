@@ -1,4 +1,5 @@
 /// <reference path='../min.references.ts'/>
+
 module Controllers {
 
     class LoginModel {
@@ -66,6 +67,10 @@ module Controllers {
             $scope.IsFormValid = this.IsFormValid;
         }
 
+        /**
+         *
+         * @constructor
+         */
         private Login = () => {
 
             var login = new LoginData();

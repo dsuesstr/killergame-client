@@ -1,12 +1,8 @@
 <ion-view clear-history title="Killergame">
-    <ion-nav-title class="kg-title">
-        <div class="home">
-            <a href="#">Killergame</a>
-        </div>
-        <div class="user">
-            <span><i class="icon ion-person"></i>{{::Model.CurrentPlayer.name}}</span>
-        </div>
+    <ion-nav-title >
+        <navbar class="kg-title" />
     </ion-nav-title>
+
     <ion-content class="kg-content">
         <ion-refresher
                 pulling-text="Pull to refresh..."

@@ -2,7 +2,7 @@ module $injections{
 
     export module Directives {
         export var RankingDirective: string = 'ranking';
-        export var FieldDirective: string = 'field';
+        export var NavbarDirective: string = 'navbar';
     }
 
     export module Constants{

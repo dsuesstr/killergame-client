@@ -32,6 +32,7 @@ class RegisterComponents {
         new Filters.FormatFilterRegister(application);
 
         new Directives.RankingDirectiveRegister(application);
+        new Directives.NavbarDirectiveRegister(application);
     }
 }
 

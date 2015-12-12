@@ -7,8 +7,8 @@ module Services {
         ];
         constructor($ionicConfig) {
             $ionicConfig.views.maxCache(0);
-            $ionicConfig.backButton.previousTitleText(true);
-            $ionicConfig.backButton.text(true);
+            $ionicConfig.backButton.previousTitleText(false);
+            $ionicConfig.backButton.text(false);
         }
     }
 
