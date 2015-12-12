@@ -1,0 +1,23 @@
+/* styles for the heaaer */
+
+.kg-title {
+  display: -webkit-flex;
+  display: flex;
+  .home {
+    width: 50%;
+    text-align: left;
+    a {
+      text-transform: uppercase;
+    }
+  }
+  .user {
+    span {
+      float: right;
+      max-width: 30vw;
+      i {
+        margin-right: 5px;
+      }
+    }
+    width: 50%;
+  }
+}
