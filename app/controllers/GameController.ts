@@ -195,7 +195,7 @@ module Controllers {
                 this.StopRefresh();
 
                 if(this.previousState == "") {
-                    this.logger.Log("game_finished", null, this, true);
+                    this.logger.Log(this.strings("game_finished"), null, this, true);
                 }
 
                 this.HandleResult(game.result, this.previousState !== "");
@@ -220,18 +220,19 @@ module Controllers {
 
             switch(result) {
                 case $constants.Game.Results.ForfeitPlayer1:
-                    this.$scope.ResultMessage = player1 + " forfeited the game. " + player2 + " won";
+                    this.$scope.ResultMessage = this.strings("forfeit_message", player1, player2);
                     break;
                 case $constants.Game.Results.ForfeitPlayer2:
-                    this.$scope.ResultMessage = player2 + " forfeited the game. " + player1 + " won!";
+                    this.$scope.ResultMessage = this.strings("forfeit_message", player2, player1);
                     break;
                 case $constants.Game.Results.WinPlayer1:
-                    this.$scope.ResultMessage = player1 + " won against " + player2;
+                    this.$scope.ResultMessage = this.strings("win_message", player1, player2);
                     break;
                 case $constants.Game.Results.WinPlayer2:
-                    this.$scope.ResultMessage = player2 + " won against " + player1;
+                    this.$scope.ResultMessage = this.strings("win_message", player2, player1);
                     break;
                 case $constants.Game.Results.Draw:
+                    this.$scope.ResultMessage = this.strings("draw_message", player2, player1);
                     default:
                     return;
             }
@@ -252,8 +253,8 @@ module Controllers {
 
         private Forfeit = () => {
             var confirmForfeit = this.$ionicPopup.confirm( {
-                title: "forfeit_confirm_title",
-                template: "forfeit_confirm"
+                title: this.strings("forfeit_confirm_title"),
+                template: this.strings("forfeit_confirm")
             });
 
             confirmForfeit.then((result:boolean) => {
@@ -271,7 +272,7 @@ module Controllers {
         };
 
         private ForfeitSuccessful = (game:Models.Messages.IGame) => {
-            this.logger.Log("forfeit_successful", null, this, true);
+            //this.logger.Log("forfeit_successful", null, this, true);
             this.StopTimeout();
             this.SetGameInfo(game);
             this.navigation.Lobby();
@@ -301,12 +302,10 @@ module Controllers {
         }
 
         private StartTimeout = () => {
-            console.log("timeout started");
             this.timeoutPromise = this.$timeout(this.Timeout, $constants.Timeouts.GameTimeout);
         }
 
         private StopTimeout = () => {
-            console.log("timeout stoped");
             this.$timeout.cancel(this.timeoutPromise);
         }
 

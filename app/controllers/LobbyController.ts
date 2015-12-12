@@ -88,7 +88,6 @@ module Controllers {
                 template: this.strings("delete_confirm")
             }).then((result:boolean) => {
                 if(result) {
-                    //TODO: then what?
                     this.gameHandler.DeleteGame(game.gameId).then(this.Refresh, this.OnError)
                 }
             });

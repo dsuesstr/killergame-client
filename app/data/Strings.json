@@ -4,166 +4,219 @@
     "value": "Really? You want to challenge {0} to a duel?"
   },
   {
-    "key": "client_login_001",
-    "value": "Hei, you're already logged in"
+    "key": "challenge_confirm_title",
+    "value": "Challenge?"
   },
   {
-    "key": "client_check_001",
-    "value": "Let's check that"
+    "key": "accept_confirm",
+    "value": "Do you want to accept the challenge from {0}?"
   },
   {
-    "key": "client_register_001",
-    "value": "A Star is born! Hello "
+    "key": "accept_confirm_title",
+    "value": "Accept?"
   },
   {
-    "key": "client_login_001",
-    "value": "Hello "
+    "key": "delete_confirm",
+    "value": "Do you want to decline this game? "
   },
   {
-    "key": "client_settings_001",
-    "value": "Settings saved"
+    "key": "delete_confirm_title",
+    "value": "Delete/Decline game? "
   },
   {
-    "key": "client_settings_002",
-    "value": "Settings not saved"
+    "key": "register_successful",
+    "value": "You're now a proud member of the killer universe. Hello {0}!"
+  },
+  {
+  "key": "login_successful",
+  "value": "Glad to see you again! Hello {0}"
+},
+  {
+    "key": "login_wait",
+    "value": "Just a little moment"
+  },
+  {
+    "key": "login_first",
+    "value": "Not so fast. You need to login first!"
+  },
+  {
+    "key": "login_already",
+    "value": "Welcome back!"
+  },
+  {
+  "key": "settings_saved",
+  "value": "You just updated your profile. Yeiii!"
+},
+  {
+    "key": "game_loading",
+    "value": "Terrabytes of data are rendered. Just a sec..."
+  },
+  {
+    "key": "game_timeout",
+    "value": "Too bad. You timed out. KO by timeout!"
+  },
+  {
+    "key": "turn_otherplayer",
+    "value": "Hands off! It's not your turn!"
+  },
+  {
+    "key": "game_finished",
+    "value": "This game is finished"
+  },
+  {
+    "key": "forfeit_confirm_title",
+    "value": "Forfeit game?"
+  },
+  {
+    "key": "forfeit_confirm",
+    "value": "Sure? A quitter never wins, a winner never quits"
+  },
+  {
+    "key": "forfeit_message",
+    "value": "{0} forfeited the game. {1} won!"
+  },
+  {
+  "key": "win_message",
+  "value": "{0} won. {1} lost!"
+  },
+  {
+    "key": "draw_message",
+    "value": "It's a draw!"
   },
   {
     "key": "database_0001",
-    "value": "there was an error querying the database",
-    "description": ""
+    "value": "there was an error querying the database"
   },
   {
     "key": "database_0002",
-    "value": "there was an error writing to the database",
-    "description": ""
+    "value": "there was an error writing to the database"
+  },
+  {
+    "key": "database_0003",
+    "value": "there was an error deleting from the database"
   },
   {
     "key": "player_register_0001",
-    "value": "not all necessary data is set",
-    "description": ""
+    "value": "not all necessary data is set"
   },
   {
     "key": "player_register_0002",
-    "value": "passwords do not match",
-    "description": ""
+    "value": "passwords do not match"
   },
   {
     "key": "player_register_0003",
-    "value": "player already exists in database",
-    "description": ""
-  },{
-  "key": "player_register_0004",
-  "value": "only own player-data can be updated",
-  "description": ""
-},
+    "value": "player already exists in database"
+  },
+  {
+    "key": "player_register_0004",
+    "value": "only own player-data can be updated"
+  },
   {
     "key": "player_update_0001",
-    "value": "not all necessary data is set",
-    "description": ""
-  },{
-  "key": "player_update_0002",
-  "value": "email address already exists in database",
-  "description": ""
-},
+    "value": "not all necessary data is set"
+  },
   {
-  "key": "player_0001",
-  "value": "player with id <playerId> does not exist",
-  "description": ""
-},
+    "key": "player_update_0002",
+    "value": "email address already exists in database"
+  },
+  {
+    "key": "player_0001",
+    "value": "player with id {0} does not exist"
+  },
   {
     "key": "player_0002",
-    "value": "player with id <username> does not exist",
-    "description": ""
+    "value": "player with id {0} does not exist"
   },
   {
     "key": "player_0003",
-    "value": "player with the given credentials does not exist",
-    "description": ""
+    "value": "player with the given credentials does not exist"
   },
   {
     "key": "player_login_0001",
-    "value": "username and/or password is invalid",
-    "description": ""
+    "value": "username and/or password is invalid"
   },
   {
     "key": "player_auth_0001",
-    "value": "token authentication failed",
-    "description": ""
+    "value": "token authentication failed"
   },
   {
     "key": "player_auth_0002",
-    "value": "no token provided",
-    "description": ""
+    "value": "no token provided"
   },
   {
     "key": "game_0001",
-    "value": "game with id \"<gameId>\" does not exist",
-    "description": ""
+    "value": "game does not exist"
   },
   {
     "key": "game_0002",
-    "value": "game does not belong to user <username>",
-    "description": ""
-  },{
-  "key": "game_0003",
-  "value": "this game is already over",
-  "description": ""
-},{
-  "key": "game_0004",
-  "value": "it is not your turn",
-  "description": ""
-},{
-  "key": "game_0005",
-  "value": "coordinates are not within bounds",
-  "description": ""
-},{
-  "key": "game_0006",
-  "value": "slot <moveData.x>/<moveData.y> cannot be used",
-  "description": ""
-},{
-  "key": "game_0007",
-  "value": "player not found in database",
-  "description": ""
-},{
-  "key": "game_0008",
-  "value": "player1 and/or player2 username not set",
-  "description": ""
-},{
-  "key": "game_0009",
-  "value": "player1 and player2 can't be the same",
-  "description": ""
-},{
-  "key": "game_0010",
-  "value": "cannot create game for other players",
-  "description": ""
-},{
-  "key": "game_0011",
-  "value": "cannot retrieve game of other players",
-  "description": ""
-},{
-  "key": "game_0012",
-  "value": "cannot make move for game of other players",
-  "description": ""
-},{
-  "key": "game_0013",
-  "value": "cannot forfeit game of other players",
-  "description": ""
-},{
-  "key": "game_0014",
-  "value": "",
-  "description": "could not create new game"
-},{
-  "key": "game_0015",
-  "value": "could not initialize new game",
-  "description": ""
-},{
-  "key": "game_0016",
-  "value": "cannot accept challenge of game if user is not the challengee",
-  "description": ""
-},
+    "value": "game does not belong to user <username>"
+  },
+  {
+    "key": "game_0003",
+    "value": "this game is already over"
+  },
+  {
+    "key": "game_0004",
+    "value": "it is not your turn"
+  },
+  {
+    "key": "game_0005",
+    "value": "coordinates are not within bounds"
+  },
+  {
+    "key": "game_0006",
+    "value": "slot {0}/{1} cannot be used"
+  },
+  {
+    "key": "game_0007",
+    "value": "player not found in database"
+  },
+  {
+    "key": "game_0008",
+    "value": "player1 and/or player2 username not set"
+  },
+  {
+    "key": "game_0009",
+    "value": "player1 and player2 can't be the same"
+  },
+  {
+    "key": "game_0010",
+    "value": "cannot create game for other players"
+  },
+  {
+    "key": "game_0011",
+    "value": "cannot retrieve game of other players"
+  },
+  {
+    "key": "game_0012",
+    "value": "cannot make move for game of other players"
+  },
+  {
+    "key": "game_0013",
+    "value": "cannot forfeit game of other players"
+  },
+  {
+    "key": "game_0014",
+    "value": "could not create new game"
+  },
+  {
+    "key": "game_0015",
+    "value": "could not initialize new game"
+  },
+  {
+    "key": "game_0016",
+    "value": "cannot accept challenge of game if user is not the challengee"
+  },
   {
     "key": "game_0017",
-    "value": "cannot accept challenge of game if status is not \"prestart\"",
-    "description": ""
+    "value": "cannot accept challenge of game if status is not 'prestart'"
+  },
+  {
+    "key": "game_0018",
+    "value": "cannot delete game of other players"
+  },
+  {
+    "key": "game_0019",
+    "value": "cannot delete game which is not in status 'prestart'"
   }
 ]

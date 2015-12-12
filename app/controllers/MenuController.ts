@@ -11,12 +11,14 @@ module Controllers {
           $injections.Angular.$Scope,
           $injections.Services.Logger,
           $injections.Services.Navigation,
+          $injections.Services.Strings,
           $injections.Services.AccountHandler
       ];
 
       constructor(private $scope:IMenuScope,
                   private logger:Services.ILogger,
                   private navigation:Services.INavigation,
+                  private strings:Services.IStrins,
                   private accountHandler:Services.IAccountHandler) {
 
           if (!this.accountHandler.IsLoggedIn()) {
@@ -28,7 +30,7 @@ module Controllers {
       }
 
       private HandleAuthenticationError = () => {
-          this.Logout("login_first", true)
+          this.Logout(this.strings("login_first"), true)
       };
 
       private Logout = (message:string, isWarning:boolean) => {

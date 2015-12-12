@@ -57,7 +57,7 @@ module Services {
                 return true;
             }
 
-            if(error.key === "player_auth_0001" || error.key == "player_auth_0002") {
+            if(error.key === $constants.Keys.PlayerAuth1 || error.key == $constants.Keys.PlayerAuth2) {
                 this.BroadcastAuthenticationError();
                 return false;
             }
