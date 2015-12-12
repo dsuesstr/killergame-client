@@ -8881,6 +8881,16 @@ a {
   a:hover:after {
     width: 100%; }
 
+.disable-user-behavior a:after {
+  border-bottom: none; }
+
+.kg-list a {
+  color: #000000;
+  transition: 0.5s linear 0s; }
+  .kg-list a:hover {
+    color: #000000;
+    text-shadow: -1px 1px 7px #779ECB, 1px -1px 7px #779ECB; }
+
 em {
   font-style: italic; }
 
@@ -8922,7 +8932,8 @@ table, th, td {
   margin-right: 10px; }
 
 .kg-content {
-  padding: 5vw; }
+  padding: 5vw;
+  margin-bottom: 44px; }
 
 .input-readonly {
   background: #fff; }

@@ -14,8 +14,8 @@ module $constants
         }
 
         export module Scroll {
-            export var RefreshComplete:string = "scroll.refreshComplete"
-            export var InfiniteScrollComplete:string = "scroll.infiniteScrollComplete"
+            export var RefreshComplete:string = "scroll.refreshComplete";
+            export var InfiniteScrollComplete:string = "scroll.infiniteScrollComplete";
         }
 
         export module IonicView {

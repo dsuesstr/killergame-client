@@ -18,6 +18,25 @@ a {
     }
 }
 
+.disable-user-behavior {
+    a {
+        &:after {
+            border-bottom: none; // disable the underline effect in the slide-in-menu
+        }
+    }
+}
+
+.kg-list {
+    a {
+        color: #000000;
+        transition: 0.5s linear 0s;
+        &:hover {
+            color: #000000;
+            text-shadow: -1px 1px 7px $calm, 1px -1px 7px $calm;
+        }
+    }
+}
+
 em {
     font-style: italic;
 }
@@ -75,6 +94,7 @@ table, th, td {
 
 .kg-content {
     padding: 5vw;
+    margin-bottom: 44px; // to cancle out the footer height
 }
 .input-readonly {
     background: #fff;

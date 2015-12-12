@@ -18,7 +18,7 @@ module Controllers {
       constructor(private $scope:IMenuScope,
                   private logger:Services.ILogger,
                   private navigation:Services.INavigation,
-                  private strings:Services.IStrins,
+                  private strings:Services.IStrings,
                   private accountHandler:Services.IAccountHandler) {
 
           if (!this.accountHandler.IsLoggedIn()) {
