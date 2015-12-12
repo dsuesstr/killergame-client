@@ -25,12 +25,7 @@ module Controllers {
 
           $scope.Logout = this.Logout;
           $scope.$on($constants.Events.Kg.AuthenticationError, this.HandleAuthenticationError);
-          $scope.$on($constants.Events.Destroy, this.DestroyMenu);
       }
-
-      private DestroyMenu = () => {
-          //console.log("Destroymenu");
-      };
 
       private HandleAuthenticationError = () => {
           this.Logout("login_first", true)

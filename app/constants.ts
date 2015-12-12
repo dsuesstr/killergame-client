@@ -55,6 +55,10 @@ module $constants
         export var GameId = "gameId";
     }
 
+    export module Timeouts {
+        export var GameTimeout = 30000;
+    }
+
     export module Intervals {
         export var LobbyRefreshInterval = 1000;
         export var GameRefreshInterval = 1000;

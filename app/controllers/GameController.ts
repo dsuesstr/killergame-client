@@ -7,7 +7,8 @@ module Controllers {
         GetSizeArray(size:number):Array<number>;
         IsCheckerTypeA(x:number,y:number);
         IsWinningStone(x:number,y:number);
-        GetFieldValue(x:number,y:number):Models.Stone
+        GetFieldValue(x:number,y:number):Models.Stone;
+
         Game:Models.Messages.IGame;
         CanMove:boolean;
         GameLoaded:boolean;
@@ -23,6 +24,7 @@ module Controllers {
     class GameController {
 
         private intervalPromise:angular.IPromise<void>;
+        private timeoutPromise:angular.IPromise<void>;
         private previousState:string = "";
         private previousField:Array<Array<Models.Stone>>;
         private gameId:string;
@@ -30,6 +32,7 @@ module Controllers {
         static $inject = [
             $injections.Angular.$Scope,
             $injections.Angular.$IntervalService,
+            $injections.Angular.$TimeoutService,
             $injections.UIRouter.$StateParams,
             $injections.UIRouter.$StateService,
             $injections.Angular.$Window,
@@ -46,6 +49,7 @@ module Controllers {
 
         constructor(private $scope: IGameScope,
                     private $interval: angular.IIntervalService,
+                    private $timeout: angular.ITimeoutService,
                     private $stateParams:angular.ui.IStateParamsService,
                     private $state:angular.ui.IStateService,
                     private $window:angular.IWindowService,
@@ -71,7 +75,6 @@ module Controllers {
             $scope.IsCheckerTypeA = this.IsCheckerTypeA;
             $scope.IsWinningStone = this.IsWinningStone;
 
-
             $scope.CurrentPlayer = playerProvider.GetCurrentPlayer();
             $scope.CanMove = false;
             $scope.GameLoaded = false;
@@ -82,9 +85,17 @@ module Controllers {
             this.$window.onbeforeunload = this.ExitApp;
 
             this.gameId = this.GetGameId();
-            this.intervalPromise = this.$interval(this.Refresh, $constants.Intervals.GameRefreshInterval);
+            this.StartRefresh();
             this.Refresh();
         }
+
+        private Timeout = () => {
+            if(this.$scope.Game.status !== $constants.Game.States.Finished) {
+                this.StopRefresh();
+                this.logger.LogWarning(this.strings("game_timeout"), null, this, true);
+                this.gameHandler.Forfeit(this.$scope.Game.gameId).then(this.ForfeitSuccessful, this.OnError)
+            }
+        };
 
         private ExitApp = (event:any) => {
             //TODO: Handle refresh view or
@@ -93,7 +104,7 @@ module Controllers {
 
         private MakeMove = (stone:Models.Stone) => {
             if(this.$scope.CanMove) {
-                this.CancelRefresh();
+                this.StopRefresh();
                 this.$scope.CanMove = false;
                 this.gameHandler.MakeMove(this.$scope.Game.gameId, stone).then(this.MakeMoveSuccessful, this.MakeMoveFailed);
             }
@@ -103,13 +114,14 @@ module Controllers {
         };
 
         private MakeMoveSuccessful = (game:Models.Messages.IGame) => {
+            this.StopTimeout();
             this.SetGameInfo(game);
-            this.intervalPromise = this.$interval(this.Refresh, $constants.Intervals.GameRefreshInterval);
+            this.StartRefresh();
         };
 
         private MakeMoveFailed = (error:Models.Messages.IError) => {
             this.OnError(error);
-            this.intervalPromise = this.$interval(this.Refresh, $constants.Intervals.GameRefreshInterval);
+            this.StartRefresh();
         };
 
         private GetFieldValue = (x:number, y:number):Models.Stone => {
@@ -167,6 +179,9 @@ module Controllers {
         };
 
         private SetGameInfo = (game:Models.Messages.IGame) => {
+
+            var currentCanMove = this.$scope.CanMove;
+
             this.$scope.Game = game;
             this.$scope.CanMove = this.GetCanMove(game);
             this.$scope.OtherPlayer = game.player1 == this.$scope.CurrentPlayer.username ? game.player2 : game.player1;
@@ -177,13 +192,21 @@ module Controllers {
             this.previousField = this.$scope.Field;
 
             if(game.status == $constants.Game.States.Finished) {
-                this.CancelRefresh();
+                this.StopRefresh();
 
                 if(this.previousState == "") {
                     this.logger.Log("game_finished", null, this, true);
                 }
 
                 this.HandleResult(game.result, this.previousState !== "");
+            }
+
+            if(!currentCanMove && this.$scope.CanMove) {
+                this.StartTimeout();
+            }
+
+            if(!this.$scope.CanMove) {
+                this.StopTimeout();
             }
 
             this.previousState = game.status;
@@ -235,12 +258,13 @@ module Controllers {
 
             confirmForfeit.then((result:boolean) => {
                 if(result) {
-                    this.CancelRefresh();
+                    this.StopRefresh();
                     this.gameHandler.Forfeit(this.$scope.Game.gameId).then(this.ForfeitSuccessful, this.OnError)
                 }
                 else {
                     if(this.$state.current.name !== $injections.Routes.GameState) {
                         this.navigation.Game(this.$scope.Game);
+                        this.StartRefresh();
                     }
                 }
             });
@@ -248,6 +272,8 @@ module Controllers {
 
         private ForfeitSuccessful = (game:Models.Messages.IGame) => {
             this.logger.Log("forfeit_successful", null, this, true);
+            this.StopTimeout();
+            this.SetGameInfo(game);
             this.navigation.Lobby();
         };
 
@@ -256,7 +282,8 @@ module Controllers {
         };
 
         private LeaveGame = () => {
-            this.CancelRefresh();
+            this.StopRefresh();
+            this.StopTimeout();
             if(this.$scope.Game.status !== $constants.Game.States.Finished) {
                 this.Forfeit();
             }
@@ -265,8 +292,22 @@ module Controllers {
             }
         };
 
-        private CancelRefresh = () => {
+        private StartRefresh = () => {
+            this.intervalPromise = this.$interval(this.Refresh, $constants.Intervals.GameRefreshInterval);
+        }
+
+        private StopRefresh = () => {
             this.$interval.cancel(this.intervalPromise);
+        }
+
+        private StartTimeout = () => {
+            console.log("timeout started");
+            this.timeoutPromise = this.$timeout(this.Timeout, $constants.Timeouts.GameTimeout);
+        }
+
+        private StopTimeout = () => {
+            console.log("timeout stoped");
+            this.$timeout.cancel(this.timeoutPromise);
         }
 
         private GetGameId = () => {

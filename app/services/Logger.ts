@@ -4,7 +4,9 @@ module Services {
     'use strict';
 
     class Logger implements ILogger {
-        constructor(private $log: angular.ILogService) {
+
+        constructor(private $log: angular.ILogService,
+                    private strings: Services.IStrings) {
             toastr.options.timeOut = 3000;
             toastr.options.showDuration = 1200;
             toastr.options.hideDuration = 500;
@@ -33,7 +35,7 @@ module Services {
         };
 
         public LogApiError = (error:Models.Messages.IError, source:any, showToast:boolean) => {
-            this.LogError(error.key, error, source, showToast);
+            this.LogError(this.strings(error.key), error, source, showToast);
         };
 
         public GetLogFn = (moduleId:any, fnName:string): any => {
@@ -79,5 +81,5 @@ module Services {
     }
 
     //Register DI    
-    angular.module($injections.Constants.AppName).factory('Logger', ['$log', ($log) => new Logger($log)]);
+    angular.module($injections.Constants.AppName).factory('Logger', ['$log', $injections.Services.Strings, ($log, strings) => new Logger($log, strings)]);
 }

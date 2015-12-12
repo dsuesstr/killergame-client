@@ -107,13 +107,13 @@ module Controllers {
 
         private OnRegisterSuccessful = (player:Models.Messages.IPlayer) => {
             this.$ionicLoading.hide();
-            this.logger.LogSuccess(this.strings("login_successful") + player.username, null, this, true);
+            this.logger.LogSuccess(this.strings("register_successful", player.username), null, this, true);
             this.navigation.Lobby();
         };
 
         private OnLoginSuccessful = (player:Models.Messages.IPlayer) => {
             this.$ionicLoading.hide();
-            this.logger.LogSuccess(this.strings("register_successful") + player.username, null, this, true);
+            this.logger.LogSuccess(this.strings("login_successful", player.username), null, this, true);
             this.navigation.Lobby();
         };
 

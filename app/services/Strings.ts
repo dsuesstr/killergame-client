@@ -10,20 +10,18 @@ module Services
             $injections.Angular.$HttpService,
             $injections.Angular.$QService,
             $injections.Constants.$Enumerable,
-            $injections.Services.LocalStorage,
-            $injections.Services.Logger,
+            $injections.Services.LocalStorage
         ];
 
         constructor(private $filter:angular.IFilterService,
                     private $http:angular.IHttpService,
                     private $q:angular.IQService,
                     private $enumerable: linqjs.EnumerableStatic,
-                    private localStorage:Services.ILocalStorage,
-                    private logger:Services.ILogger) {
+                    private localStorage:Services.ILocalStorage){
 
             this.format = $filter($injections.Filters.FormatFilter);
 
-            this.LoadStrings().then(this.StringsLoaded, this.StringsLoadedFailed)
+            this.LoadStrings().then(this.StringsLoaded, this.OnError)
         }
 
         public Format:IStrings = (key:string, ...args:any[]) => {
@@ -58,15 +56,14 @@ module Services
                 });
 
             return defer.promise;
-        }
+        };
 
         private StringsLoaded = (texts:Array<string>) => {
-            this.logger.Log("Strings loaded", texts, this, false);
             this.localStorage.Save($constants.Keys.Strings, texts);
         };
 
-        private StringsLoadedFailed = (error:any) => {
-            this.logger.LogError("Can't load strings", error, this, false);
+        private OnError = (error:any) => {
+            this.localStorage.Save($constants.Keys.Strings, null);
         };
     }
 
