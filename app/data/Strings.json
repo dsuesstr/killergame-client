@@ -1,5 +1,13 @@
 [
   {
+    "key": "connection_alert",
+    "value": "Yo! Where's your interwebz?"
+  },
+  {
+    "key": "connection_alert_title",
+    "value": "Connection Problems"
+  },
+  {
     "key": "challenge_confirm",
     "value": "Really? You want to challenge {0} to a duel?"
   },
