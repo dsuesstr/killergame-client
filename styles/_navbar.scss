@@ -4,27 +4,27 @@
   display: -webkit-flex;
   display: flex;
 
-  > .navbar-item {
+  > .navbar--item {
     width: 50%;
   }
 
-  > .navbar-item-home {
+  > .navbar--item-home {
 
     text-align: left;
 
-    > .navbar-link {
+    > .navbar--link {
       text-transform: uppercase;
     }
   }
 
-  > .navbar-item-user {
+  > .navbar--item-user {
 
     text-align: right;
 
-    > .navbar-link {
+    > .navbar--link {
       //float: right;
       max-width: 30vw;
-      > .icon {
+      > .navbar--icon {
         margin-right: 5px;
       }
     }

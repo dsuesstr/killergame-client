@@ -9064,17 +9064,17 @@ table, th, td {
 .navbar {
   display: -webkit-flex;
   display: flex; }
-  .navbar > .navbar-item {
+  .navbar > .navbar--item {
     width: 50%; }
-  .navbar > .navbar-item-home {
+  .navbar > .navbar--item-home {
     text-align: left; }
-    .navbar > .navbar-item-home > .navbar-link {
+    .navbar > .navbar--item-home > .navbar--link {
       text-transform: uppercase; }
-  .navbar > .navbar-item-user {
+  .navbar > .navbar--item-user {
     text-align: right; }
-    .navbar > .navbar-item-user > .navbar-link {
+    .navbar > .navbar--item-user > .navbar--link {
       max-width: 30vw; }
-      .navbar > .navbar-item-user > .navbar-link > .icon {
+      .navbar > .navbar--item-user > .navbar--link > .icon {
         margin-right: 5px; }
 
 /*# sourceMappingURL=default.css.map */
