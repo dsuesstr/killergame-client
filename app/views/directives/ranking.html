@@ -7,7 +7,10 @@
             <div class="col text-right">Score</div>
         </div>
     </ion-item>
-    <ion-item ng-repeat="player in Players track by $index" ng-click="ShowPlayer(player)" class="item-ranking">
+    <ion-item ng-repeat="player in Players track by $index"
+              ng-click="ShowPlayer(player)"
+              class="item-ranking"
+              ng-Class="player.playerId == CurrentPlayer.playerId ? 'item-currentplayer' : ''">
         <div class="row">
             <div class="col" ng-bind="$index+1"></div>
             <div class="col-75" ng-bind="player.username"></div>

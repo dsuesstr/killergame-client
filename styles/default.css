@@ -8952,6 +8952,9 @@ table, th, td {
   cursor: pointer;
   background: #f8f8f8; }
 
+.item-currentplayer {
+  background: rgba(119, 158, 203, 0.1); }
+
 .card-game {
   margin: 0;
   padding: 0; }

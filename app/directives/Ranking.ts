@@ -4,9 +4,11 @@ module Directives {
 
     interface IRankingDirectiveScope extends angular.IScope {
         Players:Models.Messages.IPlayer[];
+        CurrentPlayer:Models.Messages.IPlayer;
         IsLoaded:boolean;
         HasData:boolean;
         ShowPlayer(player:Models.Messages.IPlayer);
+        IsCurrentPlayer(player:Models.Messages.IPlayer):boolean;
     }
 
     class RankingDirective implements angular.IDirective {
@@ -28,6 +30,7 @@ module Directives {
 
         link = ($scope:IRankingDirectiveScope) => {
             this.$scope = $scope;
+            this.$scope.CurrentPlayer = this.playerProvider.GetCurrentPlayer();
             this.$scope.ShowPlayer = this.ShowPlayer;
             this.$scope.$on($constants.Events.Kg.RankingRefresh, this.Refresh);
             this.Refresh();
