@@ -1,8 +1,10 @@
-$positive: #77DD77 !default;
-$calm: #779ECB !default;
+
+
+@import "variables";
 
 @import "../bower_components/ionic/scss/ionic";
+
 @import "app";
 @import "field"; // styles needed for displaying the field
-@import "header"; // styles needed for the header
+@import "navbar"; // styles needed for the header
 

@@ -9061,19 +9061,20 @@ table, th, td {
   100% {
     box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } }
 /* styles for the heaaer */
-.kg-title {
+.navbar {
   display: -webkit-flex;
   display: flex; }
-  .kg-title .home {
-    width: 50%;
-    text-align: left; }
-    .kg-title .home a {
-      text-transform: uppercase; }
-  .kg-title .user {
+  .navbar > .navbar-item {
     width: 50%; }
-    .kg-title .user span {
+  .navbar > .navbar-item-home {
+    text-align: left; }
+    .navbar > .navbar-item-home > .navbar-link {
+      text-transform: uppercase; }
+  .navbar > .navbar-item-user {
+    text-align: right; }
+    .navbar > .navbar-item-user > .navbar-link {
       max-width: 30vw; }
-      .kg-title .user span i {
+      .navbar > .navbar-item-user > .navbar-link > .icon {
         margin-right: 5px; }
 
 /*# sourceMappingURL=default.css.map */

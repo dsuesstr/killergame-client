@@ -1,23 +1,33 @@
 /* styles for the heaaer */
 
-.kg-title {
+.navbar {
   display: -webkit-flex;
   display: flex;
-  .home {
+
+  > .navbar-item {
     width: 50%;
+  }
+
+  > .navbar-item-home {
+
     text-align: left;
-    a {
+
+    > .navbar-link {
       text-transform: uppercase;
     }
   }
-  .user {
-    span {
+
+  > .navbar-item-user {
+
+    text-align: right;
+
+    > .navbar-link {
       //float: right;
       max-width: 30vw;
-      i {
+      > .icon {
         margin-right: 5px;
       }
     }
-    width: 50%;
+
   }
 }

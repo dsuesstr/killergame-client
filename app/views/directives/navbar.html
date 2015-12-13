@@ -1,9 +1,9 @@
 
-<div class="home">
-    <a ui-sref="menu.lobby">Killergame</a>
+<div class="navbar-item navbar-item-home">
+    <a ui-sref="menu.lobby" class="navbar-link">Killergame</a>
 </div>
-<div class="user text-right">
-    <a ui-sref="menu.player({playerId: CurrentPlayer.playerId})">
-        <span><i class="icon ion-person"></i><span ng-bind="CurrentPlayer.name"></span></span>
+<div class="navbar-item navbar-item-user">
+    <a ui-sref="menu.player({playerId: CurrentPlayer.playerId})" class="navbar-link">
+        <i class="icon ion-person"></i>{{::CurrentPlayer.name}}
     </a>
 </div>
