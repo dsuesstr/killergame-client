@@ -20,7 +20,6 @@ module Directives {
 
         link = ($scope:INavbarScope) => {
             $scope.CurrentPlayer = this.playerProvider.GetCurrentPlayer();
-            console.log($scope.CurrentPlayer.username)
         };
     }
 

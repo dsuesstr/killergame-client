@@ -40,6 +40,9 @@ module Services
         public GamesAccepted = ():string => {
             return this.Games() + "/accepted";
         }
+        public GamesFinished = ():string => {
+            return this.Games() + "/finished";
+        }
     }
 
     export class UrlsRegister {

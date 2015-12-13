@@ -76,6 +76,10 @@ module Services {
             return this.GetGameList(this.urls.GamesAccepted());
         }
 
+        public GetFinishedGames = (playerId:string) => {
+            return this.GetGameList(this.urls.GamesFinished() + "/" + playerId);
+        }
+
         private GetGameList = (url:string):angular.IPromise<Models.Messages.IGame[]> => {
             var defer = this.$q.defer<Models.Messages.IGame[]>();
             var params = this.apiSettingsHandler.GetSecureApiParameters()

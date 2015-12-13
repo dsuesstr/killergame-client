@@ -8961,6 +8961,31 @@ table, th, td {
   .card-game > .item {
     padding: 0; }
 
+.icon-player {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  max-width: 40px;
+  max-height: 40px;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  font-size: 40px;
+  text-align: center; }
+
+.item-games {
+  padding: 0; }
+
+.list-games {
+  margin: 0; }
+
+.item-game .winner {
+  font-weight: 700; }
+.item-game.winner {
+  background: rgba(51, 205, 95, 0.1); }
+.item-game.loser {
+  background: rgba(239, 71, 58, 0.1); }
+
 .game-field {
   width: 90vw; }
   .game-field .col-10 {

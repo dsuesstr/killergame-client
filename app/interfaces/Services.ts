@@ -46,6 +46,7 @@ module Services {
         GamesChallengee():string;
         GamesChallenger():string;
         GamesAccepted():string;
+        GamesFinished():string;
     }
 
     export interface IGameHandler {
@@ -64,6 +65,7 @@ module Services {
         GetChallengerGames():angular.IPromise<Models.Messages.IGame[]>;
         GetChallengeeGames():angular.IPromise<Models.Messages.IGame[]>;
         GetAcceptedGames():angular.IPromise<Models.Messages.IGame[]>;
+        GetFinishedGames(playerId:string):angular.IPromise<Models.Messages.IGame[]>;
     }
 
     //TODO: Move from IPlayerProvider
