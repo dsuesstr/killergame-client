@@ -27,6 +27,9 @@
                                      ng-class="game.result === 'win_player2' || game.result === 'forfeit_player1'  ? 'winner' : ''"></div>
                             </div>
                         </ion-item>
+                        <ion-item ng-hide="Games.length > 0">
+                            This player hasn't played any games
+                        </ion-item>
                 </ion-list>
             </div>
         </div>

@@ -1,4 +1,5 @@
-module $injections{
+module $injections {
+    'use strict';
 
     export module Directives {
         export var RankingDirective: string = 'ranking';

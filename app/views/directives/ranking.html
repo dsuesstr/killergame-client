@@ -20,6 +20,11 @@
     <ion-item ng-hide="HasData">
         No Players to show
     </ion-item>
+
+
 </ion-list>
+<button class="button button-full button-calm" ng-click="LoadMore()" ng-if="HasMore">
+    Load more
+</button>
 
 <ion-spinner icon="lines" ng-hide="IsLoaded"></ion-spinner>

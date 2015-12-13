@@ -1,5 +1,7 @@
 /// <reference path='../min.references.ts'/>
 module Controllers {
+    'use strict';
+
     interface IGameScope extends angular.IScope {
         Forfeit();
         LeaveGame();
@@ -70,7 +72,7 @@ module Controllers {
             $scope.Forfeit = this.Forfeit;
             $scope.LeaveGame = this.LeaveGame;
             $scope.MakeMove = this.MakeMove;
-            $scope.GetFieldValue = this.GetFieldValue;
+            $scope.GetFieldValue = this.GetStone;
             $scope.GetSizeArray = this.GetSizeArray;
             $scope.IsCheckerTypeA = this.IsCheckerTypeA;
             $scope.IsWinningStone = this.IsWinningStone;
@@ -89,6 +91,11 @@ module Controllers {
             this.Refresh();
         }
 
+        /**
+         * Executes after the timeout is reached
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         */
         private Timeout = () => {
             if(this.$scope.Game.status !== $constants.Game.States.Finished) {
                 this.StopRefresh();
@@ -97,11 +104,23 @@ module Controllers {
             }
         };
 
-        private ExitApp = (event:any) => {
+        /**
+         * Handler to execute when leaving the app
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Event} event
+         */
+        private ExitApp = (event:Event) => {
             //TODO: Handle refresh view or
             this.gameHandler.Forfeit(this.$scope.Game.gameId);
         };
 
+        /**
+         * Make a move on the field
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Stone} stone
+         */
         private MakeMove = (stone:Models.Stone) => {
             if(this.$scope.CanMove) {
                 this.StopRefresh();
@@ -113,18 +132,37 @@ module Controllers {
             }
         };
 
+        /**
+         *  Sets the new gameinfo after a successful move
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IGame} game
+         */
         private MakeMoveSuccessful = (game:Models.Messages.IGame) => {
             this.StopTimeout();
             this.SetGameInfo(game);
             this.StartRefresh();
         };
 
+        /**
+         * Handles Errors from MakeMove
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IError} error
+         */
         private MakeMoveFailed = (error:Models.Messages.IError) => {
             this.OnError(error);
             this.StartRefresh();
         };
 
-        private GetFieldValue = (x:number, y:number):Models.Stone => {
+        /**
+         * Gets a specific stone from the field by it's coordinates
+         *
+         * @param {number} x
+         * @param {number} y
+         * @returns {Models.Stone}
+         */
+        private GetStone = (x:number, y:number):Models.Stone => {
             if(this.$scope.Field == undefined)
                 return null;
 
@@ -163,21 +201,44 @@ module Controllers {
             return false;
         };
 
+        /**
+         * Refreshes the game
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         */
         private Refresh = () => {
             this.gameProvider.GetGame(this.gameId).then(this.GetGameSuccess, this.GetGameFailed);
         };
 
+        /**
+         * Handles the success of GetGame
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IGame} game
+         */
         private GetGameSuccess = (game:Models.Messages.IGame) => {
             this.SetGameInfo(game);
             this.$ionicLoading.hide();
             this.$scope.GameLoaded = true;
         };
 
+        /**
+         * Handles the failed-response of GetGame
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IError} error
+         */
         private GetGameFailed = (error:Models.Messages.IError) => {
             this.OnError(error);
             this.$ionicLoading.hide();
         };
 
+        /**
+         * Sets the game info for a given game. Sets the field, the LastMove, CanMove and playerClasses
+         *
+         * @param {Models.Messages.IGame} game
+         * @constructor
+         */
         private SetGameInfo = (game:Models.Messages.IGame) => {
 
             var currentCanMove = this.$scope.CanMove;
@@ -212,6 +273,14 @@ module Controllers {
             this.previousState = game.status;
         };
 
+        /**
+         * Handles the result of a game and sets the game message accordingly.
+         * Shows a toast if showToast = true
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {string} result
+         * @param {boolean} showToast
+         */
         private HandleResult = (result:string, showToast:boolean) => {
 
             var isPlayer1 = this.$scope.Game.player1 == this.$scope.CurrentPlayer.username;
@@ -240,6 +309,13 @@ module Controllers {
             this.logger.Log(this.$scope.ResultMessage, null, this, showToast);
         };
 
+        /**
+         * Gets whether the currentplayer can make a move or not
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IGame} game
+         * @returns {boolean}
+         */
         private GetCanMove = (game:Models.Messages.IGame) => {
             if(game.status == $constants.Game.States.Finished) {
                 return false;
@@ -251,6 +327,11 @@ module Controllers {
             return game.activePlayer == $constants.Game.Player2;
         };
 
+        /**
+         * Forfeits a game. Gets confirmation from currentplayer. if true. starts forfeit-request
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         */
         private Forfeit = () => {
             var confirmForfeit = this.$ionicPopup.confirm( {
                 title: this.strings("forfeit_confirm_title"),
@@ -271,17 +352,34 @@ module Controllers {
             });
         };
 
+        /**
+         *  Handels the success of the forfeit request.
+         *  Naavigates to the lobby
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IGame} game
+         */
         private ForfeitSuccessful = (game:Models.Messages.IGame) => {
-            //this.logger.Log("forfeit_successful", null, this, true);
             this.StopTimeout();
             this.SetGameInfo(game);
             this.navigation.Lobby();
         };
 
+        /**
+         * Handles general Errors from the API
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IError} error
+         */
         private OnError = (error:Models.Messages.IError) => {
             this.logger.LogApiError(error, this, true);
         };
 
+        /**
+         * Is called when the player leaves the game. Forfeits the game is game is not finished
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         */
         private LeaveGame = () => {
             this.StopRefresh();
             this.StopTimeout();
@@ -293,22 +391,48 @@ module Controllers {
             }
         };
 
+        /**
+         * Starts the refreshinterval
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         */
         private StartRefresh = () => {
             this.intervalPromise = this.$interval(this.Refresh, $constants.Intervals.GameRefreshInterval);
         }
 
+        /**
+         * Stops the refreshinterval
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         */
         private StopRefresh = () => {
             this.$interval.cancel(this.intervalPromise);
         }
 
+        /**
+         * Starts the timeouttimer
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         */
         private StartTimeout = () => {
             this.timeoutPromise = this.$timeout(this.Timeout, $constants.Timeouts.GameTimeout);
         }
 
+        /**
+         * Stops the timeouttimer
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         */
         private StopTimeout = () => {
             this.$timeout.cancel(this.timeoutPromise);
         }
 
+        /**
+         * Gets the gameId from the stateParamsService
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @returns {any}
+         */
         private GetGameId = () => {
             var gameId = this.$stateParams[$constants.Params.GameId];
             if (this.$angular.isUndefined(gameId))
@@ -317,6 +441,13 @@ module Controllers {
             return gameId;
         };
 
+        /**
+         * Get an array of numbers of a specific size (needed for field size)
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {number} size
+         * @returns {Array}
+         */
         private GetSizeArray = (size:number):Array<number> => {
             if(size == undefined) {
                 size = 10;
@@ -331,6 +462,10 @@ module Controllers {
         };
     }
 
+    /**
+     * Registers the GameController as a module
+     *
+     */
     export class GameControllerRegister {
         constructor($module: angular.IModule) {
             $module.controller($injections.Controllers.GameController, GameController);

@@ -1,6 +1,7 @@
 /// <reference path='../min.references.ts'/>
 
 module Controllers {
+    'use strict';
 
      class PlayerData implements Models.Messages.IPlayerUpdate {
         name:string;
@@ -19,8 +20,8 @@ module Controllers {
 
     interface ISettingsScope extends angular.IScope {
         Save();
-        IsFormValid();
-        IsPasswordRequired();
+        IsFormValid():boolean;
+        IsPasswordRequired():boolean;
         Model:SettingsModel;
     }
 
@@ -48,10 +49,22 @@ module Controllers {
             $scope.IsFormValid = this.IsFormValid;
         }
 
-        private IsPasswordRequired = () => {
+        /**
+         *  Gets whether the password ist required
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @returns {boolean}
+         */
+        private IsPasswordRequired = ():boolean => {
             return this.$scope.Model.OldPassword !== "" ||  this.$scope.Model.NewPassword !== "" ||  this.$scope.Model.NewPassword2 !== "";
         };
 
+        /**
+         * Gets whether the form is valid and can be sended
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @returns {boolean}
+         */
         private IsFormValid = () => {
             if(!this.$scope.Model.SettingsForm.$valid) {
                 return false
@@ -64,6 +77,11 @@ module Controllers {
             return true;
         };
 
+        /**
+         * Save the settings to the API
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         */
         private Save = () => {
 
             var playerData = new PlayerData();
@@ -78,15 +96,32 @@ module Controllers {
             this.playerProvider.UpdateCurrentPlayer(playerData).then(this.OnSaveSuccess, this.OnError);
         };
 
+        /**
+         * Handles the save success case
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IPlayer} player
+         */
         private OnSaveSuccess = (player:Models.Messages.IPlayer) => {
             this.logger.LogSuccess(this.strings("settings_saved"), null, this, true);
         };
 
+        /**
+         * Handles the error case
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IError} error
+         */
         private OnError = (error:Models.Messages.IError) => {
             this.logger.LogApiError(error, this, true);
         }
     }
 
+    /**
+     * Registers the SettingsController as module
+     *
+     *  @author Dominik Süsstrunk <the.domi@gmail.com>
+     */
     export class SettingsControllerRegister {
         constructor($module: angular.IModule) {
             $module.controller($injections.Controllers.SettingsController, SettingsController);

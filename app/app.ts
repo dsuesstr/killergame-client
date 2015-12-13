@@ -1,5 +1,6 @@
 /// <reference path='injections.ts'/>
 /// <reference path='registrations.ts'/>
+'use strict';
 
 declare var cordova: any;
 declare var StatusBar: any;

@@ -1,13 +1,14 @@
 /// <reference path='../min.references.ts'/>
 
 module Services {
+    'use strict';
+
     class AccountHandler implements IAccountHandler {
 
         static $inject = [
             $injections.Services.Urls,
             $injections.Angular.$HttpService,
             $injections.Angular.$QService,
-            $injections.Services.Logger,
             $injections.Services.ApiSettingsHandler,
             $injections.Services.PlayerProvider
         ];
@@ -15,31 +16,64 @@ module Services {
         constructor(private urls: Services.IUrls,
                     private $http: angular.IHttpService,
                     private $q: angular.IQService,
-                    private logger: Services.ILogger,
                     private apiSettingsHandler: Services.IApiSettingsHandler,
                     private playerProvider: Services.IPlayerProvider) {
         }
 
+        /**
+         * Gets whether the current user has a token present or not (it token is present, KG assumes the player is logged in)
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @returns {boolean}
+         */
         public IsLoggedIn = ():boolean => {
             return this.apiSettingsHandler.HasToken();
         };
 
+        /**
+         * Register a user via API
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IRegister} model
+         * @returns {angular.IPromise<Models.Messages.IPlayer>}
+         */
         public Register = (model:Models.Messages.IRegister):angular.IPromise<Models.Messages.IPlayer> => {
 
             var url = this.urls.Register();
             return this.PostTokenRequest(url, model);
         };
 
+        /**
+         * Logges a user in via the API
+         *
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.ILogin} model
+         * @returns {angular.IPromise<Models.Messages.IPlayer>}
+         */
         public Login = (model:Models.Messages.ILogin):angular.IPromise<Models.Messages.IPlayer> => {
             var url = this.urls.Login();
             return this.PostTokenRequest(url, model);
         };
 
+        /**
+         *  Logs a user out from the Game (Deletes the token)
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         */
         public Logout = () => {
             this.playerProvider.RemoveCurrentPlayer();
             this.apiSettingsHandler.RemoveToken();
         };
 
+        /**
+         * Posts a request for a token (Login or Register)
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {string} url
+         * @param {any} data
+         * @returns {IPromise<Models.Messages.IPlayer>}
+         */
         private PostTokenRequest = (url:string, data:any) :angular.IPromise<Models.Messages.IPlayer> => {
 
             var params = this.apiSettingsHandler.GetApiParameters();
@@ -60,6 +94,11 @@ module Services {
         }
     }
 
+    /**
+     * Registers the AccountHandler as a module
+     *
+     * @author Dominik Süsstrunk <the.domi@gmail.com>
+     */
     export class AccountHandlerRegister {
         constructor($module: angular.IModule) {
             $module.service($injections.Services.AccountHandler, AccountHandler);

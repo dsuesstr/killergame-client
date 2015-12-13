@@ -1,6 +1,8 @@
 /// <reference path='../min.references.ts'/>
 
 module Services {
+    'use strict';
+
     class PlayerProvider implements IPlayerProvider {
         static $inject = [
             $injections.Services.Urls,
@@ -17,6 +19,13 @@ module Services {
                     private localStorage:Services.ILocalStorage) {
         }
 
+        /**
+         * Get the player from the API by it's playerId
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {string} playerId
+         * @returns {IPromise<Models.Messages.IPlayer>}
+         */
         public GetPlayer = (playerId:string):angular.IPromise<Models.Messages.IPlayer> => {
             var url = this.urls.Register() + "/" + playerId;
             var defer = this.$q.defer<Models.Messages.IPlayer>();
@@ -33,6 +42,13 @@ module Services {
             return defer.promise;
         };
 
+        /**
+         * Get all players from the API
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.ListParams} listParams
+         * @returns {angular.IPromise<Models.Messages.IPlayer[]>}
+         */
         public GetAllPlayers = (listParams:Models.ListParams) : angular.IPromise<Models.Messages.IPlayer[]> => {
             var url = this.urls.Register();
             url += "/limit/" + listParams.Limit + "/offset/" + listParams.Offset + "/sort/" + listParams.SortColumn + "/" + listParams.SortDirection;
@@ -40,6 +56,13 @@ module Services {
             return this.GetPlayersList(url, false);
         };
 
+        /**
+         * Get all availableplayers for a game from the API
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.ListParams} listParams
+         * @returns {angular.IPromise<Models.Messages.IPlayer[]>}
+         */
         public GetAvailablePlayers = (listParams:Models.ListParams) : angular.IPromise<Models.Messages.IPlayer[]> => {
 
             var url = this.urls.Players();
@@ -47,6 +70,13 @@ module Services {
             return this.GetPlayersList(url, true);
         };
 
+        /**
+         * Update the current player on the api
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Message.IPlayerUpdate} data
+         * @returns {IPromise<Models.Messages.IPlayer>}
+         */
         public UpdateCurrentPlayer = (data:Models.Messages.IPlayerUpdate):angular.IPromise<Models.Messages.IPlayer> => {
             var player = this.GetCurrentPlayer();
             var url = this.urls.Register() + "/" + player.playerId;
@@ -71,6 +101,12 @@ module Services {
             return defer.promise;
         };
 
+        /**
+         *  Set the currentplayer in the localstorage
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IPlayer} player
+         */
         public SetCurrentPlayer = (player:Models.Messages.IPlayer) => {
             this.localStorage.Save($constants.Keys.Player, player);
         };
@@ -84,10 +120,23 @@ module Services {
             return player;
         };
 
+        /**
+         * Remove the currentPlayer from the localstorage
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         */
         public RemoveCurrentPlayer = () => {
             this.localStorage.Remove($constants.Keys.Player);
         };
 
+        /**
+         * Makes a Get-request for players to the api (secure = true: with tokenheader)
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {string} url
+         * @param {boolean} secure
+         * @returns {IPromise<Models.Messages.IPlayer[]>}
+         */
         private GetPlayersList = (url:string, secure:boolean): angular.IPromise<Models.Messages.IPlayer[]> => {
             var defer = this.$q.defer<Models.Messages.IPlayer[]>();
             var params = secure
@@ -113,6 +162,11 @@ module Services {
         }
     }
 
+    /**
+     * Register the PlayerProvider as module
+     *
+     * @author Dominik Süsstrunk <the.domi@gmail.com>
+     */
     export class PlayerProviderRegister {
         constructor($module: angular.IModule) {
             $module.service($injections.Services.PlayerProvider, PlayerProvider);

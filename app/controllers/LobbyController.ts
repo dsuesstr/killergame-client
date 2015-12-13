@@ -1,5 +1,6 @@
 /// <reference path='../min.references.ts'/>
 module Controllers {
+    'use strict';
 
     class CreateGame implements Models.Messages.ICreateGame {
         player2:string;
@@ -18,7 +19,6 @@ module Controllers {
         Refresh();
         ChallengePlayer(player:Models.Messages.IPlayer);
         DeleteGame(game:Models.Messages.IGame);
-        ShowPlayer(player:Models.Messages.IPlayer);
         AcceptGame(game:Models.Messages.IGame);
         StartGame(game:Models.Messages.IGame);
     }
@@ -57,7 +57,6 @@ module Controllers {
             $scope.Refresh = this.Refresh;
             $scope.ChallengePlayer = this.ChallengePlayer;
             $scope.DeleteGame = this.DeleteGame;
-            $scope.ShowPlayer = this.ShowPlayer;
             $scope.AcceptGame = this.AcceptGame;
             $scope.StartGame = this.StartGame;
 
@@ -67,14 +66,20 @@ module Controllers {
             $scope.$on($constants.Events.Destroy, this.CancelRefresh);
         }
 
+        /**
+         * Cancels refresh interval
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         */
         private CancelRefresh = () => {
             this.$interval.cancel(this.intervalPromise);
         };
 
-        private ShowPlayer = (player:Models.Messages.IPlayer) => {
-            this.navigation.Player(player);
-        };
-
+        /**
+         * Refreshes the view (Loads availablePlayers and AvailableGames)
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         */
         private Refresh = () => {
             this.$q.all([
                 this.playerProvider.GetAvailablePlayers(new Models.ListParams()),
@@ -82,6 +87,13 @@ module Controllers {
             ]).then(this.GetDataSuccessful, this.GetDataFailed);
         };
 
+
+        /**
+         * Delete/Cancel a game (Only possible for not accepted games)
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IGame} game
+         */
         private DeleteGame = (game:Models.Messages.IGame) => {
             this.$ionicPopup.confirm( {
                 title: this.strings("delete_confirm_title"),
@@ -93,10 +105,22 @@ module Controllers {
             });
         };
 
+        /**
+         * Start an accepted game
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IGame} game
+         */
         private StartGame = (game:Models.Messages.IGame) => {
             this.navigation.Game(game);
         };
 
+        /**
+         * Accept a game
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IGame} game
+         */
         private AcceptGame = (game:Models.Messages.IGame) => {
             this.$ionicPopup.confirm( {
                 title: this.strings("accept_confirm_title"),
@@ -108,6 +132,12 @@ module Controllers {
             });
         };
 
+        /**
+         * Challenge a player
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IPlayer} player
+         */
         private ChallengePlayer = (player:Models.Messages.IPlayer) => {
             this.$ionicPopup.confirm( {
                 title: this.strings("challenge_confirm_title"),
@@ -124,13 +154,26 @@ module Controllers {
             });
         };
 
-        private GetDataSuccessful = (data:any) => {
+        /**
+         * Handler For success of GetData. Sets AvailablePlayers and AvailableGames
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Array} data
+         */
+        private GetDataSuccessful = (data:Array<any>) => {
             this.$scope.Model.AvailablePlayers = data[0];
             this.$scope.Model.AvailableGames = data[1];
             this.CheckGames();
             this.$scope.$broadcast($constants.Events.Scroll.RefreshComplete);
         };
 
+        /**
+         * Handler if one promise of GetData failes
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Array} data
+         * @constructor
+         */
         private GetDataFailed = (data:any) => {
             this.logger.LogError("GetDataFailed", data, this, false);
             this.$scope.Model.AvailablePlayers = null;
@@ -138,20 +181,42 @@ module Controllers {
             this.$scope.$broadcast($constants.Events.Scroll.RefreshComplete);
         };
 
-
+        /**
+         * Handles Accept success
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IGame} game
+         */
         private GameAcceptSuccessful = (game:Models.Messages.IGame) => {
             this.CancelRefresh();
             this.navigation.Game(game);
         };
 
+        /**
+         * Handles Game Success
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IGame} game
+         */
         private GameUpdateSuccessful = (game:Models.Messages.IGame) => {
             this.Refresh();
         };
 
+        /**
+         * Handles errors from the API
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IError} error
+         */
         private OnError = (error:Models.Messages.IError) => {
             this.logger.LogApiError(error, this, true);
         };
 
+        /**
+         * Adds CanAccept and CanStart to the gameslist
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         */
         private CheckGames = () => {
             var currentPlayer = this.playerProvider.GetCurrentPlayer();
 
@@ -165,6 +230,11 @@ module Controllers {
         };
     }
 
+    /**
+     * Registers the InfoController as a module
+     *
+     * @author Dominik Süsstrunk <the.domi@gmail.com>
+     */
     export class LobbyControllerRegister {
         constructor($module: angular.IModule) {
             $module.controller($injections.Controllers.LobbyController, LobbyController);

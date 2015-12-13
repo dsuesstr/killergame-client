@@ -1,4 +1,6 @@
 module Models {
+    'use strict';
+
     export module Messages {
 
         export interface ICoordinates {

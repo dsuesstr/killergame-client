@@ -1,5 +1,6 @@
 /// <reference path='../min.references.ts'/>
 module Services {
+    'use strict';
 
     class OpenLink {
         static $inject = [$injections.Angular.$Window];

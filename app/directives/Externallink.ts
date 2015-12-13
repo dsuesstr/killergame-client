@@ -12,6 +12,7 @@
  * @author Julian Mollik <jule@creative-coding.net>
  */
 module Directives {
+    'use strict';
 
     interface IExternallinkScope extends angular.IScope {
         href:string;

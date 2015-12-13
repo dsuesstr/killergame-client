@@ -1,7 +1,8 @@
 /// <reference path='../min.references.ts'/>
 
 module Controllers {
-
+    'use strict';
+    
     class LoginModel {
         Name:string;
         Username:string;
@@ -28,8 +29,7 @@ module Controllers {
     interface IAccountScope extends angular.IScope {
         Login();
         Register();
-        IsRegisterChanged();
-        IsFormValid();
+        IsFormValid():boolean;
         Model: LoginModel;
     }
 
@@ -68,8 +68,9 @@ module Controllers {
         }
 
         /**
+         * Tries to login to killergame
          *
-         * @constructor
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
          */
         private Login = () => {
 
@@ -84,6 +85,11 @@ module Controllers {
             this.accountHandler.Login(login).then(this.OnLoginSuccessful, this.OnError);
         };
 
+        /**
+         * Register a new user
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         */
         private Register = () => {
 
             var register = new RegisterData();
@@ -100,7 +106,13 @@ module Controllers {
             this.accountHandler.Register(register).then(this.OnRegisterSuccessful, this.OnError);
         };
 
-        private IsFormValid = () => {
+        /**
+         * Checks if the form is valid
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @returns {boolean}
+         */
+        private IsFormValid = ():boolean => {
             if(!this.$scope.Model.AccountForm.$valid)
                 return false;
 
@@ -110,18 +122,36 @@ module Controllers {
             return true;
         };
 
+        /**
+         * Handles the successful event of Register()
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IPlayer} player
+         */
         private OnRegisterSuccessful = (player:Models.Messages.IPlayer) => {
             this.$ionicLoading.hide();
             this.logger.LogSuccess(this.strings("register_successful", player.username), null, this, true);
             this.navigation.Lobby();
         };
 
+        /**
+         * Handles the successful event of Login()
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IPlayer} player
+         */
         private OnLoginSuccessful = (player:Models.Messages.IPlayer) => {
             this.$ionicLoading.hide();
             this.logger.LogSuccess(this.strings("login_successful", player.username), null, this, true);
             this.navigation.Lobby();
         };
 
+        /**
+         * Handles the Errors from Login, Register
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         * @param {Models.Messages.IError} error
+         */
         private OnError = (error:Models.Messages.IError) => {
             this.logger.LogApiError(error, this, true);
             this.$scope.Model.Password = "";
@@ -130,6 +160,10 @@ module Controllers {
         };
     }
 
+    /**
+     * Registers the AccountController as a module
+     * @author Dominik Süsstrunk <the.domi@gmail.com>
+     */
     export class AccountControllerRegister {
         constructor($module: angular.IModule) {
             $module.controller($injections.Controllers.AccountController, AccountController);

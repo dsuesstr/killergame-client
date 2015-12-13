@@ -1,4 +1,6 @@
 ﻿/// <reference path='../min.references.ts'/>
+'use strict';
+
 class AngularInit {
     constructor() {
         angular.module($injections.Constants.AppName)

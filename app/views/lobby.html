@@ -55,7 +55,7 @@
                 <div class="row">
                     <div class="col" ng-bind="player.username"></div>
                     <div class="col-10 text-right">
-                        <a ng-click="ShowPlayer(player)" class="action"><i class="icon ion-person icon-large"></i></a>
+                        <a ui-sref="menu.player({playerId: player.playerId})" class="action"><i class="icon ion-person icon-large"></i></a>
                     </div>
                     <div class="col-10 text-right">
                         <a ng-click="ChallengePlayer(player)" class="action"><i class="icon ion-ios-game-controller-a icon-large"></i></a>

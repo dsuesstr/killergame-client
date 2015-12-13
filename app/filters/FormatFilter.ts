@@ -1,6 +1,7 @@
 /// <reference path='../min.references.ts'/>
 
 module Filters {
+    'use strict';
 
     class FormatFilter {
         filter = (input:string, ...args:any[]) => {

@@ -1,6 +1,7 @@
 /// <reference path='../min.references.ts'/>
 
 module Models {
+    'use strict';
 
     export class Stone {
         X:number;
@@ -16,7 +17,7 @@ module Models {
         SortDirection:string;
 
         constructor() {
-            this.Limit = 10;
+            this.Limit = $constants.Params.DefaultLimit;
             this.Offset = 0;
             this.SortColumn = "score";
             this.SortDirection = "desc";

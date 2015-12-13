@@ -1,5 +1,7 @@
 ﻿/// <reference path='../min.references.ts'/>
 module Services {
+    'use strict';
+
     interface IIonicHistory {
         clearHistory();
         currentView(view?):any;

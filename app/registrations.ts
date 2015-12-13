@@ -1,6 +1,8 @@
 /// <reference path='all.references.ts'/>
+'use strict';
 
 class RegisterComponents {
+
     constructor(application: angular.IModule) {
 
         new Routes.UIRoutesRegister(application);

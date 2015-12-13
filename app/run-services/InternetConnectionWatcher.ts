@@ -2,6 +2,7 @@
 
 module Services {
 
+
     class ConnectionWatcherService {
         static $inject = [
             $injections.Angular.$RootScope,

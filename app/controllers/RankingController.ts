@@ -1,5 +1,6 @@
 /// <reference path='../min.references.ts'/>
 module Controllers {
+    'use strict';
 
     interface IRankingScope extends angular.IScope {
         LoadMore();
@@ -9,40 +10,40 @@ module Controllers {
 
     class RankingController {
         static $inject = [
-            $injections.Angular.$Scope,
-            $injections.Services.Logger
+            $injections.Angular.$Scope
         ];
 
-        constructor(private $scope: IRankingScope,
-                    private logger: Services.ILogger) {
-
+        constructor(private $scope: IRankingScope) {
             $scope.HasMoreData = true;
-            $scope.LoadMore = this.LoadMore;
             $scope.Refresh = this.Refresh;
             $scope.$on($constants.Events.Kg.RankingRefreshComplete, this.RefreshComplete);
 
-            //TODO: Make infinit scroll work
-            $scope.$on($constants.Events.Kg.RankingLoadMoreComplete, this.LoadMoreComplete);
         }
 
+        /**
+         * Fires the RankingRefresh event
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         */
         private Refresh = () => {
             this.$scope.$broadcast($constants.Events.Kg.RankingRefresh);
         };
 
-        private LoadMore = () => {
-            this.$scope.$broadcast($constants.Events.Kg.RankingLoadMore);
-        };
-
+        /**
+         * Fires the RefreshComplete Event to hide the "refresh" icon
+         *
+         * @author Dominik Süsstrunk <the.domi@gmail.com>
+         */
         private RefreshComplete = () => {
             this.$scope.$broadcast($constants.Events.Scroll.RefreshComplete);
         };
-
-        private LoadMoreComplete = (event, data:boolean) => {
-            this.$scope.HasMoreData = data;
-            this.$scope.$broadcast($constants.Events.Scroll.InfiniteScrollComplete);
-        }
     }
 
+    /**
+     * Registers the RankingController as a module
+     *
+     * @author Dominik Süsstrunk <the.domi@gmail.com>
+     */
     export class RankingControllerRegister {
         constructor($module: angular.IModule) {
             $module.controller($injections.Controllers.RankingController, RankingController);

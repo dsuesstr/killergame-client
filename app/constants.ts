@@ -1,5 +1,6 @@
-module $constants
-{
+module $constants {
+    'use strict';
+
     export module Events{
         export var Destroy:string = '$destroy';
         export var StateChangeSuccess:string = '$stateChangeSuccess';
@@ -53,10 +54,12 @@ module $constants
     export module Params {
         export var PlayerId:string = "playerId";
         export var GameId:string = "gameId";
+        export var DefaultLimit:number = 5;
     }
 
     export module Timeouts {
         export var GameTimeout:number = 30000;
+        export var RequestTimeout:number = 1000;
     }
 
     export module Intervals {

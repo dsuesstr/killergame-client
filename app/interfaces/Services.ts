@@ -1,6 +1,8 @@
 /// <reference path='../min.references.ts'/>
 
 module Services {
+    'use strict';
+
     export interface IStrings {
         (key: string, ...args:any[]):string;
     }

@@ -1,6 +1,7 @@
 /// <reference path='min.references.ts'/>
 
 module Routes {
+    'use strict';
 
     interface IStateProvider extends angular.ui.IStateProvider {
         state(config: any): IStateProvider;

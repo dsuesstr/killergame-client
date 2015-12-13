@@ -1,6 +1,8 @@
 ﻿/// <reference path='../min.references.ts'/>
 
 module Services {
+    'use strict';
+
     class IonicConfig {
         static $inject = [
             $injections.Ionic.$ionicConfig
