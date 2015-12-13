@@ -3,6 +3,7 @@ module $injections{
     export module Directives {
         export var RankingDirective: string = 'ranking';
         export var NavbarDirective: string = 'navbar';
+        export var ExternallinkDirective: string = 'externallink';
     }
 
     export module Constants{
