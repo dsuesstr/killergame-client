@@ -1,0 +1,11 @@
+.list-menu .list {
+    .item-content {
+        cursor: pointer;
+        &:after {
+            border-bottom: none; // disable the underline effect in the slide-in-menu
+        }
+        .icon {
+            margin-right: 10px;
+        }
+    }
+}

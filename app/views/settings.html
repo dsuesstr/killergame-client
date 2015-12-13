@@ -2,10 +2,10 @@
     <ion-nav-title >
         <navbar class="navbar" />
     </ion-nav-title>
-    <ion-content class="kg-content" scroll="true">
-        <h1>Settings</h1>
-        <h2>Profile</h2>
-        <div class="list" ng-form="Model.SettingsForm">
+    <ion-content class="content content-settings kg-content" scroll="true">
+        <h1 class="content__heading">Settings</h1>
+        <h2 class="content__subheading">Profile</h2>
+        <div class="list " ng-form="Model.SettingsForm">
             <label class="item item-input item-stacked-label">
                 <span class="input-label">Username</span>
                 <input type="text" ng-model="Model.Player.username" class="input-readonly" readonly>
@@ -20,7 +20,7 @@
             </label>
         </div>
 
-        <h2>Change Password</h2>
+        <h2 class="content__subheading">Change Password</h2>
         <div class="list">
             <label class="item item-input item-stacked-label">
                 <span class="input-label">Old Password</span>

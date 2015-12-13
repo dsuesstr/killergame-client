@@ -1,0 +1,10 @@
+.list-ranking {
+    .item-ranking:hover {
+        cursor:pointer;
+        background: $stable;
+    }
+
+    .item-currentplayer {
+        background:rgba($calm, 0.1)
+    }
+}

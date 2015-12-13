@@ -1,0 +1,31 @@
+.card-game {
+    margin:0;
+    padding: 0;
+
+    > .item {
+        padding: 0;
+    }
+}
+
+.list-games {
+    margin:0;
+}
+
+.item-games {
+    padding:0;
+}
+
+.item-game {
+
+    .winner {
+        font-weight: 700;
+    }
+
+    &.winner {
+        background: rgba($balanced,0.1);
+    }
+
+    &.loser {
+        background: rgba($assertive, 0.1);
+    }
+}

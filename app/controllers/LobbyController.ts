@@ -124,7 +124,7 @@ module Controllers {
         private AcceptGame = (game:Models.Messages.IGame) => {
             this.$ionicPopup.confirm( {
                 title: this.strings("accept_confirm_title"),
-                template: this.strings("accept_confirm"),
+                template: this.strings("accept_confirm", game.player1),
             }).then((result:boolean) => {
                 if(result) {
                     this.gameHandler.AcceptGame(game.gameId).then(this.GameAcceptSuccessful, this.OnError)

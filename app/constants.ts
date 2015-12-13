@@ -54,7 +54,7 @@ module $constants {
     export module Params {
         export var PlayerId:string = "playerId";
         export var GameId:string = "gameId";
-        export var DefaultLimit:number = 5;
+        export var DefaultLimit:number = 10;
     }
 
     export module Timeouts {

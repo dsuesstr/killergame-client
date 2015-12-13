@@ -2,23 +2,22 @@
     <ion-nav-title >
         <navbar class="navbar" />
     </ion-nav-title>
-    <ion-content class="kg-content"  scroll="true">
-        <h1>Game</h1>
+    <ion-content class="content content-game"  scroll="true">
+        <h1 class="content__heading">Game</h1>
         <div ng-if="GameLoaded">
-
             <div class="card card-game">
                 <div class="item item-divider">
                     <ion-list class="list-info">
                         <ion-item>
                             <div class="row">
                                 <div class="col-33">
-                                    <h2 ng-bind="Game.player1" ng-class="game.activePlayer == 'player1' ? 'active-player' : ''"></h2>
+                                    <h2 ng-bind="Game.player1" ng-class="game.activePlayer === 'player1' ? 'active-player' : ''"></h2>
                                 </div>
                                 <div class="col-33 text-center">
                                     vs.
                                 </div>
                                 <div class="col-33 text-right">
-                                    <h2 ng-bind="Game.player2" ng-class="game.activePlayer == 'player2' ? 'active-player' : ''"></h2>
+                                    <h2 ng-bind="Game.player2" ng-class="game.activePlayer === 'player2' ? 'active-player' : ''"></h2>
                                 </div>
                             </div>
                         </ion-item>
@@ -35,20 +34,20 @@
                     </ion-list>
                 </div>
                 <div class="item item-text-wrap">
-                    <div class="game-field" ng-class="CanMove ? '' : 'game-wait'">
+                    <div class="game" ng-class="CanMove ? '' : 'game-wait'">
                         <div class="row" ng-repeat="x in GetSizeArray(Game.width)">
                             <div class="col-10" ng-repeat="y in GetSizeArray(Game.height)" >
                                 <div ng-repeat="stone in [GetFieldValue(x,y)]">
-                                    <div ng-class="IsCheckerTypeA(x, y) ? 'slot-a' : 'slot-b'" class="slot-occupied" ng-if="stone.IsPlayer1 || stone.IsPlayer2">
-                                        <div ng-class="stone.IsPlayer1 ? 'stone-player-1' : 'stone-player-2'" class="{{IsWinningStone(x, y) ? 'stone-win' : ''}}"></div>
+                                    <div ng-class="IsCheckerTypeA(x, y) ? 'slot-a' : 'slot-b'" class="slot slot-occupied" ng-if="stone.IsPlayer1 || stone.IsPlayer2">
+                                        <div ng-class="stone.IsPlayer1 ? 'stone-player-1' : 'stone-player-2'" class="{{IsWinningStone(x, y) ? 'stone stone-win' : 'stone'}}"></div>
                                     </div>
                                     <div ng-if="CanMove">
-                                        <div ng-class="IsCheckerTypeA(x, y) ? 'slot-a' : 'slot-b'" class="slot-available" ng-if="!stone.IsPlayer1 && !stone.IsPlayer2" ng-click="MakeMove(stone)">
-                                            <div ng-class="CurrentPlayer.username == Game.player1 ? 'player-1' : 'player-2'"></div>
+                                        <div ng-class="IsCheckerTypeA(x, y) ? 'slot-a' : 'slot-b'" class="slot slot-available" ng-if="!stone.IsPlayer1 && !stone.IsPlayer2" ng-click="MakeMove(stone)">
+                                            <div class="player" ng-class="CurrentPlayer.username == Game.player1 ? 'player-1' : 'player-2'"></div>
                                         </div>
                                     </div>
                                     <div ng-if="!(stone.IsPlayer1 || stone.IsPlayer2) && !CanMove">
-                                        <div ng-class="IsCheckerTypeA(x, y) ? 'slot-a' : 'slot-b'" class="slot-occupied">
+                                        <div ng-class="IsCheckerTypeA(x, y) ? 'slot-a' : 'slot-b'" class="slot slot-occupied">
                                             <div></div>
                                         </div>
                                     </div>
@@ -58,9 +57,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-    </div>
+     </div>
     </ion-content>
 </ion-view>

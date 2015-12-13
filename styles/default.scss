@@ -4,7 +4,11 @@
 
 @import "../bower_components/ionic/scss/ionic";
 
+@import "general"; //general css for elements
 @import "app";
-@import "field"; // styles needed for displaying the field
-@import "navbar"; // styles needed for the header
+@import "menu"; // styles needed for displaying the field directive
+@import "field"; // styles needed for displaying the field directive
+@import "navbar"; // styles needed for the navbar directive
+@import "ranking"; //styles needed for displaying the ranking directive
+@import "icon"; //styles needed for displaying iconss
 

@@ -1,47 +1,5 @@
 // generic styles
 
-a {
-    color: $calm;
-    text-decoration: none;
-    display: inline-block;
-    &:after {
-        content: '';
-        display: block;
-        border-bottom: 1px solid $calm;
-        width: 0;
-        transition: 0.5s ease;
-    }
-    &:hover{
-        &:after{
-            width: 100%;
-        }
-    }
-}
-
-.disable-user-behavior {
-    a {
-        &:after {
-            border-bottom: none; // disable the underline effect in the slide-in-menu
-        }
-    }
-}
-
-// in killergame lists, add a glow when hovering the icons
-.kg-list {
-    a {
-        color: #000000;
-        transition: 0.5s linear 0s;
-        &:hover {
-            color: #000000;
-            text-shadow: -1px 1px 7px $calm, 1px -1px 7px $calm;
-        }
-    }
-}
-
-em {
-    font-style: italic;
-}
-
 .row {
     padding: 0;
 }
@@ -50,120 +8,39 @@ em {
     padding: 0;
 }
 
+.col-header {
+    font-weight: bold;
+}
+
+
+
+// in killergame lists, add a glow when hovering the icons
+.list-lobby {
+    .link-action {
+        color: #000000;
+        transition: 0.5s linear 0s;
+        &:hover {
+            color: #000000;
+            text-shadow: -1px 1px 7px $calm, 1px -1px 7px $calm;
+            cursor:pointer;
+        }
+    }
+}
+
+
 .loading-container {
     .loading {
         background-color: $calm;
     }
 }
 
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-
-.col-header {
-    font-weight: bold;
-}
-
-.long-col {
-    white-space: normal;
-}
-
-.number-col {
-    text-align: center;
-}
-
-.small-text {
-    font-size: 0.75em;
-}
-
-.custom-item {
-    padding: 0;
-}
-
-.logo {
-    height: 30px;
-}
-
-.item-content:hover {
-    cursor: pointer;
-}
-
-.item-content .icon {
-    margin-right: 10px;
-}
-
-.kg-content {
+.content {
     padding: 5vw;
     margin-bottom: 44px; // to cancle out the footer height
-}
-.input-readonly {
-    background: #fff;
 }
 
 .player-active {
     color:$calm;
 }
 
-.icon-large {
-    font-size: 150%;
-}
 
-.action:hover {
-    cursor:pointer;
-    color: $calm;
-}
-
-.item-ranking:hover {
-    cursor:pointer;
-    background: $stable;
-}
-
-.item-currentplayer {
-   background:rgba($calm, 0.1)
-}
-
-.card-game {
-    margin:0;
-    padding: 0;
-
-    > .item {
-        padding: 0;
-    }
-}
-
-.icon-player {
-    position: absolute;
-    top: 16px;
-    left: 16px;
-    max-width: 40px;
-    max-height: 40px;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    font-size: 40px;
-    text-align: center;
-}
-
-.item-games {
-    padding:0;
-}
-
-.list-games {
-    margin:0;
-}
-
-.item-game {
-
-    .winner {
-        font-weight: 700;
-    }
-
-    &.winner {
-        background: rgba($balanced,0.1);
-    }
-
-    &.loser {
-        background: rgba($assertive, 0.1);
-    }
-}

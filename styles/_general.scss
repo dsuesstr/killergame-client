@@ -1,0 +1,27 @@
+a {
+    color: $calm;
+    text-decoration: none;
+    display: inline-block;
+
+    &:after {
+        content: '';
+        display: block;
+        border-bottom: 1px solid $calm;
+        width: 0;
+        transition: 0.5s ease;
+    }
+    &:hover{
+        &:after{
+            width: 100%;
+        }
+    }
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+em {
+    font-style: italic;
+}

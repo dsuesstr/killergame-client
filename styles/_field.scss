@@ -22,7 +22,7 @@
   background: radial-gradient(ellipse at center, $stone_player2_inner 1%, $stone_player2_inner 25%, $stone_player2_outer 100%);
 }
 
-.game-field {
+.game {
   width: 90vw;
   .col-10 {
     // adapting ionic's classes for killergame's needs
