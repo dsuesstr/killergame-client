@@ -8922,6 +8922,25 @@ em {
   .list-menu .list .item-content .icon {
     margin-right: 10px; }
 
+.card-game {
+  margin: 0;
+  padding: 0; }
+  .card-game > .item {
+    padding: 0; }
+
+.list-games {
+  margin: 0; }
+
+.item-games {
+  padding: 0; }
+
+.item-game .winner {
+  font-weight: 700; }
+.item-game.winner {
+  background: rgba(51, 205, 95, 0.1); }
+.item-game.loser {
+  background: rgba(239, 71, 58, 0.1); }
+
 .game {
   width: 90vw; }
   .game .col-10 {
