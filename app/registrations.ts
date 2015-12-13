@@ -33,6 +33,7 @@ class RegisterComponents {
 
         new Directives.RankingDirectiveRegister(application);
         new Directives.NavbarDirectiveRegister(application);
+        new Directives.ExternallinkDirectiveRegister(application);
     }
 }
 
