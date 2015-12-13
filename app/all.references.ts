@@ -32,6 +32,7 @@
 /// <reference path="services/Strings.ts" />
 /// <reference path="directives/Ranking.ts" />
 /// <reference path="directives/Navbar.ts" />
+/// <reference path="directives/Externallink.ts" />
 /// <reference path="run-services/InternetConnectionWatcher.ts" />
 /// <reference path="run-services/ClearHistory.ts" />
 /// <reference path="run-services/IonicConfig.ts" />
