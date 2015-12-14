@@ -1,23 +1,23 @@
 
 
-@mixin slot-dimensions {
+%slot-dimensions {
   width: $field__stone_diameter;
   height: $field__stone_diameter;
 }
 
-@mixin stone-player {
+%stone-player {
   border-radius: 50%;
   box-shadow: $stone_shadow;
-  @include slot-dimensions;
+  @extend %slot-dimensions;
   position: relative;
 }
 
-@mixin stone-player-1 {
+%stone-player-1 {
   border: 2px solid $stone_player1_border;
   background: radial-gradient(ellipse at center, $stone_player1_inner 1%, $stone_player1_inner 25%, $stone_player1_outer 100%);
 }
 
-@mixin stone-player-2 {
+%stone-player-2 {
   border: 2px solid $stone_player2_border;
   background: radial-gradient(ellipse at center, $stone_player2_inner 1%, $stone_player2_inner 25%, $stone_player2_outer 100%);
 }
@@ -26,7 +26,7 @@
   width: 90vw;
   .col-10 {
     // adapting ionic's classes for killergame's needs
-    @include slot-dimensions;
+    @extend %slot-dimensions;
   }
 }
 
@@ -49,41 +49,41 @@
 
 .slot-occupied {
   div {
-    @include slot-dimensions;
+    @extend %slot-dimensions;
     box-sizing: border-box;
   }
 }
 
 .slot-available {
   div {
-    @include slot-dimensions;
+    @extend %slot-dimensions;
     box-sizing: border-box;
     cursor: cell;
   }
   &:hover {
     div {
-      @include stone-player;
+      @extend %stone-player;
       cursor: cell;
       opacity: 0.5;
     }
     div.player-1 {
-      @include stone-player-1;
+      @extend %stone-player-1;
     }
     div.player-2 {
-      @include stone-player-2;
+      @extend %stone-player-2;
     }
   }
 }
 
 .stone-player-1 {
-  @include stone-player;
-  @include stone-player-1;
+  @extend %stone-player;
+  @extend %stone-player-1;
   cursor: not-allowed;
 }
 
 .stone-player-2 {
-  @include stone-player;
-  @include stone-player-2;
+  @extend %stone-player;
+  @extend %stone-player-2;
   cursor: not-allowed;
 }
 
