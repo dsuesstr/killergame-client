@@ -24,6 +24,13 @@
             text-shadow: -1px 1px 7px $calm, 1px -1px 7px $calm;
             cursor:pointer;
         }
+        &:after {
+            content: '';
+            display: block;
+            border-bottom: 0;
+            width: 0;
+            transition: none;
+        }
     }
 }
 

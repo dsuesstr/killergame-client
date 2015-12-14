@@ -8904,6 +8904,12 @@ em {
     color: #000000;
     text-shadow: -1px 1px 7px #779ECB, 1px -1px 7px #779ECB;
     cursor: pointer; }
+  .list-lobby .link-action:after {
+    content: '';
+    display: block;
+    border-bottom: 0;
+    width: 0;
+    transition: none; }
 
 .loading-container .loading {
   background-color: #779ECB; }
@@ -8941,11 +8947,25 @@ em {
 .item-game.loser {
   background: rgba(239, 71, 58, 0.1); }
 
+.slot-available:hover div, .stone-player-1, .stone-player-2, .game .col-10, .slot-occupied div, .slot-available div {
+  width: 9vw;
+  height: 9vw; }
+
+.slot-available:hover div, .stone-player-1, .stone-player-2 {
+  border-radius: 50%;
+  box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.5);
+  position: relative; }
+
+.slot-available:hover div.player-1, .stone-player-1 {
+  border: 2px solid #D0A600;
+  background: radial-gradient(ellipse at center, #7F6100 1%, #7F6100 25%, #FFC900 100%); }
+
+.slot-available:hover div.player-2, .stone-player-2 {
+  border: 2px solid #0AB237;
+  background: radial-gradient(ellipse at center, #19662F 1%, #19662F 25%, #0CCC42 100%); }
+
 .game {
   width: 90vw; }
-  .game .col-10 {
-    width: 9vw;
-    height: 9vw; }
 
 .game-wait {
   cursor: wait; }
@@ -8960,48 +8980,19 @@ em {
   background-color: #E3E3E3; }
 
 .slot-occupied div {
-  width: 9vw;
-  height: 9vw;
   box-sizing: border-box; }
 
 .slot-available div {
-  width: 9vw;
-  height: 9vw;
   box-sizing: border-box;
   cursor: cell; }
 .slot-available:hover div {
-  border-radius: 50%;
-  box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.5);
-  width: 9vw;
-  height: 9vw;
-  position: relative;
   cursor: cell;
   opacity: 0.5; }
-.slot-available:hover div.player-1 {
-  border: 2px solid #D0A600;
-  background: radial-gradient(ellipse at center, #7F6100 1%, #7F6100 25%, #FFC900 100%); }
-.slot-available:hover div.player-2 {
-  border: 2px solid #0AB237;
-  background: radial-gradient(ellipse at center, #19662F 1%, #19662F 25%, #0CCC42 100%); }
 
 .stone-player-1 {
-  border-radius: 50%;
-  box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.5);
-  width: 9vw;
-  height: 9vw;
-  position: relative;
-  border: 2px solid #D0A600;
-  background: radial-gradient(ellipse at center, #7F6100 1%, #7F6100 25%, #FFC900 100%);
   cursor: not-allowed; }
 
 .stone-player-2 {
-  border-radius: 50%;
-  box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.5);
-  width: 9vw;
-  height: 9vw;
-  position: relative;
-  border: 2px solid #0AB237;
-  background: radial-gradient(ellipse at center, #19662F 1%, #19662F 25%, #0CCC42 100%);
   cursor: not-allowed; }
 
 .stone-win {
