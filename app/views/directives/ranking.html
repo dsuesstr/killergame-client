@@ -2,8 +2,9 @@
 <ion-list class="list list-ranking" ng-hide="!IsLoaded">
     <ion-item class="list-header">
         <div class="row">
-            <div class="col">#</div>
-            <div class="col-75">Player</div>
+            <div class="col-10">#</div>
+            <div class="col-33">Player</div>
+            <div class="col-33">Email</div>
             <div class="col text-right">Score</div>
         </div>
     </ion-item>
@@ -12,8 +13,9 @@
               class="item-ranking"
               ng-Class="player.playerId == CurrentPlayer.playerId ? 'item-currentplayer' : ''">
         <div class="row">
-            <div class="col" ng-bind="$index+1"></div>
-            <div class="col-75" ng-bind="player.username"></div>
+            <div class="col-10" ng-bind="$index+1"></div>
+            <div class="col-33">{{player.name}}</div>
+            <div class="col-33"><emaillink ng-click="$event.stopPropagation();" href="mailto:{{player.email}}" title="Email an {{player.name}}">{{player.username}}</emaillink></div>
             <div class="col text-right" ng-bind="player.score"></div>
         </div>
     </ion-item>
