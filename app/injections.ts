@@ -5,6 +5,7 @@ module $injections {
         export var RankingDirective: string = 'ranking';
         export var NavbarDirective: string = 'navbar';
         export var ExternallinkDirective: string = 'externallink';
+        export var EmaillinkDirective: string = 'emaillink';
     }
 
     export module Constants{
