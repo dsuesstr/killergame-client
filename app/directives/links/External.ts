@@ -24,7 +24,7 @@ module Directives {
         restrict:string = "E";
         replace:boolean = true;
         transclude:boolean = true;
-        templateUrl:string = "app/views/directives/externallink.html";
+        templateUrl:string = "app/views/directives/links/external.html";
         $scope:IExternallinkScope;
 
         constructor() {
