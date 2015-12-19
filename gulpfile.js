@@ -114,10 +114,6 @@ gulp.task("cleanRelease", function() {
 * Create release (TS files must be compiled before)
 */
 gulp.task("release", ['fonts', 'views', 'bundlecss', 'bundlejs', 'data'], function() {
-
-
-
-
     var target = gulp.src('index.html');
     // It's not necessary to read the files (will speed up things), we're only after their paths:
     var sources = gulp.src(['./build/dist/**/*.min.js', './build/dist/**/*.min.css'], {read: false});

@@ -1,5 +1,9 @@
 # Killergame 
 ## Client
+
+### Requirements
+- Running Killergame-server https://github.com/jule256/killergame-server/tree/abgabe2
+
 ### Install for devs
 
 - npm install
@@ -12,5 +16,5 @@
 ### Release Build
 - gulp release
 
-### Testing
+### Run Unittests
 - npm test
