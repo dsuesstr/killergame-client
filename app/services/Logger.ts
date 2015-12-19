@@ -141,10 +141,6 @@ module Services {
                     toastr.info(message);
                 }
             }
-
-            if ((<any>window).cordova) {
-                console.log(message);
-            }
         }
     }
 

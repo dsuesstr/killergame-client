@@ -38,7 +38,6 @@ module $injections {
         export var LobbyController:string = 'LobbyController';
         export var InfoController:string = 'InfoController';
         export var PlayerController:string = 'PlayerController';
-        export var LoadingController: string = 'LoadingController';
         export var RankingController: string = 'RankingController';
         export var SettingsController: string = 'SettingsController';
         export var AccountController: string = 'AccountController';

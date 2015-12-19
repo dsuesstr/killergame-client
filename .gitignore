@@ -1,5 +1,7 @@
 app/**/*.map
 app/**/*.js
+test/**/*.js
+test/**/*.map
 typings/
 .idea/
 bower_components/

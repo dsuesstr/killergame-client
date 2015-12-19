@@ -2,7 +2,6 @@
 /// <reference path='registrations.ts'/>
 'use strict';
 
-declare var cordova: any;
 declare var StatusBar: any;
 declare var ionic: any;
 
@@ -39,11 +38,7 @@ var application = angular.module($injections.Constants.AppName, [
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
-        if ((<any>window).cordova && (<any>window).cordova.plugins.Keyboard) {
-            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-        }
         if ((<any>window).StatusBar) {
-            // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
 

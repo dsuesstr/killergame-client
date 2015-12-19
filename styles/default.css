@@ -9028,6 +9028,10 @@ em {
   background: #f8f8f8; }
 .list-ranking .item-currentplayer {
   background: rgba(119, 158, 203, 0.1); }
+.list-ranking .col-33 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
 
 .icon.icon-large {
   font-size: 150%; }

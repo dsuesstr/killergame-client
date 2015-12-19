@@ -22,6 +22,24 @@
     },
     "angular-ui-router/angular-ui-router.d.ts": {
       "commit": "b04ad99e8b389bf377a2bd3ae582e7ecb553c09a"
+    },
+    "jasmine-fixture/jasmine-fixture.d.ts": {
+      "commit": "2272849a06f2b68205611665e6b86ffec58c1e10"
+    },
+    "jasmine-jquery/jasmine-jquery.d.ts": {
+      "commit": "2272849a06f2b68205611665e6b86ffec58c1e10"
+    },
+    "jasmine/jasmine.d.ts": {
+      "commit": "2272849a06f2b68205611665e6b86ffec58c1e10"
+    },
+    "jasmine-matchers/jasmine-matchers.d.ts": {
+      "commit": "2272849a06f2b68205611665e6b86ffec58c1e10"
+    },
+    "node/node.d.ts": {
+      "commit": "a61199a4684d70334795302f09fb2a6b8ca016db"
+    },
+    "angularjs/angular-mocks.d.ts": {
+      "commit": "efa0c1196d7280640e624ac1e7fa604502e7bd63"
     }
   }
 }

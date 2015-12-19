@@ -33,12 +33,24 @@ var commentHeader = common.createComments(gutil);
  * Compile Views and Localization Files into JavaScript
  */
 gulp.task('views', function () {
-    return gulp.src(['./app/**/*.html', './app/**/*.json'])
+        gulp.src(['./app/views/**/*.html'])
+    .pipe(gulp.dest(pkg.paths.dest.views));
+     gulp.src(['./app/views/**/*.html', './app/views/*.json'])
         .pipe(plug.angularTemplateCache({
             module: pkg.webapp,
             root: 'app'
         }))
         .pipe(gulp.dest(pkg.paths.dest.views));
+});
+
+gulp.task('data', function () {
+    return gulp.src(['./app/data/*.json'])
+        .pipe(gulp.dest(pkg.paths.dest.data));
+});
+
+gulp.task('fonts', function () {
+    return gulp.src("bower_components/ionic/release/fonts/*")
+        .pipe(gulp.dest(pkg.paths.dest.base + "/fonts"));
 });
 
 /*
@@ -50,8 +62,8 @@ gulp.task('bundlejs', ['views'], function () {
 
     return gulp.src(pkg.paths.source.js)
         .pipe(plug.size({ showFiles: true }))
+        .pipe(plug.ngAnnotate())
         .pipe(plug.uglify())
-        .pipe(plug.ngAnnotate())        
         .pipe(plug.concat(bundlefile, opt))        
         .pipe(plug.header(commentHeader))        
         .pipe(plug.size({ showFiles: true }))
@@ -69,20 +81,6 @@ gulp.task('bundlecss', function () {
         .pipe(plug.header(commentHeader))        
         .pipe(plug.size({ showFiles: true }))
         .pipe(gulp.dest(pkg.paths.dest.css));
-});
-
-/*
- * Compress images
- */
-gulp.task('images', function () {
-    return gulp.src(pkg.paths.source.images)
-        .pipe(gulp.dest(pkg.paths.dest.images));
-});
-
-gulp.task('wp8', ['bundlejs', 'bundlecss', 'images'], function () {
-    return gulp.src([pkg.dest + '**/*.js', pkg.dest + '**/*.css', pkg.dest + '**/*.png', pkg.dest + '**/*.jpg'])
-        .pipe(gulp.dest(pkg.paths.dest.wp8))
-        .pipe(gulp.dest(pkg.paths.dest.cordova));
 });
 
 /*
@@ -107,17 +105,25 @@ gulp.task('cleanMapJs', function(){
         .pipe(plug.clean({force: true}))
 });
 
-var ts = require('gulp-typescript');
-var uglify = require('gulp-uglify');
-
-gulp.task("release", ['bundlecss', 'bundlejs'], function() {
-
-
-
-
+gulp.task("cleanRelease", function() {
+    return  gulp.src(pkg.paths.dest.base, {read:false})
+        .pipe(plug.clean());
 });
 
-// npm i --save-dev gulp-serve
-gulp.task('serve', plug.serve()); // will be served at port :3000
+/*
+* Create release (TS files must be compiled before)
+*/
+gulp.task("release", ['fonts', 'views', 'bundlecss', 'bundlejs', 'data'], function() {
 
-gulp.task('default', ['bundlejs', 'bundlecss', 'images', 'wp8', 'release']);
+
+
+
+    var target = gulp.src('index.html');
+    // It's not necessary to read the files (will speed up things), we're only after their paths:
+    var sources = gulp.src(['./build/dist/**/*.min.js', './build/dist/**/*.min.css'], {read: false});
+
+    return target.pipe(plug.inject(sources, {ignorePath: 'build/dist/', addRootSlash: false }))
+        .pipe(gulp.dest('./build/dist/'));
+});
+
+gulp.task('default', ['bundlejs', 'bundlecss', 'release']);

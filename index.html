@@ -15,40 +15,31 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, target-densityDpi=medium-dpi,user-scalable=no" />
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
-    <!--<script src="phonegap.js"></script>-->
-    <!--<script src="cordova.js"></script>-->
-    <!-- build:css css/main.css -->
+    <!-- inject:css -->
     <link rel="stylesheet" href="bower_components/ionic/release/css/ionic.css">
     <link rel="stylesheet" href="styles/toastr.css">
     <link rel="stylesheet" href="styles/default.css">
-
-    <!-- endbuild -->
+    <!-- endinject -->
 </head>
 <body>
     <!--[if lt IE 7]>
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
             your browser</a> to improve your experience.</p>
     <![endif]-->
+
+    <!-- inject:js -->
     <!--[if lt IE 9]>
-        <script src="bower_components/es5-shim/es5-shim.js"></script>
-        <script src="bower_components/json3/lib/json3.min.js"></script>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
 
-    <!-- build:js js/plugins.js -->
     <script src="bower_components/linqjs/linq.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/ionic/release/js/ionic.bundle.js"></script>
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/toastr/toastr.js"></script>
-
-    <!-- build:js js/app.js -->
     <script src="app/injections.js"></script>
     <script src="app/app.js"></script>
-
-    <!-- inject-models -->
-    <!-- end-inject-models -->
-    <!-- inject -->
     <script src="app/constants.js"></script>
     <script src="app/routes.js"></script>
     <script src="app/controllers/MenuController.js"></script>
@@ -83,11 +74,11 @@
     <script src="app/directives/links/External.js"></script>
     <script src="app/directives/links/Email.js"></script>
     <script src="app/models/Models.js"></script>
-    <!-- end-inject -->
+
     <script src="app/registrations.js"></script>
     <script src="app/run-services/AngularInit.js"></script>
+    <!-- endinject -->
 
-    <!-- endbuild -->
     <ion-nav-view animation="slide-left-left" class="killergame"></ion-nav-view>
     <div class="bar bar-footer bar-light">
         <div class="title">

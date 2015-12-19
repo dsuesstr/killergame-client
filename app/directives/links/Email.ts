@@ -1,5 +1,4 @@
-/// <reference path='../min.references.ts'/>
-
+/// <reference path='../../min.references.ts'/>
 /**
  * directive for mailto links (extended with an extra icon) replaces
  *     <emaillink href="mailto:someone@example.com" title="example title">example text</emaillink>

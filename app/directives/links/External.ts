@@ -1,4 +1,4 @@
-/// <reference path='../min.references.ts'/>
+/// <reference path='../../min.references.ts'/>
 
 /**
  * directive for external links (extended with an extra icon) replaces

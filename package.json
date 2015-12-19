@@ -1,6 +1,6 @@
 {
   "name": "Killergame",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "It's a killergame",
   "main": "main.js",
   "dependencies": {
@@ -19,6 +19,7 @@
     "gulp-header": "*",
     "gulp-load-plugins": "*",
     "gulp-load-utils": "*",
+    "gulp-karma": "*",
     "chalk": "*",
     "dateformat": "*",
     "minimist": "*",
@@ -33,56 +34,52 @@
   ],
   "paths": {
     "source": {
-      "images": [
-        "images/**/*"
-      ],
       "js": [
+        "bower_components/linqjs/linq.js",
+        "bower_components/jquery/dist/jquery.js",
+        "bower_components/ionic/release/js/ionic.bundle.js",
+        "bower_components/moment/moment.js",
+        "bower_components/toastr/toastr.js",
+        "app/constants.js",
         "app/injections.js",
         "app/app.js",
-        "app/views/*.js",
-        "app/constants.js",
         "app/routes.js",
-        "app/directives/MaxHeight.js",
-        "app/directives/PieMenu.js",
         "app/controllers/MenuController.js",
-        "app/controllers/HomeController.js",
-        "app/controllers/LocationController.js",
-        "app/controllers/LanguageController.js",
-        "app/controllers/ConnectionsController.js",
-        "app/controllers/TravelDetailsController.js",
-        "app/controllers/MapController.js",
-        "app/filters/DurationFilter.js",
+        "app/controllers/LobbyController.js",
+        "app/controllers/RankingController.js",
+        "app/controllers/SettingsController.js",
+        "app/controllers/AccountController.js",
+        "app/controllers/GameController.js",
+        "app/controllers/PlayerController.js",
+        "app/controllers/InfoController.js",
         "app/filters/FormatFilter.js",
-        "app/interfaces/Framework.js",
-        "app/interfaces/GeoPosition.js",
         "app/interfaces/Plugins.js",
-        "app/interfaces/Routes.js",
         "app/interfaces/Services.js",
-        "app/services/SelectedRoute.js",
-        "app/services/Event.js",
-        "app/services/GeoLocationProvider.js",
+        "app/services/Urls.js",
         "app/run-services/InternetConnectionWatcher.js",
         "app/services/LocalStorage.js",
-        "app/run-services/LocalizationConfig.js",
-        "app/services/AvailableRoutes.js",
-        "app/services/Navigation.js",
+        "app/services/AccountHandler.js",
+        "app/services/PlayerProvider.js",
+        "app/services/GameProvider.js",
+        "app/services/GameHandler.js",
+        "app/services/ApiSettingsHandler.js",
         "app/services/Logger.js",
-        "app/services/RoutesConverter.js",
+        "app/services/Navigation.js",
         "app/services/OpenLink.js",
-        "app/services/OpenPedestrianRoute.js",
-        "app/services/SelectedLocation.js",
-        "app/services/RoutesProvider.js",
-        "app/services/SelectedPedestrianRoute.js",
-        "app/services/TargetAddress.js",
         "app/services/Strings.js",
-        "app/services/Urls.js",
-        "app/services/AddressesProvider.js",
         "app/run-services/ClearHistory.js",
         "app/run-services/IonicConfig.js",
         "app/interfaces/models/Models.js",
-        "app/interfaces/models/messages/Responses.js",
+        "app/interfaces/models/messages/Messages.js",
+        "app/directives/Ranking.js",
+        "app/directives/Navbar.js",
+        "app/directives/Externallink.js",
+        "app/directives/links/External.js",
+        "app/directives/links/Email.js",
+        "app/models/Models.js",
         "app/registrations.js",
-        "app/run-services/AngularInit.js"
+        "app/run-services/AngularInit.js",
+        "node_modules/angular-mocks/angular-mocks.js"
       ],
       "css": [
         "bower_components/ionic/release/css/ionic.css",
@@ -92,17 +89,26 @@
       ]
     },
     "dest": {
+      "base": "build/dist/",
+      "data": "build/dist/app/data",
       "css": "build/dist/css/",
       "js": "build/dist/scripts/",
-      "images": "build/dist/images/",
-      "views": "./app/views/",
-      "wp8": "build/dist/www/",
-      "cordova": "build/dist/"
+      "views": "build/dist/app/views/"
     }
   },
+
   "devDependencies": {
     "gulp-inject": "^3.0.0",
     "gulp-serve": "^1.2.0",
-    "gulp-uglify": "^1.5.1"
+    "gulp-uglify": "^1.5.1",
+    "karma": "^0.13.15",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-jasmine": "^0.3.6",
+    "karma-cli": "^0.1.0",
+    "karma-typescript-preprocessor": "0.0.19",
+      "angular-mocks": "*"
+  },
+  "scripts": {
+    "test": "karma start karma.conf.js"
   }
 }
